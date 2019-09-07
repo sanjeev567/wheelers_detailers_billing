@@ -1,0 +1,141 @@
+.loader {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 1;
+  width: 150px;
+  height: 150px;
+  margin: -75px 0 0 -75px;
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+.loader-backdrop {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.main-header .sidebar-toggle {
+  padding: initial !important;
+}
+
+.navbar-nav > .user-menu > .dropdown-menu > .user-footer .btn-default {
+  width: 100%;
+}
+
+.master_user_avatar {
+  color: #ccc;
+  font-size: 120px;
+}
+
+label.error {
+  color: #ff3b00;
+}
+
+input.error,
+input.error:focus,
+span.error,
+select.error {
+  border: 2px solid #ff3b00 !important;
+}
+
+.advisor-custom-select {
+  height: 38px !important;
+  border-radius: 0 !important;
+  border: 1px solid #d2d6de !important;
+}
+
+.advisor-custom-select > .select2-selection__arrow {
+  top: 6px !important;
+}
+
+.custom-alert {
+  position: absolute;
+  top: 100px;
+  margin: 0 auto;
+  width: 36%;
+  left: 32%;
+  padding: 16px;
+}
+
+.select2-results .select2-disabled,
+.select2-results__option[aria-disabled="true"] {
+  display: none;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+.input-icon {
+  position: relative;
+}
+
+.input-icon > input {
+  padding-left: 20px;
+  padding-right: 0;
+}
+
+.input-icon > i {
+  position: absolute;
+  display: block;
+  transform: translate(0, -50%);
+  top: 50%;
+  pointer-events: none;
+  width: 25px;
+  text-align: center;
+  font-style: normal;
+}
+
+.sidebar-mini:not(.sidebar-mini-expand-feature).sidebar-collapse
+  .sidebar-menu
+  > li:hover
+  > a
+  > span:not(.pull-right),
+.sidebar-mini:not(.sidebar-mini-expand-feature).sidebar-collapse
+  .sidebar-menu
+  > li:hover
+  > .treeview-menu {
+  width: auto;
+  min-width: 180px;
+  max-width: 250px;
+  padding-right: 10px;
+}
+
+.sidebar-mini:not(.sidebar-mini-expand-feature).sidebar-collapse
+  .sidebar-menu
+  > li:hover
+  > a
+  > .pull-right-container {
+  top: -29px !important;
+  min-width: auto !important;
+}

@@ -7,12 +7,12 @@
                 </a>
             </li>
             <li>
-                <a href="{{ config('app.app_url_prefix') }}/user">
+                <a href="{{ config('app.app_url_prefix') }}/add-customer">
                     <i class="fa fa-user-plus"></i> <span>Add Customer</span>
                 </a>
             </li>
             <li>
-                <a href="{{ config('app.app_url_prefix') }}/user-list">
+                <a href="{{ config('app.app_url_prefix') }}/customer-list">
                     <i class="fa fa-users"></i> <span>Customer List</span>
                 </a>
             </li>

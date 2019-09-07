@@ -96,10 +96,6 @@ select.error {
   text-transform: uppercase;
 }
 
-.input-icon {
-  position: relative;
-}
-
 .input-icon > input {
   padding-left: 20px;
   padding-right: 0;
@@ -114,6 +110,41 @@ select.error {
   width: 25px;
   text-align: center;
   font-style: normal;
+}
+
+td,
+th {
+  border: 1px solid #ddd;
+}
+
+table.dataTable.stripe tbody tr.odd,
+table.dataTable.display tbody tr.odd {
+  background-color: #f5dddd !important;
+}
+
+table thead {
+  background-color: #ff970c;
+  background-color: #ff7a3fe0;
+}
+
+.dt-buttons .buttons-excel,
+.dt-buttons .buttons-excel:hover {
+  background-image: none !important;
+  background-color: #00c0ef;
+  color: #fff;
+  padding: auto 20px;
+}
+
+.dt-buttons .buttons-excel:hover {
+  background-color: #5fd4f1 !important;
+}
+
+.dt-buttons .buttons-excel span {
+  margin: auto 15px;
+}
+
+table.dataTable {
+  margin: initial !important;
 }
 
 .sidebar-mini:not(.sidebar-mini-expand-feature).sidebar-collapse

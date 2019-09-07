@@ -112,8 +112,8 @@ select.error {
   font-style: normal;
 }
 
-td,
-th {
+table.dataTable td,
+table.dataTable th {
   border: 1px solid #ddd;
 }
 
@@ -122,7 +122,7 @@ table.dataTable.display tbody tr.odd {
   background-color: #f5dddd !important;
 }
 
-table thead {
+table.dataTable thead td {
   background-color: #ff970c;
   background-color: #ff7a3fe0;
 }

@@ -26,7 +26,7 @@ Route::group(['middleware' => 'auth', 'prefix' => config('app.APP_URL_PREFIX')],
     Route::post('/generate-invoice', 'InvoiceController@generateInvoice');
 });
 
-Route::group(['middleware' => 'guest', 'prefix' => config('app.APP_URL_PREFIX')], function () {
+Route::group(['middleware' => 'guest'], function () {
     Route::get('/login', function () {
         return view('login');
     })->name('login');

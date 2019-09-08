@@ -16,12 +16,12 @@
 <!--===============================================================================================-->
 </head>
 <body>
-
+<input type="hidden" value="{{ config('app.app_url_prefix') }}" id="app_url_prefix">
 	<div class="limiter">
 		<div class="container-login100" style="background-image: url('{{ config('app.app_public_path') }}/images/bg-01.jpg');">
 			<div class="wrap-login100">
 				<form class="login100-form validate-form" id="login-form"  method="post">
-        {{ csrf_field() }}
+       	 {{ csrf_field() }}
 					<span class="login100-form-logo">
 						<i class="zmdi zmdi-landscape"></i>
 					</span>

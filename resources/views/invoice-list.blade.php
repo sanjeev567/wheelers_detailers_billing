@@ -1,12 +1,12 @@
 @extends('master')
-@section('page_heading','Invoice View')
+@section('page_heading','Invoice List')
 @section ('content')
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
 
 <section class="content-header">
     <h1 class="curr_month">
-      Customer List
+    Invoice List
     </h1>
   </section>
 
@@ -27,7 +27,7 @@
             <td>{{ $invoice->customer_name }}</td>
             <td>{{ $invoice->customer_mobile }}</td>
             <td>{{ $invoice->total }}</td>
-            <td>{{ \Carbon\Carbon::parse($invoice->created_at)->format('d-M-Y') }}</td>
+            <td>{{ \Carbon\Carbon::parse($invoice->created_at)->format('d-M-Y h:i A') }}</td>
             <td><a class="btn btn-info" href="/invoice/{{ $invoice->id }}">View</a></td>
           </tr>
         @endforeach

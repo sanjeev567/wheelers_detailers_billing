@@ -38,14 +38,13 @@ $(function () {
         let quantity = $('#new-quantity').val();
         let discount = $('#new-discount').val();
 
-
         datatable.row.add([
             $('#new_item').val(),
             $('#new_item').find(":selected").html(),
             price,
             quantity,
             discount,
-            (price * quantity) - discount,
+            (price * quantity) - (price * quantity  * discount/100),
             '<button class="btn btn-danger delete_btn">Remove</button>'
         ]).draw(false);
     });
@@ -76,8 +75,9 @@ $(function () {
             data: { _token: _token, customer: customer, data: newData },
             dataType: "json",
             success: function (response) {
+                debugger;
                 if (response.status == '1') {
-                    window.location.reload('/invoice/'+response.data);
+                    window.location.href = '/invoice/'+response.data;
                 } else {
                     showFailureAlert('Unable to generate invoice. Please try again later');
                 }

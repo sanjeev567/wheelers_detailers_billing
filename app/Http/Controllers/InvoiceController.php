@@ -40,7 +40,7 @@ class InvoiceController extends BaseController
             $total = 0;
 
             foreach ($request->data as $item) {
-                $total += $item[2];
+                $total += ($item[2] * $item[3]) - ($item[2] * $item[3] * $item[4]/100);
             }
 
             $invoice = Invoice::Create([
@@ -107,11 +107,35 @@ class InvoiceController extends BaseController
     public function viewInvoiceById(Request $request)
     {
         try {
-            if (view()->exists('invoice-view')) {
-                $items = Item::all();
-                $customers = Customer::all();
+            if (view()->exists('generate-invoice-view')) {
+                $invoice = \DB::table('invoices as i')
+                ->join('customers as c', 'c.id', '=', 'i.customer_id')
+                ->select([
+                    'i.id as id',
+                    'i.total as total',
+                    'c.name as customer_name',
+                    'c.mobile as customer_mobile',
+                    'i.created_at as created_at'
+                ])
+                ->where('i.id', $request->id)
+                ->first();
 
-                return view('invoice-view', ['items' => $items, 'customers' => $customers]);
+                $invoiceDetails = \DB::table('invoice_details as id')
+                    ->join('items as i', 'i.id', '=', 'id.item_id')
+                    ->select([
+                        'id.id as id',
+                        'i.id as item_id',
+                        'i.name as item',
+                        'i.item_code as item_code',
+                        'id.item_cost as item_cost',
+                        'id.discount as discount',
+                        'id.quantity as quantity',
+                        \DB::raw('(id.item_cost * id.quantity) - (id.item_cost * id.quantity * id.discount/100) as sub_total')
+                    ])
+                    ->where('id.invoice_id', $request->id)
+                    ->get();
+
+                return view('generate-invoice-view', ['invoice' => $invoice, 'invoiceDetails' => $invoiceDetails]);
             } else {
                 return view('view-not-found', ['viewName' => 'Invoice page']);
             }

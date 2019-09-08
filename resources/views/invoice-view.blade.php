@@ -42,7 +42,7 @@
         <input type="number" name="quantity" id="new-quantity" min="1" class="form-control" placeholder="Quantity" value="1">
       </div>
       <div style="width:10%;float:left;margin-left:30px;">
-        <label for="new-discount" style="display:block;">Discount</label>
+        <label for="new-discount" style="display:block;">Discount %</label>
         <input type="number" name="discount" id="new-discount" class="form-control" placeholder="Discount" value="0.0">
       </div>
       <div style="width:15%;float:left;margin-left:30px;margin-bottom:30px;">
@@ -56,7 +56,7 @@
         <td>Item</td>
         <td>Price</td>
         <td>Quantity</td>
-        <td>Disocunt</td>
+        <td>Disocunt %</td>
         <td>Total</td>
         <td>Action</td>
       </thead>

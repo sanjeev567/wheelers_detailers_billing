@@ -115,7 +115,8 @@ class InvoiceController extends BaseController
                     'i.total as total',
                     'c.name as customer_name',
                     'c.mobile as customer_mobile',
-                    'i.created_at as created_at'
+                    'i.created_at as created_at',
+                    'c.email as customer_email'
                 ])
                 ->where('i.id', $request->id)
                 ->first();

@@ -13,8 +13,8 @@
       <!-- Logo -->
       <a href="{{ config('app.app_url_prefix') }}/" class="logo">
         <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg"><b>Mars </b>Billing</span>
-        <span class="logo-mini"><b>M</b>B</span>
+        <span class="logo-lg"><b>Wheelers Detailers Pvt Ltd </b></span>
+        <span class="logo-mini"><b>W</b>D</span>
       </a>
       <!-- Header Navbar: style can be found in header.less -->
       <nav class="navbar navbar-static-top">
@@ -37,7 +37,7 @@
     @yield('content')
 
     <footer class="main-footer">
-      <strong>Copyright &copy; 2019 Mars Car Care.</strong> All rights reserved.
+      <strong>Copyright &copy; 2019 Wheelers Detailers Pvt Ltd.</strong> All rights reserved.
     </footer>
   </div>
   <!-- ./wrapper -->

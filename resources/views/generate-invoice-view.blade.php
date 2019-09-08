@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Mars Car Care | Invoice</title>
+    <title>Wheelers Detailers Pvt Ltd | Invoice</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.7 -->
@@ -42,18 +42,18 @@
 
             <!-- title row -->
             <div class="row">
-                <h1 style="margin-left:15px;">{{ $invoice->customer_name }}: Mars Car Care Invoice</h1><br>
+                <h1 style="margin-left:15px;">{{ $invoice->customer_name }}: Wheelers Detailers Pvt Ltd Invoice</h1><br>
             </div>
             <!-- info row -->
             <div class="row invoice-info">
                 <div class="col-sm-4 invoice-col">
                     From
                     <address>
-                        <strong>Mars Car Care services Pvt Ltd</strong>
-                        <br>IInd Floor, Rana Complex
-                        <br>Panchsheel Park, Rajender
-                        <br>Nagar G.T.Road Sahibabad
-                        <br>Ghaziabad-201005
+                        <strong>Wheelers Detailers Pvt Ltd</strong>
+                        <br>A-10/64, Ground Floor, Opposite DPS
+                        <br>Ghaziabad Gate No. 5 Site-3,
+                        <br>Industrial Area Meerut Road
+                        <br>Ghaziabad-201001
                     </address>
                 </div>
                 <!-- /.col -->
@@ -62,16 +62,17 @@
                     <address>
                         <strong>{{ $invoice->customer_name }}</strong>
                         <br> Mobile: {{ $invoice->customer_mobile }}
-                        <br> Email: manishyadav0012@gmail.com
+                        <br> Email: {{ $invoice->customer_email }}
                     </address>
                 </div>
                 <!-- /.col -->
                 <div class="col-sm-4 invoice-col">
-
                     <br>
-                    <b>Invoice #</b>{{ $invoice->id }}
+                    <b>GSTIN No.: </b> 07AABCW6278Q1ZG
                     <br>
-                    <b>Date & Time:</b> {{ \Carbon\Carbon::parse($invoice->created_at)->format('d-M-Y h:i A') }}
+                    <b>Invoice: </b>#{{ $invoice->id }}
+                    <br>
+                    <b>Date & Time: </b> {{ \Carbon\Carbon::parse($invoice->created_at)->format('d-M-Y h:i A') }}
                     <br>
                 </div>
                 <!-- /.col -->
@@ -87,7 +88,7 @@
                                 <th>Product/Service</th>
                                 <th>Price</th>
                                 <th>Quantity</th>
-                                <th>Discount</th>
+                                <th>Discount %</th>
                                 <th>Subtotal</th>
                             </tr>
                         </thead>
@@ -144,7 +145,7 @@
 </body>
 <script>
     var qrcode = new QRCode("qrcode", {
-        text: "{{ $invoice->customer_name }}: Mars Car Care Invoice | Total Amount Due: Rs. {{ $invoice->total }}",
+        text: "{{ $invoice->customer_name }}: Wheelers Detailers Pvt Ltd Invoice | Total Amount Due: Rs. {{ $invoice->total }}",
         width: 128,
         height: 128,
         colorDark: "#000000",

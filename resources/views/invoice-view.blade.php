@@ -64,7 +64,7 @@
       </tbody>
     </table>
 
-    <button type="button" class="btn btn-info" id="generate_invoice_btn">Generate Invoice</button>
+    <button type="button" class="btn btn-info" style="margin-top:20px;" id="generate_invoice_btn">Generate Invoice</button>
   </section>
   <!-- /.content -->
 </div>

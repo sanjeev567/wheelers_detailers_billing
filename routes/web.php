@@ -10,7 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
  */
-Route::group(['middleware' => 'auth', 'prefix' => config('app.APP_URL_PREFIX')], function () {
+Route::group(['middleware' => 'auth'], function () {
     Route::get('/', 'InvoiceController@invoiceView');
     Route::get('/home', 'InvoiceController@invoiceView');
     Route::get('/invoice-list', 'InvoiceController@invoiceList');
@@ -19,6 +19,10 @@ Route::group(['middleware' => 'auth', 'prefix' => config('app.APP_URL_PREFIX')],
     Route::get('/add-customer', 'CustomerController@addCustomerView');
     Route::post('/add-customer', 'CustomerController@addCustomer');
     Route::get('/customer-list', 'CustomerController@customerList');
+
+    Route::get('/add-item', 'ItemController@addItemView');
+    Route::post('/add-item', 'ItemController@addItem');
+    Route::get('/item-list', 'ItemController@itemList');
 
     Route::get('/add-package', 'PackageController@addPackage');
     Route::get('/package-list', 'PackageController@packageList');

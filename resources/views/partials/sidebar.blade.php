@@ -22,6 +22,16 @@
                 </a>
             </li>
             <li>
+                <a href="{{ config('app.app_url_prefix') }}/add-item">
+                    <i class="fa fa-user-plus"></i> <span>Add Item</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ config('app.app_url_prefix') }}/item-list">
+                    <i class="fa fa-users"></i> <span>Item List</span>
+                </a>
+            </li>
+            <li>
                 <a href="{{ config('app.app_url_prefix') }}/add-package">
                     <i class="fa fa-archive"></i> <span>Add Package</span>
                 </a>

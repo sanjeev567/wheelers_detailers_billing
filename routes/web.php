@@ -13,6 +13,8 @@
 Route::group(['middleware' => 'auth', 'prefix' => config('app.APP_URL_PREFIX')], function () {
     Route::get('/', 'InvoiceController@invoiceView');
     Route::get('/home', 'InvoiceController@invoiceView');
+    Route::get('/invoice-list', 'InvoiceController@invoiceList');
+    Route::get('/invoice/{id}', 'InvoiceController@viewInvoiceById');
 
     Route::get('/add-customer', 'CustomerController@addCustomerView');
     Route::post('/add-customer', 'CustomerController@addCustomer');

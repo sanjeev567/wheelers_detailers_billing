@@ -40,6 +40,7 @@ $(function () {
 
 
         datatable.row.add([
+            $('#new_item').val(),
             $('#new_item').find(":selected").html(),
             price,
             quantity,
@@ -59,34 +60,27 @@ $(function () {
     $('#generate_invoice_btn').click(function (event) {
         event.preventDefault();
 
-        var selectedData = datatable.rows().data();
+        var _token = $('[name="_token"]').val();
+        let customer = $('#customer').val();
+        let selectedData = datatable.rows().data();
         let newData = [];
         for (i = 0; i < selectedData.length; i++) {
             selectedData[i].pop(); // remove action column
             newData.push(selectedData[i]);
         }
-        console.log(newData);
-        jsonData = JSON.stringify({ data: newData });
-        console.log(jsonData);
 
         var prefix = $.trim($('#app_url_prefix').val());
         $.ajax({
-            url: prefix + "/delete-service/generate-invoice",
+            url: prefix + "/generate-invoice",
             type: "POST",
-            data: jsonData,
-            contentType: false,
-            processData: false,
-            dataType: "JSON",
-            success: function (data) {
-                data.forEach(function (e) {
-                    console.log(e);
-                })
-                console.log(data);
-                alert("sheet created successfully");
-
-                $('#btnSel').text('create');
-                $('#btnSel').attr('disabled', false);
-
+            data: { _token: _token, customer: customer, data: newData },
+            dataType: "json",
+            success: function (response) {
+                if (response.status == '1') {
+                    window.location.reload('/invoice/'+response.data);
+                } else {
+                    showFailureAlert('Unable to generate invoice. Please try again later');
+                }
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 alert('Error in creating invoice');

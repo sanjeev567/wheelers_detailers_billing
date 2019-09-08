@@ -3,7 +3,12 @@
         <ul class="sidebar-menu" data-widget="tree">
             <li>
                 <a href="{{ config('app.app_url_prefix') }}/">
-                    <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+                    <i class="fa fa-plus"></i> <span>Generate Invoice</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ config('app.app_url_prefix') }}/invoice-list">
+                    <i class="fa fa-file"></i> <span>Invoice List</span>
                 </a>
             </li>
             <li>
@@ -18,7 +23,7 @@
             </li>
             <li>
                 <a href="{{ config('app.app_url_prefix') }}/add-package">
-                    <i class="fa fa-list"></i> <span>Add Package</span>
+                    <i class="fa fa-archive"></i> <span>Add Package</span>
                 </a>
             </li>
             <li>

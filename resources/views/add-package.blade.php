@@ -11,15 +11,14 @@
                 <div class="card-heading"></div>
                 <div class="card-body">
                     <h2 class="title">Customer Registration</h2>
-                    <form method="POST" id="customer-form">
-                        {{ csrf_field() }}
+                    <form method="POST">
                         <div class="input-group">
                             <input class="input--style-2" type="text" placeholder="Name" name="name">
                         </div>
                         <div class="row row-space">
                             <div class="col-6">
                                 <div class="input-group">
-                                    <input class="input--style-2 js-datepicker" type="text" placeholder="Birthdate" name="dob">
+                                    <input class="input--style-2 js-datepicker" type="text" placeholder="Birthdate" name="birthday">
                                     <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
                                 </div>
                             </div>
@@ -50,7 +49,7 @@
                             </div>
                         </div>
                         <div class="p-t-30">
-                            <button class="btn btn--radius btn--green"  id="add-customer-btn" type="submit">Add</button>
+                            <button class="btn btn--radius btn--green" type="submit">Add</button>
                         </div>
                     </form>
                 </div>
@@ -66,7 +65,6 @@
     <script src="{{ config('app.app_public_path') }}/vendor/datepicker/moment.min.js"></script>
     <script src="{{ config('app.app_public_path') }}/vendor/datepicker/daterangepicker.js"></script>
     <script src="{{ config('app.app_public_path') }}/vendor/select2/select2.min.js"></script>
-    <script src="{{ config('app.app_public_path') }}/js/lib/jquery.validate.min.js"></script>
 
     <!-- Main JS-->
     <script src="{{ config('app.app_public_path') }}js/add-customer.js"></script>

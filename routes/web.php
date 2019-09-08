@@ -14,8 +14,12 @@ Route::group(['middleware' => 'auth', 'prefix' => config('app.APP_URL_PREFIX')],
     Route::get('/', 'InvoiceController@invoiceView');
     Route::get('/home', 'InvoiceController@invoiceView');
 
-    Route::get('/add-customer', 'CustomerController@addCustomer');
+    Route::get('/add-customer', 'CustomerController@addCustomerView');
+    Route::post('/add-customer', 'CustomerController@addCustomer');
     Route::get('/customer-list', 'CustomerController@customerList');
+
+    Route::get('/add-package', 'PackageController@addPackage');
+    Route::get('/package-list', 'PackageController@packageList');
 
     Route::post('/generate-invoice', 'InvoiceController@generateInvoice');
 });

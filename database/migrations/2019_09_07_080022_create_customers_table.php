@@ -17,6 +17,8 @@ class CreateCustomersTable extends Migration
             $table->increments('id');
             $table->string('name')->nullable();
             $table->string('email')->unique()->nullable();
+            $table->string('gender', 50)->nullable();
+            $table->date('dob')->nullable();
             $table->string('mobile', 15)->unique();
             $table->string('joined_on')->nullable();
             $table->unsignedInteger('created_by')->nullable()->default(0);

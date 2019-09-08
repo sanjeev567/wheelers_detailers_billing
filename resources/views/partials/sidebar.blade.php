@@ -17,7 +17,12 @@
                 </a>
             </li>
             <li>
-                <a href="{{ config('app.app_url_prefix') }}/vehicle-service-list">
+                <a href="{{ config('app.app_url_prefix') }}/add-package">
+                    <i class="fa fa-list"></i> <span>Add Package</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ config('app.app_url_prefix') }}/package-list">
                     <i class="fa fa-list"></i> <span>Pacakge List</span>
                 </a>
             </li>

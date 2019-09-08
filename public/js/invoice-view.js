@@ -75,9 +75,8 @@ $(function () {
             data: { _token: _token, customer: customer, data: newData },
             dataType: "json",
             success: function (response) {
-                debugger;
                 if (response.status == '1') {
-                    window.location.href = '/invoice/'+response.data;
+                    window.location.href = prefix + '/invoice/'+response.data;
                 } else {
                     showFailureAlert('Unable to generate invoice. Please try again later');
                 }

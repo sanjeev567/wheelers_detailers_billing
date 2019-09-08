@@ -127,6 +127,7 @@ return [
     'app_public_path' => env('APP_PUBLIC_PATH', ''),
 
     'app_url_prefix' => env('APP_URL_PREFIX', ''),
+    'APP_URL_PREFIX' => env('APP_URL_PREFIX', ''),
 
     /*
     |--------------------------------------------------------------------------

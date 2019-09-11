@@ -17,14 +17,14 @@
       <thead>
         <td>Name</td>
         <td>Price</td>
-        <td>Code</td>
+        <td>Size</td>
       </thead>
       <tbody>
         @foreach ($items as $item)
           <tr>
             <td>{{ $item->name }}</td>
             <td>{{ $item->price }}</td>
-            <td>{{ $item->item_code }}</td>
+            <td>{{ ($item->size == 's')?'Small':(($item->size =='m')?'Medium':(($item->size == 'l')?'Large':'-NA-')) }}</td>
           </tr>
         @endforeach
       </tbody>

@@ -41,7 +41,7 @@ class ApplicationLogMiddleware
                     $log['response'] = $response->content();
                 } else {
                     // encode data as it is not json
-                    $log['response'] = json_encode($response->content());
+                    $log['response'] = substr(json_encode($response->content()), 0, 1000);
                 }
             }
 

@@ -104,8 +104,8 @@ $(function () {
                     if (response.status == '1') {
                         showSuccessAlert('Customer Added Successfully');
                         window.setTimeout(function () {
-                            window.location.reload('/');
-                        }, 2000);
+                            window.location.href = prefix+'/?cust='+response.data.id;
+                        }, 500);
                     } else {
                         showFailureAlert('Unable to add the customer. Please try again later');
                     }

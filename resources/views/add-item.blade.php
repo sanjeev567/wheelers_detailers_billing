@@ -24,7 +24,15 @@
                             </div>
                             <div class="col-6">
                                 <div class="input-group">
-                                    <input class="input--style-2" type="text" placeholder="Item Code" name="code">
+                                    <div class="rs-select2 js-select-simple select--no-search">
+                                        <select name="size">
+                                            <option disabled="disabled" selected="selected">Size</option>
+                                            <option value="s">Small</option>
+                                            <option value="m">Medium</option>
+                                            <option value="l">Large</option>
+                                        </select>
+                                        <div class="select-dropdown"></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

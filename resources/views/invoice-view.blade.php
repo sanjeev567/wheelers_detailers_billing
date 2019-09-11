@@ -20,7 +20,7 @@
         <select class="form-control advisor-custom-select" id="customer" name="name" data-placeholder="Select Customer">
           <option value=''></option>
           @foreach ($customers as $customer)
-          <option value="{{ $customer->id }}"> {{ $customer->name }}</option>
+          <option value="{{ $customer->id }}" {{ ($selectedCustomer == $customer->id)?'selected':'' }}> {{ $customer->name }}</option>
           @endforeach
         </select>
       </div>
@@ -29,7 +29,7 @@
         <select class="form-control advisor-custom-select" id="new_item" name="name" data-placeholder="Select Item">
           <option value=''></option>
           @foreach ($items as $item)
-          <option value="{{ $item->id }}" data-price="{{ $item->price }}"> {{ $item->name }}</option>
+          <option value="{{ $item->id }}" data-price="{{ $item->price }}"> {{ $item->name }} - {{ ($item->size == 's')?'Small':(($item->size =='m')?'Medium':(($item->size == 'l')?'Large':''))}}</option>
           @endforeach
         </select>
       </div>

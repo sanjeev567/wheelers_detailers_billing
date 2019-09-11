@@ -21,7 +21,9 @@ class InvoiceController extends BaseController
                 $items = Item::all();
                 $customers = Customer::all();
 
-                return view('invoice-view', ['items' => $items, 'customers' => $customers]);
+                $selectedCustomer = $request->cust;
+
+                return view('invoice-view', ['items' => $items, 'customers' => $customers, 'selectedCustomer' => $selectedCustomer]);
             } else {
                 return view('view-not-found', ['viewName' => 'Invoice page']);
             }

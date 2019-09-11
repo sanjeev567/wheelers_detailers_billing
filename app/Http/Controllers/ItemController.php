@@ -34,7 +34,7 @@ class ItemController extends BaseController
             $item = Item::create([
                 'name' => $request->name,
                 'price' => $request->price,
-                'item_code' => $request->code
+                'size' => $request->size
             ]);
 
             if ($item) {

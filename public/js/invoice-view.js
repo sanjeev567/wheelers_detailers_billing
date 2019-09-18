@@ -2,6 +2,7 @@ $(function () {
     var datatable = $('#item-list-table').DataTable({
         select: true
     });
+
     $('.advisor-custom-select').select2({
         containerCssClass: ':all:',
         placeholder: function () {
@@ -44,7 +45,7 @@ $(function () {
             price,
             quantity,
             discount,
-            (price * quantity) - (price * quantity  * discount/100),
+            (price * quantity) - (price * quantity * discount / 100),
             '<button class="btn btn-danger delete_btn">Remove</button>'
         ]).draw(false);
     });
@@ -76,7 +77,7 @@ $(function () {
             dataType: "json",
             success: function (response) {
                 if (response.status == '1') {
-                    window.location.href = prefix + '/invoice/'+response.data;
+                    window.location.href = prefix + '/invoice/' + response.data;
                 } else {
                     showFailureAlert('Unable to generate invoice. Please try again later');
                 }

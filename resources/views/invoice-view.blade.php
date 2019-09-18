@@ -24,7 +24,7 @@
           @endforeach
         </select>
       </div>
-      <div style="width:20%;float:left;">
+      <div style="width:25%;float:left;">
       <label for="new_item" style="display:block;">Select Item</label>
         <select class="form-control advisor-custom-select" id="new_item" name="name" data-placeholder="Select Item">
           <option value=''></option>

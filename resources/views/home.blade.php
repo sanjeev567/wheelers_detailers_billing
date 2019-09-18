@@ -15,7 +15,7 @@
     <form method="post" action="#" name="invoice-form" id="invoice-form" style="margin-bottom:15px;">
       {{ csrf_field() }}
 
-      <div style="width:15%;float:left;">
+      <div style="width:25%;float:left;">
         <select class="form-control advisor-custom-select" id="new_item" name="name" data-placeholder="Select Item">
           <option value=''></option>
           @foreach ($items as $item)

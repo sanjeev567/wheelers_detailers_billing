@@ -24,9 +24,9 @@
           @endforeach
         </select>
       </div>
-      <div style="width:25%;float:left;">
+      <div style="width:20%;float:left;">
       <label for="new_item" style="display:block;">Select Item</label>
-        <select class="form-control advisor-custom-select" id="new_item" name="name" data-placeholder="Select Item">
+        <select class="form-control advisor-custom-select" id="new_item" name="name" data-placeholder="Select Item" style="width: 100% !important;">
           <option value=''></option>
           @foreach ($items as $item)
           <option value="{{ $item->id }}" data-price="{{ $item->price }}"> {{ $item->name }} - {{ ($item->size == 's')?'Small':(($item->size =='m')?'Medium':(($item->size == 'l')?'Large':''))}}</option>

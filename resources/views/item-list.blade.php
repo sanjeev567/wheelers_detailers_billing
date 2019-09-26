@@ -24,7 +24,7 @@
         @foreach ($items as $item)
           <tr>
             <td>{{ $item->name }}</td>
-            <td>{{ $item->price }}</td>
+            <td>{{ $item->price_without_tax }}</td>
             <td>{{ ($item->size == 's')?'Small':(($item->size =='m')?'Medium':(($item->size == 'l')?'Large':'-NA-')) }}</td>
             <td> <a href="{{ config('app.app_url_prefix') }}/add-item/{{ $item->id }}" class="btn btn-info">Edit</a>
             | <a class="btn btn-danger delete-item-btn" href="#" data-id="{{ $item->id }}">Delete</a></td>

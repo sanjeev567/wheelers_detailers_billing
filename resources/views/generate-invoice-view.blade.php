@@ -21,16 +21,95 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="{{ config('app.app_public_path') }}/js/qrcode.js"></script>
     <style>
-        .watermark {
-            position: absolute;
-            top: 35%;
-            width: 95%;
-            left: 2%;
-            opacity: 0.1;
-            z-index: 999;
-            transform: rotate(-35deg);
+        .invoice {
+            width: 1164px !important;
+            margin: 0 auto;
+            font-size: 14px;
+        }
+
+        .header {
+            min-height: 110px;
+            background-color: #414143;
+            color: #ccc;
+            padding-top: 30px;
+            /* background-image: linear-gradient(to right, #f12711, #f44d03, #f56800, #f67f00, #f69400, #e9881b, #da7d28, #cb7330, #9f4f34, #6c322e, #381c20, #000000); */
+        }
+
+        .header strong {
+            color: #fff;
+        }
+
+        .mid_header {
+            min-height: 137px;
+            padding-top: 30px;
+            padding-bottom: 30px;
+        }
+
+        .invoice_word {
+            letter-spacing: 20px;
+            font-size: 64px;
+        }
+
+        .customer_name {
+            text-transform: uppercase;
+            font-weight: bold;
+            font-size: 16px;
+            letter-spacing: 2px;
+        }
+
+        .color_theme {
+            color: #ca8236;
+        }
+
+        .invoice_number {
+            color: #888;
+            letter-spacing: 10px;
+            margin-top:-15px;
+            font-size: 16px;
+        }
+
+        .invoice_to {
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .base_color {
+            color: #666;
+        }
+
+        .item_list_header {
+            background-color: #414143;
+            min-height: 30px;
+            margin-left: -15px;
+            margin-right: -15px;
+            color: #fff;
+            /* background-image: linear-gradient(to right, #f12711, #f44d03, #f56800, #f67f00, #f69400, #e9881b, #da7d28, #cb7330, #9f4f34, #6c322e, #381c20, #000000); */
+        }
+
+        .item_table td {
+            color: #666;
+        }
+
+        .item_table td.dark {
+            color: #333;
+        }
+
+        .grand_total_heading {
+            font-size: 20px;
+            color:#666;
+        }
+
+        .grand_total_value {
+            font-size: 20px;
+            color:#333;
+            letter-spacing: 2px;
+        }
+
+        .invoice-col {
+            margin-left: 15px;
         }
     </style>
+    <link rel="stylesheet" media="print" href="{{ config('app.app_public_path') }}/css/invoice-print.css">
 </head>
 
 
@@ -40,59 +119,70 @@
         <!-- Main content -->
         <section class="invoice">
 
-            <!-- title row -->
-            <div class="row">
-                <h1 style="margin-left:15px;">{{ $invoice->customer_name }}: {{ $invoice->seller_name }}</h1><br>
-            </div>
-            <!-- info row -->
-            <div class="row invoice-info">
-                <div class="col-sm-4 invoice-col">
-                    From
-                    <address>
-                        <!-- <strong>Wheelers Detailers Pvt Ltd</strong>
-                        <br>A-10/64, Ground Floor, Opposite DPS
-                        <br>Ghaziabad Gate No. 5 Site-3,
-                        <br>Industrial Area Meerut Road
-                        <br>Ghaziabad-201001 -->
-
-                        <strong>{{ $invoice->seller_name }}</strong>
-                        <br>{{ $invoice->seller_address_line1 }}
-                        <br>{{ $invoice->seller_address_line2 }}
-                        <br>{{ $invoice->seller_address_line3 }}
-
-                    </address>
+                <div class="row header">
+                    <div class="col-xs-4"></div>
+                    <div class="col-xs-8">
+                        <div class="col-xs-4">
+                            <strong>Web</strong>
+                            <address>
+                            {{ $invoice->web_link }}
+                            </address>
+                        </div>
+                        <div class="col-xs-4">
+                            <strong>Phone</strong>
+                            <address>
+                                {{ $invoice->seller_phone1 }}<br>
+                                {{ $invoice->seller_phone2 }}
+                            </address>
+                        </div>
+                        <div class="col-xs-4">
+                            <strong>Address</strong>
+                            <address>
+                                {{ $invoice->seller_address_line1 }}<br>
+                                {{ $invoice->seller_address_line2 }}<br>
+                                {{ $invoice->seller_address_line3 }}
+                            </address>
+                        </div>
+                    </div>
                 </div>
-                <!-- /.col -->
-                <div class="col-sm-4 invoice-col">
-                    To
-                    <address>
-                        <strong>{{ $invoice->customer_name }}</strong>
-                        <br> Mobile: {{ $invoice->customer_mobile }}
-                        <br> Email: {{ $invoice->customer_email }}
-                    </address>
-                </div>
-                <!-- /.col -->
-                <div class="col-sm-4 invoice-col">
-                    <br>
-                    <b>GSTIN No.: </b> {{ $invoice->gs_tin }}  <!-- 07AABCW6278Q1ZG -->
-                    <br>
-                    <b>Invoice: </b>#{{ $invoice->id }}
-                    <br>
-                    <b>Date & Time: </b> {{ \Carbon\Carbon::parse($invoice->created_at)->format('d-M-Y h:i A') }}
-                    <br>
-                </div>
-                <!-- /.col -->
-            </div>
-            <!-- /.row -->
 
-            <!-- Table row -->
+
+                <div class="row mid_header">
+                    <div class="col-md-7 col-xs-7">
+                            <div class="invoice-col">
+                                <span class="invoice_to">Invoice To</span>
+                                <address class="base_color">
+                                    <div class="customer_name color_theme">{{ $invoice->customer_name }}</div>
+                                    <div><strong>M</strong> {{ $invoice->customer_mobile }}</div>
+                                    <div><strong>E</strong> {{ $invoice->customer_email }}</div>
+                                </address>
+                            </div>
+                    </div>
+                    <div class="col-md-5 col-xs-5">
+                        <div class="invoice_word color_theme">
+                            INVOICE
+                        </div>
+                        <div class="invoice_number">
+                            No. #{{ $invoice->id }}
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <!-- <div class="item_list_section">
+                    <div class="item_list_header"></div>
+                </div> -->
+
+                <!-- Table row -->
             <div class="row">
                 <div class="col-xs-12 table-responsive">
-                    <table class="table table-striped table-bordered">
-                        <thead>
+                    <table class="table table-striped table-bordered item_table">
+                        <thead class="item_list_header">
                             <tr>
                                 <th>Product/Service</th>
-                                <th>Price</th>
+                                <th>Unit Price</th>
+                                <th>Tax</th>
                                 <th>Quantity</th>
                                 <th>Discount %</th>
                                 <th>Subtotal</th>
@@ -101,11 +191,12 @@
                         <tbody>
                             @foreach ($invoiceDetails as $item)
                             <tr>
-                                <td>{{ $item->item_name }}</td>
-                                <td>{{ $item->item_cost }}</td>
+                                <td class="dark">{{ $item->item_name }}</td>
+                                <td><span class='WebRupee'>&#x20B9; </span>{{ $item->item_cost - $item->tax_value }}</td>
+                                <td>{{ $item->tax_percent }} %</td>
                                 <td>{{ $item->quantity }}</td>
-                                <td>{{ $item->discount }}</td>
-                                <td>{{ round($item->sub_total, 2) }}</td>
+                                <td>{{ $item->discount }} %</td>
+                                <td class="dark"><span class='WebRupee'>&#x20B9; </span>{{ round($item->sub_total, 2) }}</td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -117,33 +208,27 @@
 
             <div class="row">
                 <!-- accepted payments column -->
-                <div class="col-xs-6">
+                <div class="col-xs-8">
                     <div style="margin-top: 25px;" id="qrcode"></div>
                 </div>
                 <!-- /.col -->
-                <div class="col-xs-6">
-                    <p class="lead">Due Date: {{ \Carbon\Carbon::parse($invoice->due_date)->format('d-M-Y') }}</p>
-
-                    <div class="table-responsive">
-                        <table class="table">
-                            <!-- <tr>
-                                <th style="width:50%">Subtotal:</th>
-                                <td>Rs. 33000</td>
-                            </tr>
-                            <tr>
-                                <th>Discount</th>
-                                <td>Rs. 0</td>
-                            </tr> -->
-                            <tr>
-                                <th>Total:</th>
-                                <td> Rs. {{ $invoice->total }}</td>
-                            </tr>
-                        </table>
+                <div class="col-xs-4">
+                    <div class="row">
+                        <div class="col-xs-6 grand_total_heading">Grand Total:</div>
+                        <div class="col-xs-6 grand_total_value"><span class='WebRupee'>&#x20B9; </span> {{ $invoice->total }}</div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-xs-6 due_date_heading">Due Date:</div>
+                        <div class="col-xs-6 due_date_value">{{ \Carbon\Carbon::parse($invoice->due_date)->format('d-M-Y') }}</div>
                     </div>
                 </div>
                 <!-- /.col -->
             </div>
             <!-- /.row -->
+
+
+
         </section>
         <!-- /.content -->
     </div>

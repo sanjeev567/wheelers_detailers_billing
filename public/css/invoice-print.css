@@ -1,0 +1,100 @@
+.invoice {
+  width: 968px !important;
+  margin: 0 auto !important;
+  font-size: 14px !important;
+}
+
+.header {
+  min-height: 110px !important;
+  background-color: #414143 !important;
+  color: #ccc !important;
+  padding-top: 30px !important;
+  /* background-image: linear-gradient(to right, #f12711, #f44d03, #f56800, #f67f00, #f69400, #e9881b, #da7d28, #cb7330, #9f4f34, #6c322e, #381c20, #000000); */
+}
+
+.header strong {
+  color: #fff !important;
+}
+
+.mid_header {
+  min-height: 137px !important;
+  padding-top: 30px !important;
+  padding-bottom: 30px !important;
+}
+
+.invoice_word {
+  letter-spacing: 20px !important;
+  font-size: 64px !important;
+}
+
+.customer_name {
+  text-transform: uppercase !important;
+  font-weight: bold !important;
+  font-size: 16px !important;
+  letter-spacing: 2px !important;
+}
+
+.color_theme {
+  color: #ca8236 !important;
+}
+
+.invoice_number {
+  color: #888 !important;
+  letter-spacing: 10px !important;
+  margin-top: -15px !important;
+  font-size: 16px !important;
+}
+
+.invoice_to {
+  font-size: 12px !important;
+  font-weight: bold !important;
+}
+
+.base_color {
+  color: #666 !important;
+}
+
+.item_list_header {
+  background-color: #414143 !important;
+  min-height: 30px !important;
+  margin-left: -15px !important;
+  margin-right: -15px !important;
+  color: #fff !important;
+  /* background-image: linear-gradient(to right, #f12711, #f44d03, #f56800, #f67f00, #f69400, #e9881b, #da7d28, #cb7330, #9f4f34, #6c322e, #381c20, #000000) !important; */
+}
+
+.item_table td {
+  color: #666 !important;
+}
+
+.item_table td.dark {
+  color: #333 !important;
+}
+
+.grand_total_heading {
+  font-size: 20px !important;
+  color: #666 !important;
+}
+
+.grand_total_value {
+  font-size: 20px !important;
+  color: #333 !important;
+  letter-spacing: 2px !important;
+}
+
+*, :after, :before {
+    color: inherit !important;
+    text-shadow: none!important;
+    background: 0 0!important;
+    -webkit-box-shadow: none!important;
+    box-shadow: none!important;
+}
+
+.table td, .table th {
+    background-color: inherit !important;
+}
+
+.invoice-col {
+    margin-left: 15px;
+    width:100% !important;
+}

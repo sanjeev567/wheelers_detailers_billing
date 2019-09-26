@@ -28,7 +28,7 @@ class ModifyInvoicesTableV1 extends Migration
 
             $table->string('gs_tin');
 
-            $table->decimal('total_without_tax');
+            $table->decimal('total_without_tax')->default(0);
             $table->decimal('total_tax')->default(0);
             $table->decimal('total_discount')->default(0);
 

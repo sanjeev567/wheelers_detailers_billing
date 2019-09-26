@@ -9,7 +9,7 @@
       Item List
     </h1>
   </section>
-
+  {{ csrf_field() }}
 
   <!-- Main content -->
   <section class="content">
@@ -18,6 +18,7 @@
         <td>Name</td>
         <td>Price</td>
         <td>Size</td>
+        <td>Actions</td>
       </thead>
       <tbody>
         @foreach ($items as $item)
@@ -25,6 +26,8 @@
             <td>{{ $item->name }}</td>
             <td>{{ $item->price }}</td>
             <td>{{ ($item->size == 's')?'Small':(($item->size =='m')?'Medium':(($item->size == 'l')?'Large':'-NA-')) }}</td>
+            <td> <a href="{{ config('app.app_url_prefix') }}/add-item/{{ $item->id }}" class="btn btn-info">Edit</a>
+            | <a class="btn btn-danger delete-item-btn" href="#" data-id="{{ $item->id }}">Delete</a></td>
           </tr>
         @endforeach
       </tbody>

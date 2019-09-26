@@ -20,7 +20,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/add-customer', 'CustomerController@addCustomer');
     Route::get('/customer-list', 'CustomerController@customerList');
 
-    Route::get('/add-item', 'ItemController@addItemView');
+    Route::get('/add-item/{id?}', 'ItemController@addItemView');
+    Route::post('/delete-item', 'ItemController@deleteItem');
     Route::post('/add-item', 'ItemController@addItem');
     Route::get('/item-list', 'ItemController@itemList');
 

@@ -74,7 +74,7 @@
                 <!-- /.col -->
                 <div class="col-sm-4 invoice-col">
                     <br>
-                    <b>GSTIN No.: </b> {{ $invoice->gs_tin }}
+                    <b>GSTIN No.: </b> {{ $invoice->gs_tin }}  <!-- 07AABCW6278Q1ZG -->
                     <br>
                     <b>Invoice: </b>#{{ $invoice->id }}
                     <br>

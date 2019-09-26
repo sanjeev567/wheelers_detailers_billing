@@ -10,26 +10,36 @@
             <div class="card card-2">
                 <div class="card-heading"></div>
                 <div class="card-body">
-                    <h2 class="title">Add Item</h2>
+                    @if (!empty($item))
+                        <h2 class="title">Edit Item</h2>
+                    @else
+                        <h2 class="title">Add Item</h2>
+                    @endif
                     <form method="POST" id="item-form">
+                        <input type="hidden" name="id" value="{{ !empty($item)?$item->id:'' }}">
                         {{ csrf_field() }}
                         <div class="input-group">
-                            <input class="input--style-2" type="text" placeholder="Name" name="name">
+                            <input class="input--style-2" type="text" placeholder="Name" name="name" value="{{ !empty($item)?$item->name:'' }}">
                         </div>
                         <div class="row row-space">
-                            <div class="col-6">
+                            <div class="col-4">
                                 <div class="input-group">
-                                    <input class="input--style-2" type="text" placeholder="Price" name="price">
+                                    <input class="input--style-2" type="text" placeholder="Price" name="price" value="{{ !empty($item)?$item->price_without_tax:'' }}">
                                 </div>
                             </div>
-                            <div class="col-6">
+                            <div class="col-4">
                                 <div class="input-group">
-                                    <div class="rs-select2 js-select-simple select--no-search">
-                                        <select name="size">
-                                            <option disabled="disabled" selected="selected">Size</option>
-                                            <option value="s">Small</option>
-                                            <option value="m">Medium</option>
-                                            <option value="l">Large</option>
+                                    <input class="input--style-2" type="number" placeholder="Tax" name="tax" value="{{ !empty($item)?$item->tax_percent:'' }}">
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="input-group">
+                                    <div class="rs-select2 js-select-simple select--no-search padd-4">
+                                        <select name="size" class="padd-4">
+                                            <option disabled="disabled" {{ (empty($item) || $item->size == '' || $item->size == null)? 'selected="selected"' :'' }}>Size</option>
+                                            <option value="s" {{ (!empty($item) && $item->size == 's')? 'selected="selected"' :'' }}>Small</option>
+                                            <option value="m" {{ (!empty($item) && $item->size == 'm')? 'selected="selected"' :'' }}>Medium</option>
+                                            <option value="l" {{ (!empty($item) && $item->size == 'l')? 'selected="selected"' :'' }}>Large</option>
                                         </select>
                                         <div class="select-dropdown"></div>
                                     </div>
@@ -56,7 +66,7 @@
     <script src="{{ config('app.app_public_path') }}/js/lib/jquery.validate.min.js"></script>
 
     <!-- Main JS-->
-    <script src="{{ config('app.app_public_path') }}js/add-item.js"></script>
+    <script src="{{ config('app.app_public_path') }}/js/add-item.js"></script>
 @endsection
 
 @section ('styles')

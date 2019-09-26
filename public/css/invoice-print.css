@@ -1,5 +1,5 @@
 .invoice {
-  width: 968px !important;
+  width: 760px !important;
   margin: 0 auto !important;
   font-size: 14px !important;
 }
@@ -23,8 +23,8 @@
 }
 
 .invoice_word {
-  letter-spacing: 20px !important;
-  font-size: 64px !important;
+  letter-spacing: 16px !important;
+  font-size: 42px !important;
 }
 
 .customer_name {
@@ -64,21 +64,21 @@
 }
 
 .item_table td {
-  color: #666 !important;
+  color: #000 !important;
 }
 
 .item_table td.dark {
-  color: #333 !important;
+  color: #000 !important;
 }
 
 .grand_total_heading {
   font-size: 20px !important;
-  color: #666 !important;
+  color: #000 !important;
 }
 
 .grand_total_value {
   font-size: 20px !important;
-  color: #333 !important;
+  color: #000 !important;
   letter-spacing: 2px !important;
 }
 

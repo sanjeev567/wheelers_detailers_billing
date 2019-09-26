@@ -22,7 +22,7 @@
     <script src="{{ config('app.app_public_path') }}/js/qrcode.js"></script>
     <style>
         .invoice {
-            width: 1164px !important;
+            width: 793px !important;
             margin: 0 auto;
             font-size: 14px;
         }
@@ -46,8 +46,8 @@
         }
 
         .invoice_word {
-            letter-spacing: 20px;
-            font-size: 64px;
+            letter-spacing: 16px;
+            font-size: 48px;
         }
 
         .customer_name {

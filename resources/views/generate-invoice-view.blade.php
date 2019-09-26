@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Wheelers Detailers Pvt Ltd | Invoice</title>
+    <title>{{ $invoice->seller_name }} | Invoice</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.7 -->
@@ -42,18 +42,24 @@
 
             <!-- title row -->
             <div class="row">
-                <h1 style="margin-left:15px;">{{ $invoice->customer_name }}: Wheelers Detailers Pvt Ltd Invoice</h1><br>
+                <h1 style="margin-left:15px;">{{ $invoice->customer_name }}: {{ $invoice->seller_name }}</h1><br>
             </div>
             <!-- info row -->
             <div class="row invoice-info">
                 <div class="col-sm-4 invoice-col">
                     From
                     <address>
-                        <strong>Wheelers Detailers Pvt Ltd</strong>
+                        <!-- <strong>Wheelers Detailers Pvt Ltd</strong>
                         <br>A-10/64, Ground Floor, Opposite DPS
                         <br>Ghaziabad Gate No. 5 Site-3,
                         <br>Industrial Area Meerut Road
-                        <br>Ghaziabad-201001
+                        <br>Ghaziabad-201001 -->
+
+                        <strong>{{ $invoice->seller_name }}</strong>
+                        <br>{{ $invoice->seller_address_line1 }}
+                        <br>{{ $invoice->seller_address_line2 }}
+                        <br>{{ $invoice->seller_address_line3 }}
+
                     </address>
                 </div>
                 <!-- /.col -->
@@ -68,7 +74,7 @@
                 <!-- /.col -->
                 <div class="col-sm-4 invoice-col">
                     <br>
-                    <b>GSTIN No.: </b> 07AABCW6278Q1ZG
+                    <b>GSTIN No.: </b> {{ $invoice->gs_tin }}
                     <br>
                     <b>Invoice: </b>#{{ $invoice->id }}
                     <br>
@@ -95,7 +101,7 @@
                         <tbody>
                             @foreach ($invoiceDetails as $item)
                             <tr>
-                                <td>{{ $item->item }}</td>
+                                <td>{{ $item->item_name }}</td>
                                 <td>{{ $item->item_cost }}</td>
                                 <td>{{ $item->quantity }}</td>
                                 <td>{{ $item->discount }}</td>
@@ -116,7 +122,7 @@
                 </div>
                 <!-- /.col -->
                 <div class="col-xs-6">
-                    <p class="lead">Due Date: {{ \Carbon\Carbon::parse($invoice->created_at)->format('d-M-Y') }}</p>
+                    <p class="lead">Due Date: {{ \Carbon\Carbon::parse($invoice->due_date)->format('d-M-Y') }}</p>
 
                     <div class="table-responsive">
                         <table class="table">
@@ -145,7 +151,7 @@
 </body>
 <script>
     var qrcode = new QRCode("qrcode", {
-        text: "{{ $invoice->customer_name }}: Wheelers Detailers Pvt Ltd Invoice | Total Amount Due: Rs. {{ $invoice->total }}",
+        text: "{{ $invoice->customer_name }}: {{ $invoice->seller_name }} | Total Amount Due: Rs. {{ $invoice->total }}",
         width: 128,
         height: 128,
         colorDark: "#000000",

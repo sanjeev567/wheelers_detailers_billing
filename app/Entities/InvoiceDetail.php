@@ -26,6 +26,10 @@ class InvoiceDetail extends Model
         'item_cost',
         'discount',
         'created_by',
+        'item_name',
+        'item_description',
+        'tax_percent',
+        'tax_value',
     ];
 
     /**

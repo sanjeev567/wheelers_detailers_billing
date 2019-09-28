@@ -13,27 +13,15 @@
                     <h2 class="title">Customer Registration</h2>
                     <form method="POST" id="customer-form">
                         {{ csrf_field() }}
-                        <div class="input-group">
-                            <input class="input--style-2" type="text" placeholder="Name" name="name">
-                        </div>
                         <div class="row row-space">
                             <div class="col-6">
                                 <div class="input-group">
-                                    <input class="input--style-2 js-datepicker" type="text" placeholder="Birthdate" name="dob">
-                                    <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
+                                <input class="input--style-2" type="text" placeholder="Name" name="name">
                                 </div>
                             </div>
-                            <div class="col-4">
+                            <div class="col-6">
                                 <div class="input-group">
-                                    <div class="rs-select2 js-select-simple select--no-search">
-                                        <select name="gender">
-                                            <option disabled="disabled" selected="selected">Gender</option>
-                                            <option>Male</option>
-                                            <option>Female</option>
-                                            <option>Other</option>
-                                        </select>
-                                        <div class="select-dropdown"></div>
-                                    </div>
+                                    <input class="input--style-2" type="text" placeholder="GST Number" name="gst_number">
                                 </div>
                             </div>
                         </div>
@@ -48,6 +36,9 @@
                                     <input class="input--style-2" type="text" placeholder="Email" name="email">
                                 </div>
                             </div>
+                        </div>
+                        <div class="input-group">
+                            <input class="input--style-2" type="text" placeholder="Address" name="address">
                         </div>
                         <div class="p-t-30">
                             <button class="btn btn--radius btn--green"  id="add-customer-btn" type="submit">Add</button>

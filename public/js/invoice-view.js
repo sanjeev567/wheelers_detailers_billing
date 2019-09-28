@@ -65,8 +65,9 @@ $(function () {
         let selectedData = datatable.rows().data();
         let newData = [];
         for (i = 0; i < selectedData.length; i++) {
-            selectedData[i].pop(); // remove action column
-            newData.push(selectedData[i]);
+            let temp = selectedData[i];
+            temp.pop(); // remove action column
+            newData.push(temp);
         }
 
         var prefix = $.trim($('#app_url_prefix').val());

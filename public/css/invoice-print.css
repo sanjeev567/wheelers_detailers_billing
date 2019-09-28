@@ -1,5 +1,8 @@
+body {
+  font-family: sans-serif;
+}
 .invoice {
-  width: 760px !important;
+  width: 780px !important;
   margin: 0 auto !important;
   font-size: 14px !important;
 }
@@ -9,7 +12,7 @@
   background-color: #414143 !important;
   color: #ccc !important;
   padding-top: 30px !important;
-  /* background-image: linear-gradient(to right, #f12711, #f44d03, #f56800, #f67f00, #f69400, #e9881b, #da7d28, #cb7330, #9f4f34, #6c322e, #381c20, #000000); */
+  /* background-image: linear-gradient(to right, #f12711, #f44d03, #f56800, #f67f00, #f69400, #e9881b, #da7d28, #cb7330, #9f4f34, #6c322e, #381c20, #000000) !important; */
 }
 
 .header strong {
@@ -65,6 +68,7 @@
 
 .item_table td {
   color: #000 !important;
+  font-size: 13px !important;
 }
 
 .item_table td.dark {
@@ -72,29 +76,65 @@
 }
 
 .grand_total_heading {
-  font-size: 20px !important;
-  color: #000 !important;
+  font-size: 15px !important;
+  color: #666 !important;
 }
 
 .grand_total_value {
-  font-size: 20px !important;
+  font-size: 14px !important;
   color: #000 !important;
   letter-spacing: 2px !important;
-}
-
-*, :after, :before {
-    color: inherit !important;
-    text-shadow: none!important;
-    background: 0 0!important;
-    -webkit-box-shadow: none!important;
-    box-shadow: none!important;
-}
-
-.table td, .table th {
-    background-color: inherit !important;
+  font-weight: bold !important;
+  font-family: sans-serif !important;
 }
 
 .invoice-col {
-    margin-left: 15px;
-    width:100% !important;
+  margin-left: 15px !important;
+  font-size: 12px !important;
+  width: 100% !important;
+}
+
+.totals-col hr {
+  margin-top: 4px !important;
+  margin-bottom: 4px !important;
+}
+
+.text_amount_row {
+  margin-top: 10px !important;
+}
+
+.text_amount_row span,
+.text_amount_row div {
+  letter-spacing: 0px !important;
+  font-size: 12px !important;
+  font-weight: normal !important;
+}
+
+.seller_info div {
+  font-size: 12px !important;
+}
+
+.seller_info span {
+  font-family: sans-serif !important;
+  letter-spacing: 1px !important;
+  font-size: 12px !important;
+}
+
+.t_c div {
+  font-size: 12px !important;
+}
+
+*,
+:after,
+:before {
+  color: inherit !important;
+  text-shadow: none !important;
+  background: 0 0 !important;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+}
+
+.table td,
+.table th {
+  background-color: inherit !important;
 }

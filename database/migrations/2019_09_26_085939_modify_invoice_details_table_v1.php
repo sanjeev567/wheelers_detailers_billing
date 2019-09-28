@@ -16,6 +16,7 @@ class ModifyInvoiceDetailsTableV1 extends Migration
         Schema::table('invoice_details', function (Blueprint $table) {
             $table->string('item_name');
             $table->string('item_description')->nullable();
+            $table->string('item_cost_without_tax')->nullable();
 
             $table->decimal('tax_percent')->default(0);
             $table->decimal('tax_value')->default(0);
@@ -32,6 +33,7 @@ class ModifyInvoiceDetailsTableV1 extends Migration
         Schema::table('invoice_details', function (Blueprint $table) {
             $table->dropColumn('item_name');
             $table->dropColumn('item_description');
+            $table->dropColumn('item_cost_without_tax');
 
             $table->dropColumn('tax_percent');
             $table->dropColumn('tax_value');

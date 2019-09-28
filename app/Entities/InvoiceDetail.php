@@ -30,6 +30,7 @@ class InvoiceDetail extends Model
         'item_description',
         'tax_percent',
         'tax_value',
+        'item_cost_without_tax',
     ];
 
     /**

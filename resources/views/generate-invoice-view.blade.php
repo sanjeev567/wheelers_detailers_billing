@@ -148,6 +148,12 @@
         .t_c div {
             font-size: 12px;
         }
+
+        .company_info {
+            text-align: center;
+            font-size: 12px;
+
+        }
     </style>
     <link rel="stylesheet" media="print" href="{{ config('app.app_public_path') }}/css/invoice-print.css">
 </head>
@@ -254,24 +260,24 @@
                     <div style="margin-top: 25px;" id="qrcode"></div>
                 </div>
                 <!-- /.col -->
-                <div class="col-xs-4 totals-col">
+                <div class="col-xs-5 totals-col">
                     <div class="row">
-                        <div class="col-xs-6 grand_total_heading">Sub Total:</div>
+                        <div class="col-xs-5 grand_total_heading">Sub Total:</div>
                         <div class="col-xs-6 grand_total_value"><span class='WebRupee'>&#x20B9; </span> {{ $invoice->total_without_tax }}</div>
                     </div>
                     <hr>
                     <div class="row">
-                        <div class="col-xs-6 grand_total_heading">Total Tax:</div>
+                        <div class="col-xs-5 grand_total_heading">Tax:</div>
                         <div class="col-xs-6 grand_total_value"><span class='WebRupee'>&#x20B9; </span> {{ $invoice->total_tax }}</div>
                     </div>
                     <hr>
                     <div class="row">
-                        <div class="col-xs-6 grand_total_heading">Total Discount:</div>
+                        <div class="col-xs-5 grand_total_heading">Discount:</div>
                         <div class="col-xs-6 grand_total_value"><span class='WebRupee'>&#x20B9; </span> {{ $invoice->total_discount }}</div>
                     </div>
                     <hr>
                     <div class="row">
-                        <div class="col-xs-6 grand_total_heading">Grand Total:</div>
+                        <div class="col-xs-5 grand_total_heading">Grand Total:</div>
                         <div class="col-xs-6 grand_total_value"><span class='WebRupee'>&#x20B9; </span> {{ $invoice->total }}</div>
                     </div>
                     <!-- <hr>
@@ -308,7 +314,13 @@
                     <hr style="margin-top:10px;margin-bottom:10px;">
                     <div>Seller's GSTIN: <span>{{ $invoice->seller_gstin }} </span> </div>
                     <div>Seller's PAN: <span>{{ $invoice->seller_pan }} </span> </div>
+                    <div>Seller's CIN: <span>{{ $invoice->seller_cin }} </span> </div>
                 </div>
+            </div>
+
+            <hr style="margin-bottom:10px;margin-top:30px;">
+            <div class="company_info">
+                Registered Address: H. No.  8897 2nd Floor, Karol Bagh, Gali No. 14B, Sidhipura, Delhi - 110005
             </div>
 
         </section>

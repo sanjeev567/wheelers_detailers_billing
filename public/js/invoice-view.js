@@ -45,7 +45,7 @@ $(function () {
             price,
             quantity,
             discount,
-            (price * quantity) - (price * quantity * discount / 100),
+            Math.round(((price * quantity) - (price * quantity * discount / 100)) * 100)/100,
             '<button class="btn btn-danger delete_btn">Remove</button>'
         ]).draw(false);
     });

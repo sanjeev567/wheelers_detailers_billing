@@ -35,6 +35,7 @@ class ModifyInvoicesTableV1 extends Migration
             $table->string('seller_branch')->nullable();
             $table->string('seller_ifsc')->nullable();
             $table->string('seller_account_number')->nullable();
+            $table->string('seller_cin')->nullable();
 
             $table->decimal('total_without_tax')->default(0);
             $table->decimal('total_tax')->default(0);
@@ -73,6 +74,7 @@ class ModifyInvoicesTableV1 extends Migration
             $table->dropColumn('seller_branch');
             $table->dropColumn('seller_ifsc');
             $table->dropColumn('seller_account_number');
+            $table->dropColumn('seller_cin');
 
             $table->dropColumn('total_tax');
             $table->dropColumn('total_discount');

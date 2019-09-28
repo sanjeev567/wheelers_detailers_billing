@@ -44,6 +44,7 @@ class Invoice extends Model
         'seller_branch',
         'seller_ifsc',
         'seller_account_number',
+        'seller_cin',
     ];
 
     /**

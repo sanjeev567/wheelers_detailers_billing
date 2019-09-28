@@ -28,6 +28,7 @@
             width: 793px !important;
             margin: 0 auto;
             font-size: 14px;
+            height: 100vh;
         }
 
         .header {
@@ -154,6 +155,13 @@
             font-size: 12px;
 
         }
+
+        .bottom {
+            position: fixed;
+            bottom: 0;
+            width: 751px;
+            padding: 10px;
+        }
     </style>
     <link rel="stylesheet" media="print" href="{{ config('app.app_public_path') }}/css/invoice-print.css">
 </head>
@@ -199,9 +207,9 @@
                                 <span class="invoice_to">Invoice To</span>
                                 <address class="base_color">
                                     <div class="customer_name color_theme">{{ $invoice->customer_name }}</div>
-                                    <div><strong>MOBILE </strong> {{ $invoice->customer_mobile }}</div>
-                                    <div><strong>EMAIL </strong> {{ $invoice->customer_email }}</div>
-                                    <div><strong>ADDRESS </strong> {{ $invoice->customer_address }}</div>
+                                    <div><strong>Mobile </strong> {{ $invoice->customer_mobile }}</div>
+                                    <div><strong>Email </strong> {{ $invoice->customer_email }}</div>
+                                    <div><strong>Address </strong> {{ $invoice->customer_address }}</div>
                                     <div><strong>GST </strong> {{ $invoice->buyer_gstin }}</div>
                                 </address>
                             </div>
@@ -254,73 +262,75 @@
             </div>
             <!-- /.row -->
 
-            <div class="row">
-                <!-- accepted payments column -->
-                <div class="col-xs-7">
-                    <div style="margin-top: 25px;" id="qrcode"></div>
-                </div>
-                <!-- /.col -->
-                <div class="col-xs-5 totals-col">
-                    <div class="row">
-                        <div class="col-xs-5 grand_total_heading">Sub Total:</div>
-                        <div class="col-xs-6 grand_total_value"><span class='WebRupee'>&#x20B9; </span> {{ $invoice->total_without_tax }}</div>
+            <div class="bottom">
+                <div class="row ">
+                    <!-- accepted payments column -->
+                    <div class="col-xs-5">
+                        <!-- <hr style="margin-top:10px;margin-bottom:10px;"> -->
+                            <div>Seller's GSTIN: <span>{{ $invoice->seller_gstin }} </span> </div>
+                            <div>Seller's PAN: <span>{{ $invoice->seller_pan }} </span> </div>
+                            <div>Seller's CIN: <span>{{ $invoice->seller_cin }} </span> </div>
+                        </div>
+                    <div class="col-xs-2">
+                        <div style="margin-top: 0px;" id="qrcode"></div>
                     </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-xs-5 grand_total_heading">Tax:</div>
-                        <div class="col-xs-6 grand_total_value"><span class='WebRupee'>&#x20B9; </span> {{ $invoice->total_tax }}</div>
+                    <!-- /.col -->
+                    <div class="col-xs-5 totals-col">
+                        <div class="row">
+                            <div class="col-xs-5 grand_total_heading">Sub Total:</div>
+                            <div class="col-xs-6 grand_total_value"><span class='WebRupee'>&#x20B9; </span> {{ $invoice->total_without_tax }}</div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-xs-5 grand_total_heading">Tax:</div>
+                            <div class="col-xs-6 grand_total_value"><span class='WebRupee'>&#x20B9; </span> {{ $invoice->total_tax }}</div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-xs-5 grand_total_heading">Discount:</div>
+                            <div class="col-xs-6 grand_total_value"><span class='WebRupee'>&#x20B9; </span> {{ $invoice->total_discount }}</div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-xs-5 grand_total_heading">Grand Total:</div>
+                            <div class="col-xs-6 grand_total_value"><span class='WebRupee'>&#x20B9; </span> {{ $invoice->total }}</div>
+                        </div>
+                        <!-- <hr>
+                        <div class="row">
+                            <div class="col-xs-6 due_date_heading">Due Date:</div>
+                            <div class="col-xs-6 due_date_value">{{ \Carbon\Carbon::parse($invoice->due_date)->format('d-M-Y') }}</div>
+                        </div> -->
                     </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-xs-5 grand_total_heading">Discount:</div>
-                        <div class="col-xs-6 grand_total_value"><span class='WebRupee'>&#x20B9; </span> {{ $invoice->total_discount }}</div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+                <hr style="margin-bottom:10px;margin-top:10px;">
+                <div class="row text_amount_row">
+                    <div class="col-xs-2 grand_total_heading">Total In Word:</div>
+                    <div class="col-xs-10 grand_total_value"><span id="amount_in_words"></span></div>
+                </div>
+                <hr style="margin-top:10px;">
+
+                <div class="row">
+                    <div class="col-xs-6 border_black t_c">
+                        <h5>Terms & Conditions:-</h5>
+                        @foreach ( config('app_config.SELLER_TERMS_AND_CONDITIONS') as $term )
+                            <div>- {{ $term }}</div>
+                        @endforeach
                     </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-xs-5 grand_total_heading">Grand Total:</div>
-                        <div class="col-xs-6 grand_total_value"><span class='WebRupee'>&#x20B9; </span> {{ $invoice->total }}</div>
+                    <div class="col-xs-6 border_black seller_info">
+                        <h5>Bank Details:-</h5>
+                        <div>Bank: <span>{{ $invoice->seller_bank }} </span> </div>
+                        <div>Branch: <span>{{ $invoice->seller_branch }} </span> </div>
+                        <div>IFS Code: <span>{{ $invoice->seller_ifsc }} </span> </div>
+                        <div>Account: <span>{{ $invoice->seller_account_number }} </span> </div>
                     </div>
-                    <!-- <hr>
-                    <div class="row">
-                        <div class="col-xs-6 due_date_heading">Due Date:</div>
-                        <div class="col-xs-6 due_date_value">{{ \Carbon\Carbon::parse($invoice->due_date)->format('d-M-Y') }}</div>
-                    </div> -->
                 </div>
-                <!-- /.col -->
-            </div>
-            <!-- /.row -->
 
-            <div class="row text_amount_row">
-                <div class="col-xs-2 grand_total_heading">Total In Word:</div>
-                <div class="col-xs-10 grand_total_value"><span id="amount_in_words"></span></div>
-            </div>
-            <hr>
-
-            <div class="row">
-                <div class="col-xs-6 border_black t_c">
-                    <h5>Terms & Conditions:-</h5>
-                    @foreach ( config('app_config.SELLER_TERMS_AND_CONDITIONS') as $term )
-                        <div>- {{ $term }}</div>
-                    @endforeach
+                <hr style="margin-bottom:10px;margin-top:30px;">
+                <div class="company_info">
+                    Registered Address: H. No.  8897 2nd Floor, Karol Bagh, Gali No. 14B, Sidhipura, Delhi - 110005
                 </div>
-                <div class="col-xs-6 border_black seller_info">
-                    <h5>Bank Details:-</h5>
-                    <div>Bank: <span>{{ $invoice->seller_bank }} </span> </div>
-                    <div>Branch: <span>{{ $invoice->seller_branch }} </span> </div>
-                    <div>IFS Code: <span>{{ $invoice->seller_ifsc }} </span> </div>
-                    <div>Account: <span>{{ $invoice->seller_account_number }} </span> </div>
-
-
-                    <hr style="margin-top:10px;margin-bottom:10px;">
-                    <div>Seller's GSTIN: <span>{{ $invoice->seller_gstin }} </span> </div>
-                    <div>Seller's PAN: <span>{{ $invoice->seller_pan }} </span> </div>
-                    <div>Seller's CIN: <span>{{ $invoice->seller_cin }} </span> </div>
-                </div>
-            </div>
-
-            <hr style="margin-bottom:10px;margin-top:30px;">
-            <div class="company_info">
-                Registered Address: H. No.  8897 2nd Floor, Karol Bagh, Gali No. 14B, Sidhipura, Delhi - 110005
             </div>
 
         </section>

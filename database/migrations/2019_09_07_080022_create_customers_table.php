@@ -16,10 +16,10 @@ class CreateCustomersTable extends Migration
         Schema::create('customers', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->nullable();
+            $table->string('gst_number')->nullable();
             $table->string('email')->unique()->nullable();
-            $table->string('gender', 50)->nullable();
-            $table->date('dob')->nullable();
             $table->string('mobile', 15)->unique();
+            $table->string('address')->nullable();
             $table->string('joined_on')->nullable();
             $table->unsignedInteger('created_by')->nullable();
             $table->softDeletes();

@@ -26,6 +26,7 @@ class Invoice extends Model
         'customer_name',
         'customer_mobile',
         'customer_email',
+        'customer_address',
         'seller_name',
         'web_link',
         'seller_phone1',
@@ -33,10 +34,17 @@ class Invoice extends Model
         'seller_address_line1',
         'seller_address_line2',
         'seller_address_line3',
-        'gs_tin',
         'total_without_tax',
         'total_tax',
         'total_discount',
+        'seller_gstin',
+        'seller_pan',
+        'buyer_gstin',
+        'seller_bank',
+        'seller_branch',
+        'seller_ifsc',
+        'seller_account_number',
+        'seller_cin',
     ];
 
     /**

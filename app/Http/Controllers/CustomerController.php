@@ -33,8 +33,8 @@ class CustomerController extends BaseController
             $customer = Customer::create([
                 'name' => $request->name,
                 'email' => $request->email,
-                'gender' => $request->gender,
-                'dob' => $request->dob,
+                'address' => $request->address,
+                'gst_number' => $request->gst_number,
                 'mobile' => $request->mobile,
                 'joined_on' => date('Y-m-d'),
                 'created_by' => \Auth::id(),

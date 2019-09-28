@@ -18,7 +18,7 @@
         <td>Name</td>
         <td>Mobile</td>
         <td>Email</td>
-        <td>Gender</td>
+        <td>GST Number</td>
         <td>Joined On</td>
       </thead>
       <tbody>
@@ -27,7 +27,7 @@
             <td>{{ $customer->name }}</td>
             <td>{{ $customer->mobile }}</td>
             <td>{{ $customer->email }}</td>
-            <td>{{ $customer->gender }}</td>
+            <td>{{ $customer->gst_number }}</td>
             <td>{{ \Carbon\Carbon::parse($customer->joined_on)->format('d-M-Y') }}</td>
           </tr>
         @endforeach

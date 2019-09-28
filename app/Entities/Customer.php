@@ -20,12 +20,12 @@ class Customer extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'gst_number',
+        'address',
         'email',
-        'dob',
         'mobile',
         'joined_on',
         'created_by',
-        'gender',
     ];
 
 }

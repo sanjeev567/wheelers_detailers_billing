@@ -5,6 +5,7 @@ body {
   width: 700px !important;
   margin: 0 auto !important;
   font-size: 14px !important;
+  padding: 10px !important;
 }
 
 .header {
@@ -123,6 +124,24 @@ body {
 .t_c div {
   font-size: 12px !important;
 }
+
+.bottom {
+  position: fixed !important;
+  bottom: 0 !important;
+  width: 680px !important;
+  padding: 10px !important;
+}
+
+
+
+
+
+
+
+
+
+
+
 
 *,
 :after,

@@ -158,7 +158,7 @@
 
         .bottom {
             position: fixed;
-            bottom: 0;
+            bottom: 20px;
             width: 751px;
             padding: 10px;
         }

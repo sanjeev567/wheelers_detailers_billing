@@ -127,7 +127,7 @@ body {
 
 .bottom {
   position: fixed !important;
-  bottom: 0 !important;
+  bottom: 20px !important;
   width: 680px !important;
   padding: 10px !important;
 }

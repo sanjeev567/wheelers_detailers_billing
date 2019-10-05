@@ -46,7 +46,6 @@
         .mid_header {
             min-height: 137px;
             padding-top: 30px;
-            padding-bottom: 30px;
         }
 
         .invoice_word {

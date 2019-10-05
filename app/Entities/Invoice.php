@@ -45,6 +45,8 @@ class Invoice extends Model
         'seller_ifsc',
         'seller_account_number',
         'seller_cin',
+        'invoice_number',
+        'customer_state'
     ];
 
     /**

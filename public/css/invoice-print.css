@@ -27,7 +27,7 @@ body {
 }
 
 .invoice_word {
-  letter-spacing: 16px !important;
+  letter-spacing: 6px !important;
   font-size: 42px !important;
 }
 
@@ -44,7 +44,7 @@ body {
 
 .invoice_number {
   color: #888 !important;
-  letter-spacing: 10px !important;
+  letter-spacing: 2px !important;
   margin-top: -15px !important;
   font-size: 16px !important;
 }
@@ -64,6 +64,7 @@ body {
   margin-left: -15px !important;
   margin-right: -15px !important;
   color: #fff !important;
+  font-size: 16px !important;
   /* background-image: linear-gradient(to right, #f12711, #f44d03, #f56800, #f67f00, #f69400, #e9881b, #da7d28, #cb7330, #9f4f34, #6c322e, #381c20, #000000) !important; */
 }
 
@@ -130,6 +131,10 @@ body {
   bottom: 40px !important;
   width: 680px !important;
   padding: 10px !important;
+}
+
+.signature {
+  margin-top:100px !important;
 }
 
 

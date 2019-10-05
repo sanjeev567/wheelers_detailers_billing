@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Entities\Customer;
+use App\Entities\State;
 use App\Http\Controllers\Controller as BaseController;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,8 @@ class CustomerController extends BaseController
     {
         try {
             if (view()->exists('add-customer')) {
-                return view('add-customer');
+                $states = State::all();
+                return view('add-customer', ['states' => $states]);
             } else {
                 return view('view-not-found', ['viewName' => 'Add Customer page']);
             }
@@ -38,6 +40,7 @@ class CustomerController extends BaseController
                 'mobile' => $request->mobile,
                 'joined_on' => date('Y-m-d'),
                 'created_by' => \Auth::id(),
+                'state' => $request->state
             ]);
 
             if ($customer) {

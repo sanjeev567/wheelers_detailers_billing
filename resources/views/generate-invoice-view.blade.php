@@ -50,7 +50,7 @@
         }
 
         .invoice_word {
-            letter-spacing: 16px;
+            letter-spacing: 6px;
             font-size: 48px;
         }
 
@@ -67,7 +67,7 @@
 
         .invoice_number {
             color: #888;
-            letter-spacing: 10px;
+            letter-spacing: 2px;
             margin-top:-15px;
             font-size: 16px;
         }
@@ -86,6 +86,7 @@
             min-height: 30px;
             margin-left: -15px;
             margin-right: -15px;
+            font-size: 16px;
             color: #fff;
             /* background-image: linear-gradient(to right, #f12711, #f44d03, #f56800, #f67f00, #f69400, #e9881b, #da7d28, #cb7330, #9f4f34, #6c322e, #381c20, #000000); */
         }
@@ -99,13 +100,27 @@
             color: #333;
         }
 
-        .grand_total_heading {
+        .total_heading {
             font-size: 15px;
             color:#666;
         }
 
-        .grand_total_value {
+        .total_value {
             font-size: 14px;
+            color:#333;
+            letter-spacing: 2px;
+            font-weight: bold;
+            font-family: sans-serif;
+        }
+
+        .grand_total_heading {
+            font-size: 17px;
+            color:#666;
+            font-weight: bold;
+        }
+
+        .grand_total_value {
+            font-size: 17px;
             color:#333;
             letter-spacing: 2px;
             font-weight: bold;
@@ -162,6 +177,10 @@
             width: 751px;
             padding: 10px;
         }
+
+        .signature {
+            margin-top:100px;
+        }
     </style>
     <link rel="stylesheet" media="print" href="{{ config('app.app_public_path') }}/css/invoice-print.css">
 </head>
@@ -172,37 +191,8 @@
 
         <!-- Main content -->
         <section class="invoice">
-
-                <!-- <div class="row header">
-                    <div class="col-xs-4"></div>
-                    <div class="col-xs-8">
-                        <div class="col-xs-4">
-                            <strong>Web</strong>
-                            <address>
-                            {{ $invoice->web_link }}
-                            </address>
-                        </div>
-                        <div class="col-xs-4">
-                            <strong>Phone</strong>
-                            <address>
-                                {{ $invoice->seller_phone1 }}<br>
-                                {{ $invoice->seller_phone2 }}
-                            </address>
-                        </div>
-                        <div class="col-xs-4">
-                            <strong>Address</strong>
-                            <address>
-                                {{ $invoice->seller_address_line1 }}<br>
-                                {{ $invoice->seller_address_line2 }}<br>
-                                {{ $invoice->seller_address_line3 }}
-                            </address>
-                        </div>
-                    </div>
-                </div> -->
-
-
                 <div class="row mid_header">
-                    <div class="col-md-7 col-xs-7">
+                    <div class="col-md-5 col-xs-5">
                             <div class="invoice-col">
                                 <span class="invoice_to">Invoice To</span>
                                 <address class="base_color">
@@ -214,12 +204,17 @@
                                 </address>
                             </div>
                     </div>
-                    <div class="col-md-5 col-xs-5">
+                    <div class="col-md-7 col-xs-7">
                         <div class="invoice_word color_theme">
-                            INVOICE
+                            TAX INVOICE
                         </div>
                         <div class="invoice_number">
-                            No. #{{ $invoice->id }}
+                            <div>
+                                Date: {{ date('d-M-Y', strtotime($invoice->created_at)) }}
+                            </div>
+                            <div>
+                                Invoice No: #{{ $invoice->invoice_number }}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -248,11 +243,11 @@
                             @foreach ($invoiceDetails as $item)
                             <tr>
                                 <td class="dark">{{ $item->item_name }}</td>
-                                <td><span class='WebRupee'>&#x20B9; </span>{{ $item->item_cost_without_tax }}</td>
+                                <td><span class='WebRupee'>Rs. </span>{{ $item->item_cost_without_tax }}</td>
                                 <td>{{ $item->tax_percent }} %</td>
                                 <td>{{ $item->quantity }}</td>
                                 <td>{{ $item->discount }} %</td>
-                                <td class="dark"><span class='WebRupee'>&#x20B9; </span>{{ round($item->sub_total, 2) }}</td>
+                                <td class="dark"><span class='WebRupee'>Rs. </span>{{ round($item->sub_total, 2) }}</td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -277,23 +272,23 @@
                     <!-- /.col -->
                     <div class="col-xs-5 totals-col">
                         <div class="row">
-                            <div class="col-xs-5 grand_total_heading">Sub Total:</div>
-                            <div class="col-xs-6 grand_total_value"><span class='WebRupee'>&#x20B9; </span> {{ $invoice->total_without_tax }}</div>
+                            <div class="col-xs-5 total_heading">Sub Total:</div>
+                            <div class="col-xs-6 total_value"><span class='WebRupee'>Rs. </span> {{ $invoice->total_without_tax }}</div>
                         </div>
                         <hr>
                         <div class="row">
-                            <div class="col-xs-5 grand_total_heading">Tax:</div>
-                            <div class="col-xs-6 grand_total_value"><span class='WebRupee'>&#x20B9; </span> {{ $invoice->total_tax }}</div>
+                            <div class="col-xs-5 total_heading">Tax:</div>
+                            <div class="col-xs-6 total_value"><span class='WebRupee'>Rs. </span> {{ $invoice->total_tax }}</div>
                         </div>
                         <hr>
                         <div class="row">
-                            <div class="col-xs-5 grand_total_heading">Discount:</div>
-                            <div class="col-xs-6 grand_total_value"><span class='WebRupee'>&#x20B9; </span> {{ $invoice->total_discount }}</div>
+                            <div class="col-xs-5 total_heading">Discount:</div>
+                            <div class="col-xs-6 total_value"><span class='WebRupee'>Rs. </span> {{ $invoice->total_discount }}</div>
                         </div>
                         <hr>
                         <div class="row">
                             <div class="col-xs-5 grand_total_heading">Grand Total:</div>
-                            <div class="col-xs-6 grand_total_value"><span class='WebRupee'>&#x20B9; </span> {{ $invoice->total }}</div>
+                            <div class="col-xs-6 grand_total_value"><span class='WebRupee'>Rs. </span> {{ $invoice->total }}</div>
                         </div>
                         <!-- <hr>
                         <div class="row">
@@ -306,28 +301,32 @@
                 <!-- /.row -->
                 <hr style="margin-bottom:10px;margin-top:10px;">
                 <div class="row text_amount_row">
-                    <div class="col-xs-2 grand_total_heading">Total In Word:</div>
-                    <div class="col-xs-10 grand_total_value"><span id="amount_in_words"></span></div>
-                </div>
-                <hr style="margin-top:10px;">
-
-                <div class="row">
-                    <div class="col-xs-6 border_black t_c">
-                        <h5>Terms & Conditions:-</h5>
-                        @foreach ( config('app_config.SELLER_TERMS_AND_CONDITIONS') as $term )
-                            <div>- {{ $term }}</div>
-                        @endforeach
+                    <div class="col-xs-6">
+                        <div class="row">
+                            <div class="col-xs-4 total_heading">Total In Word:</div>
+                            <div class="col-xs-8 total_value"><span id="amount_in_words"></span></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 border_black t_c">
+                                <h5>Terms & Conditions:-</h5>
+                                @foreach ( config('app_config.SELLER_TERMS_AND_CONDITIONS') as $term )
+                                    <div>- {{ $term }}</div>
+                                @endforeach
+                            </div>
+                        </div>
                     </div>
                     <div class="col-xs-6 border_black seller_info">
-                        <h5>Bank Details:-</h5>
+                        <h5 style="margin-top:0;">Bank Details:-</h5>
                         <div>Bank: <span>{{ $invoice->seller_bank }} </span> </div>
                         <div>Branch: <span>{{ $invoice->seller_branch }} </span> </div>
                         <div>IFS Code: <span>{{ $invoice->seller_ifsc }} </span> </div>
                         <div>Account: <span>{{ $invoice->seller_account_number }} </span> </div>
+
+                        <div class="signature">Authorised Signatory</div>
                     </div>
                 </div>
 
-                <hr style="margin-bottom:10px;margin-top:30px;">
+                <hr style="margin-bottom:10px;margin-top:10px;">
                 <div class="company_info">
                     Registered Address: H. No.  8897 2nd Floor, Karol Bagh, Gali No. 14B, Sidhipura, Delhi - 110005
                 </div>
@@ -350,7 +349,10 @@
 
     function Rs(amount) {
         var words = new Array();
-        words[0] = 'Zero'; words[1] = 'One'; words[2] = 'Two'; words[3] = 'Three'; words[4] = 'Four'; words[5] = 'Five'; words[6] = 'Six'; words[7] = 'Seven'; words[8] = 'Eight'; words[9] = 'Nine'; words[10] = 'Ten'; words[11] = 'Eleven'; words[12] = 'Twelve'; words[13] = 'Thirteen'; words[14] = 'Fourteen'; words[15] = 'Fifteen'; words[16] = 'Sixteen'; words[17] = 'Seventeen'; words[18] = 'Eighteen'; words[19] = 'Nineteen'; words[20] = 'Twenty'; words[30] = 'Thirty'; words[40] = 'Forty'; words[50] = 'Fifty'; words[60] = 'Sixty'; words[70] = 'Seventy'; words[80] = 'Eighty'; words[90] = 'Ninety'; var op;
+        words[0] = 'Zero'; words[1] = 'One'; words[2] = 'Two'; words[3] = 'Three'; words[4] = 'Four'; words[5] = 'Five'; words[6] = 'Six'; words[7] = 'Seven';
+        words[8] = 'Eight'; words[9] = 'Nine'; words[10] = 'Ten'; words[11] = 'Eleven'; words[12] = 'Twelve'; words[13] = 'Thirteen'; words[14] = 'Fourteen';
+        words[15] = 'Fifteen'; words[16] = 'Sixteen'; words[17] = 'Seventeen'; words[18] = 'Eighteen'; words[19] = 'Nineteen'; words[20] = 'Twenty';
+        words[30] = 'Thirty'; words[40] = 'Forty'; words[50] = 'Fifty'; words[60] = 'Sixty'; words[70] = 'Seventy'; words[80] = 'Eighty'; words[90] = 'Ninety'; var op;
         amount = amount.toString();
         var atemp = amount.split(".");
         var number = atemp[0].split(",").join("");

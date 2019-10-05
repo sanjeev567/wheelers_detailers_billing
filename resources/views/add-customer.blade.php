@@ -37,8 +37,25 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="input-group">
-                            <input class="input--style-2" type="text" placeholder="Address" name="address">
+                        <div class="row row-space">
+                            <div class="col-7">
+                                <div class="input-group">
+                                    <input class="input--style-2" type="text" placeholder="Address" name="address">
+                                </div>
+                            </div>
+                            <div class="col-5">
+                                <div class="input-group">
+                                    <div style="width:100%;"class="rs-select2 js-select-simple padd-4">
+                                        <select name="state" class="padd-4">
+                                            <option disabled="disabled" selected>State</option>
+                                            @foreach ($states as $state)
+                                                <option value="{{$state->code}}" {{ (!empty($state) && $state->code == 's')? 'selected="selected"' :'' }}>{{$state->state}}</option>
+                                            @endforeach
+                                        </select>
+                                        <div class="select-dropdown"></div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="p-t-30">
                             <button class="btn btn--radius btn--green"  id="add-customer-btn" type="submit">Add</button>

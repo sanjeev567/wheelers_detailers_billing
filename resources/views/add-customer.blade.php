@@ -12,7 +12,7 @@
                 <div class="card-body">
                     <h2 class="title">Customer Registration</h2>
                     <form method="POST" id="customer-form">
-                        <input type="hidden" name="id" value="{{ !empty($customer)?$customer->id:'' }}">
+                        <input type="hidden" name="id"  id="id" value="{{ !empty($customer)?$customer->id:'' }}">
                         {{ csrf_field() }}
                         <div class="row row-space">
                             <div class="col-6">

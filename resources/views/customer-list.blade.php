@@ -10,7 +10,7 @@
     </h1>
   </section>
 
-
+  {{csrf_field()}}
   <!-- Main content -->
   <section class="content">
   <table id="customer-list-table" class="stripe">
@@ -20,6 +20,7 @@
         <td>Email</td>
         <td>GST Number</td>
         <td>Joined On</td>
+        <td>Actions</td>
       </thead>
       <tbody>
         @foreach ($customers as $customer)
@@ -29,6 +30,8 @@
             <td>{{ $customer->email }}</td>
             <td>{{ $customer->gst_number }}</td>
             <td>{{ \Carbon\Carbon::parse($customer->joined_on)->format('d-M-Y') }}</td>
+            <td> <a href="{{ config('app.app_url_prefix') }}/add-customer/{{ $customer->id }}" class="btn btn-info">Edit</a>
+            | <a class="btn btn-danger delete-customer-btn" href="#" data-id="{{ $customer->id }}">Delete</a></td>
           </tr>
         @endforeach
       </tbody>

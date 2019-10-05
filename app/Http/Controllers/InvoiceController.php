@@ -73,6 +73,7 @@ class InvoiceController extends BaseController
                 'seller_ifsc' => config('app_config.SELLER_BANK_IFSC'),
                 'seller_account_number' => config('app_config.SELLER_BANK_ACCOUNT_NUMBER'),
                 'seller_cin' => config('app_config.SELLER_CIN'),
+                'seller_state' => config('app_config.SELLER_STATE'),
                 'total_without_tax' => '0',
                 'total_tax' => '0',
                 'total_discount' => '0',

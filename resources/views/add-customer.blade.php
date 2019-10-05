@@ -12,35 +12,36 @@
                 <div class="card-body">
                     <h2 class="title">Customer Registration</h2>
                     <form method="POST" id="customer-form">
+                        <input type="hidden" name="id" value="{{ !empty($customer)?$customer->id:'' }}">
                         {{ csrf_field() }}
                         <div class="row row-space">
                             <div class="col-6">
                                 <div class="input-group">
-                                <input class="input--style-2" type="text" placeholder="Name" name="name">
+                                <input class="input--style-2" type="text" placeholder="Name" name="name" value="{{ !empty($customer)?$customer->name:'' }}">
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="input-group">
-                                    <input class="input--style-2" type="text" placeholder="GST Number" name="gst_number">
+                                    <input class="input--style-2" type="text" placeholder="GST Number" name="gst_number" value="{{ !empty($customer)?$customer->gst_number:'' }}">
                                 </div>
                             </div>
                         </div>
                         <div class="row row-space">
                             <div class="col-4">
                                 <div class="input-group">
-                                    <input class="input--style-2" type="text" placeholder="Mobile" name="mobile">
+                                    <input class="input--style-2" type="text" placeholder="Mobile" name="mobile" value="{{ !empty($customer)?$customer->mobile:'' }}">
                                 </div>
                             </div>
                             <div class="col-8">
                                 <div class="input-group">
-                                    <input class="input--style-2" type="text" placeholder="Email" name="email">
+                                    <input class="input--style-2" type="text" placeholder="Email" name="email" value="{{ !empty($customer)?$customer->email:'' }}">
                                 </div>
                             </div>
                         </div>
                         <div class="row row-space">
                             <div class="col-7">
                                 <div class="input-group">
-                                    <input class="input--style-2" type="text" placeholder="Address" name="address">
+                                    <input class="input--style-2" type="text" placeholder="Address" name="address" value="{{ !empty($customer)?$customer->address:'' }}">
                                 </div>
                             </div>
                             <div class="col-5">
@@ -49,7 +50,7 @@
                                         <select name="state" class="padd-4">
                                             <option disabled="disabled" selected>State</option>
                                             @foreach ($states as $state)
-                                                <option value="{{$state->code}}" {{ (!empty($state) && $state->code == 's')? 'selected="selected"' :'' }}>{{$state->state}}</option>
+                                                <option value="{{$state->code}}" {{ (!empty($state) && !empty($customer) && $state->code == $customer->state)? 'selected="selected"' :'' }}>{{$state->state}}</option>
                                             @endforeach
                                         </select>
                                         <div class="select-dropdown"></div>
@@ -77,7 +78,7 @@
     <script src="{{ config('app.app_public_path') }}/js/lib/jquery.validate.min.js"></script>
 
     <!-- Main JS-->
-    <script src="{{ config('app.app_public_path') }}js/add-customer.js"></script>
+    <script src="{{ config('app.app_public_path') }}/js/add-customer.js"></script>
 @endsection
 
 @section ('styles')

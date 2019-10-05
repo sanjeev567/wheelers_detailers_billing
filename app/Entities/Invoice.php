@@ -46,7 +46,8 @@ class Invoice extends Model
         'seller_account_number',
         'seller_cin',
         'invoice_number',
-        'customer_state'
+        'customer_state',
+        'seller_state',
     ];
 
     /**

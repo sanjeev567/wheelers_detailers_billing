@@ -276,10 +276,22 @@
                             <div class="col-xs-6 total_value"><span class='WebRupee'>Rs. </span> {{ $invoice->total_without_tax }}</div>
                         </div>
                         <hr>
+                        @if ($invoice->customer_state == $invoice->seller_state)
                         <div class="row">
-                            <div class="col-xs-5 total_heading">Tax:</div>
+                            <div class="col-xs-5 total_heading">SGST:</div>
+                            <div class="col-xs-6 total_value"><span class='WebRupee'>Rs. </span> {{ round($invoice->total_tax/2, 2) }}</div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-xs-5 total_heading">CGST:</div>
+                            <div class="col-xs-6 total_value"><span class='WebRupee'>Rs. </span> {{ round($invoice->total_tax/2, 2) }}</div>
+                        </div>
+                        @else
+                        <div class="row">
+                            <div class="col-xs-5 total_heading">IGST:</div>
                             <div class="col-xs-6 total_value"><span class='WebRupee'>Rs. </span> {{ $invoice->total_tax }}</div>
                         </div>
+                        @endif
                         <hr>
                         <div class="row">
                             <div class="col-xs-5 total_heading">Discount:</div>

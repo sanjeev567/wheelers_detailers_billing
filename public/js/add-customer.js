@@ -107,7 +107,7 @@ $(function () {
                     if (response.status == '1') {
                         showSuccessAlert('Customer Added Successfully');
                         window.setTimeout(function () {
-                            window.location.href = prefix+'/?cust='+response.data.id;
+                            window.location.href = prefix+'/?cust='+(response.data.id || $('#id').val());
                         }, 500);
                     } else {
                         showFailureAlert('Unable to add the customer. Please try again later');

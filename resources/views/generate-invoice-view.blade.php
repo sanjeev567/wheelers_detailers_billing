@@ -68,7 +68,6 @@
         .invoice_number {
             color: #888;
             letter-spacing: 2px;
-            margin-top:-15px;
             font-size: 16px;
         }
 
@@ -115,13 +114,11 @@
 
         .grand_total_heading {
             font-size: 17px;
-            color:#666;
             font-weight: bold;
         }
 
         .grand_total_value {
-            font-size: 17px;
-            color:#333;
+            font-size: 18px;
             letter-spacing: 2px;
             font-weight: bold;
             font-family: sans-serif;
@@ -180,6 +177,24 @@
 
         .signature {
             margin-top:100px;
+            float: right;
+        }
+
+        .grand_total_row {
+            background-color: #414143;
+            color:#fff;
+            padding-top:10px;
+            padding-bottom:10px;
+        }
+
+        .signature_wrapper {
+            border: 1px solid #000;
+            margin-top: 10px;
+        }
+
+        .seller_name {
+            font-size: 15px !important;
+            margin-top:10px;
         }
     </style>
     <link rel="stylesheet" media="print" href="{{ config('app.app_public_path') }}/css/invoice-print.css">
@@ -213,7 +228,7 @@
                                 Date: {{ date('d-M-Y', strtotime($invoice->created_at)) }}
                             </div>
                             <div>
-                                Invoice No: #{{ $invoice->invoice_number }}
+                                Invoice No: {{ $invoice->invoice_number }}
                             </div>
                         </div>
                     </div>
@@ -257,7 +272,9 @@
             </div>
             <!-- /.row -->
 
+
             <div class="bottom">
+                <hr style="margin-bottom:10px;border-color: #000;">
                 <div class="row ">
                     <!-- accepted payments column -->
                     <div class="col-xs-5">
@@ -298,7 +315,7 @@
                             <div class="col-xs-6 total_value"><span class='WebRupee'>Rs. </span> {{ $invoice->total_discount }}</div>
                         </div>
                         <hr>
-                        <div class="row">
+                        <div class="row grand_total_row">
                             <div class="col-xs-5 grand_total_heading">Grand Total:</div>
                             <div class="col-xs-6 grand_total_value"><span class='WebRupee'>Rs. </span> {{ $invoice->total }}</div>
                         </div>
@@ -328,13 +345,21 @@
                         </div>
                     </div>
                     <div class="col-xs-6 border_black seller_info">
-                        <h5 style="margin-top:0;">Bank Details:-</h5>
-                        <div>Bank: <span>{{ $invoice->seller_bank }} </span> </div>
-                        <div>Branch: <span>{{ $invoice->seller_branch }} </span> </div>
-                        <div>IFS Code: <span>{{ $invoice->seller_ifsc }} </span> </div>
-                        <div>Account: <span>{{ $invoice->seller_account_number }} </span> </div>
-
-                        <div class="signature">Authorised Signatory</div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <h5 style="margin-top:0;">Bank Details:-</h5>
+                                <div>Bank: <span>{{ $invoice->seller_bank }} </span> </div>
+                                <div>Branch: <span>{{ $invoice->seller_branch }} </span> </div>
+                                <div>IFS Code: <span>{{ $invoice->seller_ifsc }} </span> </div>
+                                <div>Account: <span>{{ $invoice->seller_account_number }} </span> </div>
+                            </div>
+                        </div>
+                        <div class="row signature_wrapper">
+                            <div class="col-xs-12">
+                                <div class="seller_name">{{config('app_config.SELLER_NAME')}}</div>
+                                <div class="signature">Authorised Signatory</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 

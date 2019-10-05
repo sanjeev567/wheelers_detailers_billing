@@ -1,4 +1,4 @@
-$('#customer-list-table').DataTable({
+$('#item-list-table').DataTable({
     select: true,
     dom: 'Bfrtip',
     buttons: [
@@ -9,8 +9,8 @@ $('#customer-list-table').DataTable({
     ],
 });
 
-$(document).on('click', '.delete-customer-btn', function () {
-    if(!verifyRemove('Are you sure you want to delete this customer?')){
+$(document).on('click', '.delete-item-btn', function () {
+    if(!verifyRemove('Are you sure you want to delete this item?')){
         return false;
     }
     var prefix = $.trim($('#app_url_prefix').val());
@@ -19,7 +19,7 @@ $(document).on('click', '.delete-customer-btn', function () {
 
     $.ajax({
         type: "post",
-        url: prefix + "/delete-customer",
+        url: prefix + "/delete-item",
         data: {
             _token:_token,
             id:id
@@ -27,17 +27,17 @@ $(document).on('click', '.delete-customer-btn', function () {
         dataType: "json",
         success: function (response) {
             if (response.status == '1') {
-                showSuccessAlert('customer deleted successfully');
+                showSuccessAlert('Item deleted successfully');
                 window.setTimeout(function () {
                     window.location.reload('/');
                 }, 1200);
             } else {
-                showFailureAlert('Unable to delete the customer. Please try again later');
+                showFailureAlert('Unable to delete the item. Please try again later');
             }
         },
         error: function (jqXHR) {
             console.log('failure response received');
-            showFailureAlert('Unable to delete the customer. Please try again later');
+            showFailureAlert('Unable to delete the item. Please try again later');
         }
     });
 });

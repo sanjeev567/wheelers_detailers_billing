@@ -45,6 +45,8 @@ class InvoiceController extends BaseController
             $totalDiscount = 0;
 
             $customerDetails = Customer::whereId($request->customer)->first();
+            $currentInvoiceNumber = Invoice::where('created_at', '>=', strtotime('first day of january this year'))->get()->count();
+
             $invoice = Invoice::Create([
                 'customer_id' => $request->customer,
                 'total_items' => count($request->data),
@@ -54,6 +56,8 @@ class InvoiceController extends BaseController
                 'customer_mobile' => $customerDetails->mobile,
                 'customer_email' => $customerDetails->email,
                 'customer_address' => $customerDetails->address,
+                'invoice_number' => 'TW-'.date('y').'/'.((int)date('y')+1).'-'.((int)$currentInvoiceNumber + 1),
+                'customer_state' => $customerDetails->state,
                 'buyer_gstin' => $customerDetails->gst_number,
                 'seller_name' => config('app_config.SELLER_NAME'),
                 'web_link' => config('app_config.SELLER_WEB_LINKS'),
@@ -69,6 +73,7 @@ class InvoiceController extends BaseController
                 'seller_ifsc' => config('app_config.SELLER_BANK_IFSC'),
                 'seller_account_number' => config('app_config.SELLER_BANK_ACCOUNT_NUMBER'),
                 'seller_cin' => config('app_config.SELLER_CIN'),
+                'seller_state' => config('app_config.SELLER_STATE'),
                 'total_without_tax' => '0',
                 'total_tax' => '0',
                 'total_discount' => '0',

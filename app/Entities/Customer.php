@@ -26,6 +26,7 @@ class Customer extends Authenticatable
         'mobile',
         'joined_on',
         'created_by',
+        'state'
     ];
 
 }

@@ -81,6 +81,9 @@ $(function () {
             },
             email: {
                 email: true
+            },
+            state:{
+                required:true
             }
         },
         errorPlacement: function (error, element) {

@@ -15,6 +15,7 @@ return [
     'SELLER_BANK_BRANCH_NAME' => 'Rajender Nagar, Shahibabad',
     'SELLER_BANK_IFSC' => '695605600226',
     'SELLER_BANK_ACCOUNT_NUMBER' => '695605600226',
+    'SELLER_STATE' => 'up',
     'SELLER_TERMS_AND_CONDITIONS' => [
         'Goods once sold cannot be returned or exchanged',
         'All dispute to be setteled at Delhi Jurisdiction',

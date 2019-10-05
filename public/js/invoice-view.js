@@ -59,13 +59,12 @@ $(function () {
 
     $('#generate_invoice_btn').click(function (event) {
         event.preventDefault();
-
         var _token = $('[name="_token"]').val();
         let customer = $('#customer').val();
         let selectedData = datatable.rows().data();
         let newData = [];
         for (i = 0; i < selectedData.length; i++) {
-            let temp = selectedData[i];
+            let temp = selectedData[i].slice();
             temp.pop(); // remove action column
             newData.push(temp);
         }

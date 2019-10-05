@@ -29,7 +29,7 @@
         <select class="form-control advisor-custom-select" id="new_item" name="name" data-placeholder="Select Item" style="width: 100% !important;">
           <option value=''></option>
           @foreach ($items as $item)
-          <option value="{{ $item->id }}" data-price="{{ $item->price }}"> {{ $item->name }} - {{ ($item->size == 's')?'Small':(($item->size =='m')?'Medium':(($item->size == 'l')?'Large':''))}}</option>
+          <option value="{{ $item->id }}" data-price="{{ $item->price_without_tax }}"> {{ $item->name }} - {{ ($item->size == 's')?'Small':(($item->size =='m')?'Medium':(($item->size == 'l')?'Large':''))}}</option>
           @endforeach
         </select>
       </div>

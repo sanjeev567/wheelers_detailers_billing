@@ -113,7 +113,7 @@
         }
 
         .grand_total_heading {
-            font-size: 17px;
+            font-size: 18px;
             font-weight: bold;
         }
 
@@ -315,10 +315,7 @@
                             <div class="col-xs-6 total_value"><span class='WebRupee'>Rs. </span> {{ $invoice->total_discount }}</div>
                         </div>
                         <hr>
-                        <div class="row grand_total_row">
-                            <div class="col-xs-5 grand_total_heading">Grand Total:</div>
-                            <div class="col-xs-6 grand_total_value"><span class='WebRupee'>Rs. </span> {{ $invoice->total }}</div>
-                        </div>
+
                         <!-- <hr>
                         <div class="row">
                             <div class="col-xs-6 due_date_heading">Due Date:</div>
@@ -327,6 +324,11 @@
                     </div>
                     <!-- /.col -->
                 </div>
+                <div class="row">
+                    <div class="col-xs-5"></div>
+                            <div class="col-xs-3 grand_total_heading grand_total_row">Grand Total:</div>
+                            <div class="col-xs-4 grand_total_value grand_total_row"><span class='WebRupee'>Rs. </span> {{ $invoice->total }}</div>
+                        </div>
                 <!-- /.row -->
                 <hr style="margin-bottom:10px;margin-top:10px;">
                 <div class="row text_amount_row">

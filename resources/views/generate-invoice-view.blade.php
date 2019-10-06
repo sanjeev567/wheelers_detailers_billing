@@ -195,6 +195,21 @@
             font-size: 15px !important;
             margin-top:10px;
         }
+
+        .print-btns {
+            position: absolute;
+            top: 0;
+            left: 0;
+            margin-top: 10px;
+            margin-left: 10px;
+        }
+
+        .invoice-type{
+            position: absolute;
+            right: 24px;
+            top: 30px;
+            color: #464646;
+        }
     </style>
     <link rel="stylesheet" media="print" href="{{ config('app.app_public_path') }}/css/invoice-print.css">
 </head>
@@ -206,6 +221,7 @@
         <!-- Main content -->
         <section class="invoice">
                 <div class="row mid_header">
+                    <span class="invoice-type">Original</span>
                     <div class="col-md-5 col-xs-5">
                             <div class="invoice-col">
                                 <span class="invoice_to">Invoice To</span>
@@ -373,6 +389,12 @@
         </section>
         <!-- /.content -->
     </div>
+
+    <div class="print-btns">
+        <button class="btn btn-info" data-type="Original" id="original">Print Original</button>
+        <button class="btn btn-info" data-type="Duplicate" id="duplicate">Print Duplicate</button>
+        <button class="btn btn-info" data-type="Triplicate" id="triplicate">Print Triplicate</button>
+    </div>
     <!-- ./wrapper -->
 </body>
 <script>
@@ -467,6 +489,10 @@
     $(function(){
         $('#amount_in_words').html(RsPaise( Math.round( {{ $invoice->total }} * 100) / 100  ));
 
+        $('.print-btns button').on('click', function(event) {
+            $('.invoice-type').html($(this).data('type'));
+            window.print();
+        });
     });
 </script>
 

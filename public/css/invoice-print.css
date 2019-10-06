@@ -153,6 +153,17 @@ body {
   margin-top:10px !important;
 }
 
+.print-btns {
+  display: none !important;
+}
+
+.invoice-type{
+  position: absolute !important;
+  right: 24px !important;
+  top: 30px !important;
+  color: #464646!important;
+}
+
 
 
 

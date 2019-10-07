@@ -156,6 +156,122 @@ class StockController extends BaseController
     /**
      * Funtion to return the view for invoice generation page
      */
+    public function editStockInvoice(Request $request)
+    {
+        \DB::beginTransaction();
+        try {
+            $total = 0;
+            $totalTax = 0;
+            $totalWithoutTax = 0;
+
+            $sellerDetails = Customer::whereId($request->customer)->first();
+
+            StockInvoice::whereId($request->id)->update([
+                'seller_id' => $request->customer,
+                'total_items' => count($request->data),
+                'created_by' => \Auth::id(),
+                'invoice_date' => $request->invoice_date,
+
+                'customer_name' => config('app_config.SELLER_NAME'),
+                'customer_mobile' => config('app_config.SELLER_PHONE1'),
+                'customer_email' => '',
+                'customer_address' => config('app_config.SELLER_ADDRESS_LINE1') . config('app_config.SELLER_ADDRESS_LINE2') . config('app_config.SELLER_ADDRESS_LINE3'),
+                'invoice_number' => $request->invoice_number,
+                'customer_state' => config('app_config.SELLER_STATE'),
+                'buyer_gstin' => config('app_config.SELLER_GSTIN'),
+
+                'seller_name' => $sellerDetails->name,
+                'seller_phone1' => $sellerDetails->mobile,
+                'seller_address_line1' => $sellerDetails->address,
+                'seller_gstin' => $sellerDetails->gst_number,
+                'seller_state' => $sellerDetails->state,
+
+                'total_without_tax' => '0',
+                'total_tax' => '0',
+                'total_discount' => '0',
+                'total' => '0',
+            ]);
+
+            $oldInvoiceDetails = StockInvoiceDetail::where('stock_invoice_id', $request->id)->get();
+
+            foreach ($oldInvoiceDetails as $details) {
+                $details->delete();
+                $itemDetails = Item::whereId($details->item_id)->first();
+
+                if ($request->force == "false" && $itemDetails->type == "material" && $itemDetails->stock - $details->quantity < 0) {
+                    \DB::rollback();
+                    return response()->json(['status' => '-1', 'data' => null, 'msg' => 'Not enough stock for material: ' . $itemDetails->name .
+                        ', only ' . $itemDetails->stock . ' left in inventory. Are you sure you want to update this invoice?']);
+                } else if ($itemDetails->type == "material") {
+                    $itemDetails->update([
+                        'stock' => $itemDetails->stock - $details->quantity,
+                    ]);
+                }
+            }
+
+            $request->data = json_decode($request->data);
+            foreach ($request->data as $row) {
+                $itemDetails = Item::whereId($row[0])->first();
+                $total += ($row[2] * $row[4]);
+                $totalTax += 0 * $row[4];
+                $totalWithoutTax += $row[2] * $row[4];
+
+                StockInvoiceDetail::create([
+                    'stock_invoice_id' => $request->id,
+                    'seller_id' => $request->customer,
+                    'item_id' => $itemDetails->id,
+                    'item_cost' => $row[2],
+                    'item_cost_without_tax' => $row[2],
+                    'quantity' => $row[4],
+                    'created_by' => \Auth::id(),
+                    'item_name' => $itemDetails->name,
+                    'tax_percent' => 0,
+                    'tax_value' => 0,
+                ]);
+
+                $itemDetails->update([
+                    'stock' => $itemDetails->stock + $row[4],
+                ]);
+            }
+
+            StockInvoice::whereId($request->id)->update([
+                'total_without_tax' => $totalWithoutTax,
+                'total_tax' => $totalTax,
+                'total' => $total,
+            ]);
+
+            if ($files = $request->file('images')) {
+                foreach ($files as $file) {
+                    $name = $file->getClientOriginalName();
+                    $name = str_slug(pathinfo($name, PATHINFO_FILENAME));
+                    $name = $name . '.' . $file->getClientOriginalExtension();
+
+                    $pathToMove = (config('app.app_public_path_absolute') !== "")
+                    ? (config('app.app_public_path_absolute') . config('app.user_doc_image_path'))
+                    : public_path(config('app.user_doc_image_path'));
+
+                    $file->move($pathToMove, $name);
+
+                    StockInvoiceImage::insert([
+                        'stock_invoice_id' => $request->id,
+                        'image' => $name,
+                        'description' => 'uploaded from web with invoice number ' . $request->id,
+                        'created_by' => \Auth::id(),
+                    ]);
+                }
+            }
+
+            \DB::commit();
+            return response()->json(['status' => '1', 'data' => $request->id]);
+        } catch (\Throwable $th) {
+            \DB::rollback();
+            throw $th;
+        }
+    }
+
+    /**
+     * Funtion to return the view for invoice generation page
+     */
     public function stockInvoiceList(Request $request)
     {
         try {

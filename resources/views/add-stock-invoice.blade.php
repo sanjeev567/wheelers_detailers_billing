@@ -18,7 +18,7 @@
   <section class="content">
     <form method="post" action="#" name="invoice-form" id="invoice-form" style="margin-bottom:15px;display:inline-block;">
       {{ csrf_field() }}
-
+      <input type="hidden" name="id" id="id" value="{{ !empty($invoice)?$invoice->id:'' }}">
       <div style="width:50%;margin-bottom:30px;">
       <label for="customer" style="display:block;">Select Party</label>
         <select class="form-control advisor-custom-select" id="customer" name="name" data-placeholder="Select Party">
@@ -65,7 +65,8 @@
         <select class="form-control advisor-custom-select" id="new_item" name="name" data-placeholder="Select Item" style="width: 100% !important;">
           <option value=''></option>
           @foreach ($items as $item)
-          <option value="{{ $item->id }}" data-price="{{ $item->price_without_tax }}"> {{ $item->name }} - {{ ($item->size == 's')?'Small':(($item->size =='m')?'Medium':(($item->size == 'l')?'Large':''))}}</option>
+          <option value="{{ $item->id }}" data-price="{{ $item->price_without_tax }}">
+            {{ $item->name }} - {{ ($item->size == 's')?'Small':(($item->size =='m')?'Medium':(($item->size == 'l')?'Large':''))}}</option>
           @endforeach
         </select>
       </div>

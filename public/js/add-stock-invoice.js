@@ -45,7 +45,7 @@ $(function () {
             buying_price,
             price,
             quantity,
-            Math.round(price * quantity * 100)/100,
+            Math.round(price * quantity * 100) / 100,
             '<button class="btn btn-danger delete_btn">Remove</button>'
         ]).draw(false);
     });
@@ -59,6 +59,10 @@ $(function () {
 
     $('#generate_invoice_btn').click(function (event) {
         event.preventDefault();
+        createStockInvoice(false);
+    });
+
+    function createStockInvoice(force) {
         let customer = $('#customer').val();
         let selectedData = datatable.rows().data();
         let newData = [];
@@ -70,12 +74,20 @@ $(function () {
         }
         formData.append('data', JSON.stringify(newData));
         formData.append('customer', customer);
+        formData.append('force', force);
 
         var prefix = $.trim($('#app_url_prefix').val());
+        let url = prefix + "/add-stock-invoice";
+        let invoiceId = $('#id').val();
+
+        if (invoiceId != '' && invoiceId != undefined) {
+            url = prefix + "/edit-stock-invoice";
+        }
+
         $.ajax({
-            url: prefix + "/add-stock-invoice",
+            url: url,
             type: "POST",
-            data:formData,
+            data: formData,
             dataType: "json",
             enctype: 'multipart/form-data',
             processData: false,
@@ -84,14 +96,22 @@ $(function () {
                 if (response.status == '1') {
                     window.location.href = prefix + '/stock-invoice-list';
                 } else {
-                    showFailureAlert('Unable to generate invoice. Please try again later');
+                    if (response.status == '-1' && response.msg != '' && response.msg != undefined) {
+                        if (!verifyRemove(response.msg)) {
+                            return false;
+                        } else {
+                            createStockInvoice(true);
+                        }
+                    } else {
+                        showFailureAlert('Unable to update invoice. Please try again later');
+                    }
                 }
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 alert('Error in creating invoice');
             }
         });
-    });
+    }
 
     $('.user-docs-images').on('click', function (e) {
         $('#img-cover').fadeIn();

@@ -28,7 +28,7 @@
             <td>{{ $invoice->seller_mobile }}</td>
             <td>{{ $invoice->total }}</td>
             <td>{{ \Carbon\Carbon::parse($invoice->invoice_date)->format('d-M-Y') }}</td>
-            <td><a class="btn btn-info" href="{{ config('app.app_url_prefix') }}/add-stock/{{ $invoice->id }}">View</a></td>
+            <td><a class="btn btn-warning" href="{{ config('app.app_url_prefix') }}/add-stock/{{ $invoice->id }}">Edit</a></td>
           </tr>
         @endforeach
       </tbody>

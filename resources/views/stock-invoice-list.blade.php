@@ -1,41 +1,34 @@
 @extends('master')
-@section('page_heading','Invoice View')
+@section('page_heading','Invoice List')
 @section ('content')
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
 
 <section class="content-header">
     <h1 class="curr_month">
-      Item List
+    Stock Invoice List
     </h1>
   </section>
-  {{ csrf_field() }}
+
 
   <!-- Main content -->
   <section class="content">
-  <table id="item-list-table" class="stripe">
+  <table id="customer-list-table" class="stripe">
       <thead>
-        <td>Name</td>
-        <td>Price</td>
-        <td>Size</td>
-        <td>Type</td>
-        <td>Stock</td>
-        <td>Actions</td>
+        <td>Customer Name</td>
+        <td>Customer Mobile</td>
+        <td>Total</td>
+        <td>Invoice Date</td>
+        <td>Action</td>
       </thead>
       <tbody>
-        @foreach ($items as $item)
+        @foreach ($invoices as $invoice)
           <tr>
-            <td>{{ $item->name }}</td>
-            <td>{{ $item->price_without_tax }}</td>
-            <td>{{ ($item->size == 's')?'Small':(($item->size =='m')?'Medium':(($item->size == 'l')?'Large':'-NA-')) }}</td>
-            <td>{{ ucfirst($item->type) }}</td>
-            @if ( $item->type == "material")
-            <td>{{ $item->stock }}</td>
-            @else
-            <td>-</td>
-            @endif
-            <td> <a href="{{ config('app.app_url_prefix') }}/add-item/{{ $item->id }}" class="btn btn-info">Edit</a>
-            | <a class="btn btn-danger delete-item-btn" href="#" data-id="{{ $item->id }}">Delete</a></td>
+            <td>{{ $invoice->seller_name }}</td>
+            <td>{{ $invoice->seller_mobile }}</td>
+            <td>{{ $invoice->total }}</td>
+            <td>{{ \Carbon\Carbon::parse($invoice->invoice_date)->format('d-M-Y') }}</td>
+            <td><a class="btn btn-warning" href="{{ config('app.app_url_prefix') }}/add-stock/{{ $invoice->id }}">Edit</a></td>
           </tr>
         @endforeach
       </tbody>
@@ -54,7 +47,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
 
   <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
-    <script src="{{ config('app.app_public_path') }}js/item-list.js"></script>
+  <script src="{{ config('app.app_public_path') }}js/customer-list.js"></script>
 @endsection
 
 @section ('styles')

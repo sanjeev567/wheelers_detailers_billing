@@ -547,4 +547,6 @@ iframe {
 }
 
 
-
+input.error, input.error:focus, span.error, select.error {
+  border: inherit !important;
+}

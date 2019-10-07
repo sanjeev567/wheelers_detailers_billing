@@ -129,6 +129,10 @@ return [
     'app_url_prefix' => env('APP_URL_PREFIX', ''),
     'APP_URL_PREFIX' => env('APP_URL_PREFIX', ''),
 
+    'user_doc_image_path' => env('USER_DOC_IMAGE_PATH', '/user_docs'),
+
+    'app_public_path_absolute' => env('APP_PUBLIC_PATH_ABSOLUTE', ''),
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers

@@ -5,11 +5,11 @@ namespace App\Entities;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Item extends Model
+class StockInvoiceDetail extends Model
 {
     use SoftDeletes;
 
-    protected $table = "items";
+    protected $table = "stock_invoice_details";
 
     public $timestamps = true;
 
@@ -19,7 +19,18 @@ class Item extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'price', 'price_without_tax', 'item_code', 'batch_code', 'size', 'tax_percent', 'tax_value', 'type', 'stock'
+        'stock_invoice_id',
+        'seller_id',
+        'item_id',
+        'quantity',
+        'item_cost',
+        'discount',
+        'created_by',
+        'item_name',
+        'item_description',
+        'tax_percent',
+        'tax_value',
+        'item_cost_without_tax',
     ];
 
     /**

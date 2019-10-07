@@ -10,6 +10,8 @@ $(function () {
         }
     });
 
+    handleInvoiceTypeChange();
+
     $("#invoice-form").validate({
         rules: {
             name: {
@@ -59,6 +61,10 @@ $(function () {
 
     $('#generate_invoice_btn').click(function (event) {
         event.preventDefault();
+        createInvoice(false);
+    });
+
+    function createInvoice (force) {
         var _token = $('[name="_token"]').val();
         let customer = $('#customer').val();
         let selectedData = datatable.rows().data();
@@ -73,18 +79,43 @@ $(function () {
         $.ajax({
             url: prefix + "/generate-invoice",
             type: "POST",
-            data: { _token: _token, customer: customer, data: newData },
+            data: { _token: _token, customer: customer, data: newData, force: force },
             dataType: "json",
             success: function (response) {
                 if (response.status == '1') {
                     window.location.href = prefix + '/invoice/' + response.data;
                 } else {
-                    showFailureAlert('Unable to generate invoice. Please try again later');
+                    if (response.status == '-1' && response.msg != '' && response.msg != undefined) {
+                        if (!verifyRemove(response.msg)) {
+                            return false;
+                        } else {
+                            createInvoice(true);
+                        }
+                    } else {
+                        showFailureAlert('Unable to generate invoice. Please try again later');
+                    }
                 }
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 alert('Error in creating invoice');
             }
         });
-    });
+    }
+
+    $('#invoice_type').on('change', handleInvoiceTypeChange);
+
+    function handleInvoiceTypeChange() {
+        var type = $('#invoice_type').val();
+        $('#new_item option').removeAttr('disabled');
+        $('#new_item option[data-type!="'+type+'"]').prop('disabled', true);
+
+        $("#new_item").val(null).trigger("change");
+        $("#new_item").select2("destroy");
+        $('#new_item').select2({
+            containerCssClass: ':all:',
+            placeholder: function () {
+                $(this).data('placeholder');
+            }
+        });
+    }
 });

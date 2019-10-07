@@ -56,7 +56,7 @@ class InvoiceController extends BaseController
                 'customer_mobile' => $customerDetails->mobile,
                 'customer_email' => $customerDetails->email,
                 'customer_address' => $customerDetails->address,
-                'invoice_number' => 'TW-'.date('y').'/'.((int)date('y')+1).'-'.((int)$currentInvoiceNumber + 1),
+                'invoice_number' => 'TW-' . date('y') . '/' . ((int) date('y') + 1) . '-' . ((int) $currentInvoiceNumber + 1),
                 'customer_state' => $customerDetails->state,
                 'buyer_gstin' => $customerDetails->gst_number,
                 'seller_name' => config('app_config.SELLER_NAME'),
@@ -78,6 +78,7 @@ class InvoiceController extends BaseController
                 'total_tax' => '0',
                 'total_discount' => '0',
                 'total' => '0',
+                'type' => (!empty($request->invoice_type))?$request->invoice_type:'treatment'
             ]);
 
             if ($invoice) {
@@ -87,6 +88,16 @@ class InvoiceController extends BaseController
                     $totalTax += $itemDetails->tax_value * $row[3];
                     $totalWithoutTax += $itemDetails->price_without_tax * $row[3];
                     $totalDiscount += $itemDetails->price * $row[3] * $row[4] / 100;
+
+                    if ($request->force == "false" && $itemDetails->type == "material" && $itemDetails->stock - $row[3] < 0) {
+                        \DB::rollback();
+                        return response()->json(['status' => '-1', 'data' => null, 'msg' => 'Not enough stock for material: ' . $itemDetails->name.
+                         ', only '.$itemDetails->stock.' left in inventory. Are you sure you want to make this invoice?']);
+                    } else if ($itemDetails->type == "material") {
+                        $itemDetails->update([
+                            'stock' => $itemDetails->stock - $row[3],
+                        ]);
+                    }
 
                     InvoiceDetail::create([
                         'invoice_id' => $invoice->id,

@@ -330,16 +330,10 @@
                             <div class="col-xs-6 total_value"><span class='WebRupee'>Rs. </span> {{ $invoice->total_discount }}</div>
                         </div>
                         <hr>
-
-                        <!-- <hr>
-                        <div class="row">
-                            <div class="col-xs-6 due_date_heading">Due Date:</div>
-                            <div class="col-xs-6 due_date_value">{{ \Carbon\Carbon::parse($invoice->due_date)->format('d-M-Y') }}</div>
-                        </div> -->
                     </div>
                     <!-- /.col -->
                 </div>
-                <div class="row">
+                <div class="row" style="margin-top:10px;">
                     <div class="col-xs-5"></div>
                             <div class="col-xs-3 grand_total_heading grand_total_row">Grand Total:</div>
                             <div class="col-xs-4 grand_total_value grand_total_row"><span class='WebRupee'>Rs. </span> {{ $invoice->total }}</div>

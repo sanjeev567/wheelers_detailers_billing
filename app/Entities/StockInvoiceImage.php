@@ -3,15 +3,10 @@
 namespace App\Entities;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Item extends Model
+class StockInvoiceImage extends Model
 {
-    use SoftDeletes;
-
-    protected $table = "items";
-
-    public $timestamps = true;
+    protected $table = "stock_invoice_images";
 
     /**
      * The attributes that are mass assignable.
@@ -19,7 +14,7 @@ class Item extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'price', 'price_without_tax', 'item_code', 'batch_code', 'size', 'tax_percent', 'tax_value', 'type', 'stock'
+        'stock_invoice_id', 'image', 'description', 'created_by'
     ];
 
     /**

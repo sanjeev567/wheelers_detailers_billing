@@ -6,7 +6,11 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1 class="curr_month">
-      Add Stock Invoice
+      @if (!empty($invoice))
+        Edit Stock Invoice
+      @else
+        Add Stock Invoice
+      @endif
     </h1>
   </section>
 
@@ -20,18 +24,20 @@
         <select class="form-control advisor-custom-select" id="customer" name="name" data-placeholder="Select Party">
           <option value=''></option>
           @foreach ($customers as $customer)
-          <option value="{{ $customer->id }}"> {{ $customer->name }}</option>
+          <option value="{{ $customer->id }}" {{ (!empty($invoice) && $invoice->seller_id == $customer->id)? 'selected="selected"' :'' }}> {{ $customer->name }}</option>
           @endforeach
         </select>
       </div>
       <div style="width:20%;float:left;margin-bottom:20px;">
         <label for="invoice-number" style="display:block;">Invoice Number</label>
-        <input type="text" name="invoice_number" id="invoice-number" class="form-control" style="min-height: 44px;" placeholder="Invoice Number">
+        <input type="text" name="invoice_number" id="invoice-number" class="form-control" style="min-height: 44px;" placeholder="Invoice Number"
+        value="{{ !empty($invoice)? $invoice->invoice_number:'' }}">
       </div>
 
       <div style="width:20%;float:left;margin-bottom:20px;margin-left:20px;margin-right:12px;">
         <label for="invoice-date" style="display:block;">Invoice Date</label>
-        <input type="date" name="invoice_date" id="invoice-date" class="form-control" style="min-height: 44px;" placeholder="Invoice Date">
+        <input type="date" name="invoice_date" id="invoice-date" class="form-control" style="min-height: 44px;" placeholder="Invoice Date"
+        value="{{ !empty($invoice)? $invoice->invoice_date:'' }}">
       </div>
 
       <div class="form-row">
@@ -39,9 +45,9 @@
           <label for="mobile">Invoice Images (multiple)</label>
           <input type="file" class="form-control" name="images[]" placeholder="Document Images" multiple>
         </div>
-        @if (isset($user))
+        @if (isset($invoice))
         <div class="col-md-9 mb-9" id="document-images">
-          @foreach ($images as $image)
+          @foreach ($invoiceImages as $image)
           <div class="user-docs-images-wrapper">
             <img  class="user-docs-images" alt="{{$image->image}}"
             src="{{ asset( config('app.user_doc_image_path') .'/'. $image->image) }}"
@@ -90,22 +96,36 @@
         <td>Action</td>
       </thead>
       <tbody>
+        @foreach ($invoiceItems as $item)
+        <tr>
+            <td class="dark">{{ $item->id }}</td>
+            <td class="dark">{{ $item->item_name }}</td>
+            <td><span class='WebRupee'>Rs. </span>{{ $item->item_cost_without_tax }}</td>
+            <td>{{ $item->tax_percent }}</td>
+            <td>{{ $item->quantity }}</td>
+            <td><span class='WebRupee'>Rs. </span>{{ ($item->item_cost * $item->quantity) - ($item->item_cost * $item->quantity * $item->discount/100) }}</td>
+            <td class="dark"><button class="btn btn-danger delete_btn">Remove</button></td>
+        </tr>
+        @endforeach
       </tbody>
     </table>
     <button type="button" class="btn btn-info" style="margin-top:20px;" id="generate_invoice_btn">Save</button>
   </section>
   <!-- /.content -->
 </div>
+<div id="img-cover"></div>
+    <div id="img-container">HEY</div>
 @endsection
 
 @section ('body_scripts')
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.full.min.js"></script>
 <script src="{{ config('app.app_public_path') }}/js/lib/jquery.validate.min.js"></script>
-<script src="{{ config('app.app_public_path') }}js/add-stock-invoice.js"></script>
+<script src="{{ config('app.app_public_path') }}/js/add-stock-invoice.js"></script>
 @endsection
 
 @section ('styles')
 <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="{{ config('app.app_public_path') }}/css/add-stock-invoice.css"  media="all">
 @endsection

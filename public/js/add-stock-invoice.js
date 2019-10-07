@@ -59,13 +59,12 @@ $(function () {
 
     $('#generate_invoice_btn').click(function (event) {
         event.preventDefault();
-        var _token = $('[name="_token"]').val();
         let customer = $('#customer').val();
         let selectedData = datatable.rows().data();
         let newData = [];
         let formData = new FormData($('#invoice-form')[0]);
         for (i = 0; i < selectedData.length; i++) {
-            let temp = selectedData[i].slice();
+            let temp = selectedData[i].slice(); // clone array
             temp.pop(); // remove action column
             newData.push(temp);
         }
@@ -76,7 +75,6 @@ $(function () {
         $.ajax({
             url: prefix + "/add-stock-invoice",
             type: "POST",
-            // data: { _token: _token, customer: customer, data: newData },
             data:formData,
             dataType: "json",
             enctype: 'multipart/form-data',
@@ -101,8 +99,8 @@ $(function () {
         $(img).addClass('maximize-img');
         $('#img-container').html(img.clone())
             .css({
-                'margin-top': '-' + img.height() / 2 + 'px',
-                'margin-left': '-' + img.width() / 2 + 'px'
+                'margin-top': '-' + (img.height() / 2 + 100) + 'px',
+                'margin-left': '-' + (img.width() / 2 + 100) + 'px'
             }).fadeIn();
 
         $(img).removeClass('maximize-img');

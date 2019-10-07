@@ -61,6 +61,10 @@ $(function () {
 
     $('#generate_invoice_btn').click(function (event) {
         event.preventDefault();
+        createInvoice(false);
+    });
+
+    function createInvoice (force) {
         var _token = $('[name="_token"]').val();
         let customer = $('#customer').val();
         let selectedData = datatable.rows().data();
@@ -75,14 +79,18 @@ $(function () {
         $.ajax({
             url: prefix + "/generate-invoice",
             type: "POST",
-            data: { _token: _token, customer: customer, data: newData },
+            data: { _token: _token, customer: customer, data: newData, force: force },
             dataType: "json",
             success: function (response) {
                 if (response.status == '1') {
                     window.location.href = prefix + '/invoice/' + response.data;
                 } else {
-                    if (response.msg != '' && response.msg != undefined) {
-                        showFailureAlert(response.msg);
+                    if (response.status == '-1' && response.msg != '' && response.msg != undefined) {
+                        if (!verifyRemove(response.msg)) {
+                            return false;
+                        } else {
+                            createInvoice(true);
+                        }
                     } else {
                         showFailureAlert('Unable to generate invoice. Please try again later');
                     }
@@ -92,7 +100,7 @@ $(function () {
                 alert('Error in creating invoice');
             }
         });
-    });
+    }
 
     $('#invoice_type').on('change', handleInvoiceTypeChange);
 

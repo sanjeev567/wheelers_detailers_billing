@@ -35,6 +35,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/add-stock/{id?}', 'StockController@addStockView');
     Route::post('/add-stock-invoice', 'StockController@addStockInvoice');
     Route::get('/stock-invoice-list', 'StockController@stockInvoiceList');
+    Route::post('/delete-user-doc-image', 'StockController@deleteUserDocumentImage');
     Route::get('/view-stock', 'StockController@viewStock');
 });
 

@@ -9,6 +9,7 @@ use App\Entities\StockInvoiceDetail;
 use App\Entities\StockInvoiceImage;
 use App\Http\Controllers\Controller as BaseController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class StockController extends BaseController
 {
@@ -20,12 +21,25 @@ class StockController extends BaseController
         try {
             if (view()->exists('add-stock-invoice')) {
                 if (!empty($request->id)) {
-                    $customers = Customer::whereId($request->id)->first();
+                    $invoice = StockInvoice::whereId($request->id)->first();
+                    $invoiceItems = StockInvoiceDetail::where('stock_invoice_id', $request->id)->get();
+                    $invoiceImages = StockInvoiceImage::where('stock_invoice_id', $request->id)->get();
                 } else {
-                    $customers = Customer::all();
+                    $invoice = null;
+                    $invoiceItems = [];
+                    $invoiceImages = [];
                 }
+
+                $customers = Customer::all();
                 $items = Item::whereType('material')->get();
-                return view('add-stock-invoice', ['items' => $items, 'customers' => $customers]);
+
+                return view('add-stock-invoice', [
+                    'items' => $items,
+                    'customers' => $customers,
+                    'invoice' => $invoice,
+                    'invoiceItems' => $invoiceItems,
+                    'invoiceImages' => $invoiceImages,
+                ]);
             } else {
                 return view('view-not-found', ['viewName' => 'Add Stock Invoice page']);
             }
@@ -205,21 +219,21 @@ class StockController extends BaseController
                 return response()->json(['status' => 0, 'data' => $validator->errors()]);
             }
 
-            $userImage = UserImage::whereId($request->id)->first();
+            $stockInvoiceImage = StockInvoiceImage::whereId($request->id)->first();
 
             $imageFolderPath = (config('app.app_public_path_absolute') !== "")
             ? (config('app.app_public_path_absolute') . config('app.user_doc_image_path'))
             : public_path(config('app.user_doc_image_path'));
 
-            $fileToDelete = $imageFolderPath . '/' . $userImage->image;
+            $fileToDelete = $imageFolderPath . '/' . $stockInvoiceImage->image;
 
             if (file_exists($fileToDelete)) {
                 unlink($fileToDelete);
             }
 
-            $userImage->delete();
-            if ($userImage) {
-                return response()->json(['status' => '1', 'data' => (string) $userImage]);
+            $stockInvoiceImage->delete();
+            if ($stockInvoiceImage) {
+                return response()->json(['status' => '1', 'data' => (string) $stockInvoiceImage]);
             } else {
                 return response()->json(['status' => '0', 'data' => null]);
             }

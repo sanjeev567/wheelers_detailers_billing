@@ -89,10 +89,10 @@ class InvoiceController extends BaseController
                     $totalWithoutTax += $itemDetails->price_without_tax * $row[3];
                     $totalDiscount += $itemDetails->price * $row[3] * $row[4] / 100;
 
-                    if ($itemDetails->type == "material" && $itemDetails->stock - $row[3] < 0) {
+                    if ($request->force == "false" && $itemDetails->type == "material" && $itemDetails->stock - $row[3] < 0) {
                         \DB::rollback();
-                        return response()->json(['status' => '0', 'data' => null, 'msg' => 'Not enough stock for material: ' . $itemDetails->name.
-                         ', only '.$itemDetails->stock.' left in inventory.']);
+                        return response()->json(['status' => '-1', 'data' => null, 'msg' => 'Not enough stock for material: ' . $itemDetails->name.
+                         ', only '.$itemDetails->stock.' left in inventory. Are you sure you want to make this invoice?']);
                     } else if ($itemDetails->type == "material") {
                         $itemDetails->update([
                             'stock' => $itemDetails->stock - $row[3],

@@ -18,6 +18,8 @@
         <td>Name</td>
         <td>Price</td>
         <td>Size</td>
+        <td>Type</td>
+        <td>Stock</td>
         <td>Actions</td>
       </thead>
       <tbody>
@@ -26,6 +28,12 @@
             <td>{{ $item->name }}</td>
             <td>{{ $item->price_without_tax }}</td>
             <td>{{ ($item->size == 's')?'Small':(($item->size =='m')?'Medium':(($item->size == 'l')?'Large':'-NA-')) }}</td>
+            <td>{{ ucfirst($item->type) }}</td>
+            @if ( $item->type == "material")
+            <td>{{ $item->stock }}</td>
+            @else
+            <td>-</td>
+            @endif
             <td> <a href="{{ config('app.app_url_prefix') }}/add-item/{{ $item->id }}" class="btn btn-info">Edit</a>
             | <a class="btn btn-danger delete-item-btn" href="#" data-id="{{ $item->id }}">Delete</a></td>
           </tr>

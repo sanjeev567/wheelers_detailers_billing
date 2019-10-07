@@ -18,21 +18,27 @@
                     <form method="POST" id="item-form">
                         <input type="hidden" name="id" value="{{ !empty($item)?$item->id:'' }}">
                         {{ csrf_field() }}
-                        <div class="input-group">
-                            <input class="input--style-2" type="text" placeholder="Name" name="name" value="{{ !empty($item)?$item->name:'' }}">
+                        <div class="row row-space">
+                            <div class="col-8">
+                                <div class="input-group">
+                                    <input class="input--style-2" type="text" placeholder="Name" name="name" value="{{ !empty($item)?$item->name:'' }}">
+                                </div>
+                            </div>
+                            <div class="col-4">
+                            <div class="input-group">
+                                    <div class="rs-select2 js-select-simple select--no-search padd-4">
+                                        <select name="type" class="padd-4">
+                                            <option disabled="disabled" {{ (empty($item) || $item->size == '' || $item->size == null)? 'selected="selected"' :'' }}>Type</option>
+                                            <option value="material" {{ (!empty($item) && $item->size == 's')? 'selected="selected"' :'' }}>Material</option>
+                                            <option value="treatment" {{ (!empty($item) && $item->size == 'l')? 'selected="selected"' :'' }}>Treatment</option>
+                                        </select>
+                                        <div class="select-dropdown"></div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="row row-space">
-                            <div class="col-4">
-                                <div class="input-group">
-                                    <input class="input--style-2" type="text" placeholder="Price" name="price" value="{{ !empty($item)?$item->price_without_tax:'' }}">
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="input-group">
-                                    <input class="input--style-2" type="number" placeholder="Tax" name="tax" value="{{ !empty($item)?$item->tax_percent:'' }}">
-                                </div>
-                            </div>
-                            <div class="col-4">
+                            <div class="col-3">
                                 <div class="input-group">
                                     <div class="rs-select2 js-select-simple select--no-search padd-4">
                                         <select name="size" class="padd-4">
@@ -43,6 +49,21 @@
                                         </select>
                                         <div class="select-dropdown"></div>
                                     </div>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="input-group">
+                                    <input class="input--style-2" type="number" placeholder="Price" name="price" value="{{ !empty($item)?$item->price_without_tax:'' }}">
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="input-group">
+                                    <input class="input--style-2" type="number" placeholder="Tax" name="tax" value="{{ !empty($item)?$item->tax_percent:'' }}">
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="input-group">
+                                    <input class="input--style-2" type="text" placeholder="Stock" name="stock" value="{{ !empty($item)?$item->stock:'' }}">
                                 </div>
                             </div>
                         </div>

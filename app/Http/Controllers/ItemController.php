@@ -46,6 +46,8 @@ class ItemController extends BaseController
                 'tax_value' => ($request->price * $request->tax / 100),
                 'price_without_tax' => $request->price,
                 'price' => ($request->price + $request->price * $request->tax / 100),
+                'type' => $request->type,
+                'stock' => $request->stock
             ];
 
             if (!empty($request->id)) {

@@ -31,6 +31,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/package-list', 'PackageController@packageList');
 
     Route::post('/generate-invoice', 'InvoiceController@generateInvoice');
+
+    Route::get('/add-stock/{id?}', 'StockController@addStockView');
+    Route::post('/add-stock', 'StockController@addStock');
+    Route::get('/stock-invoice-list', 'StockController@stockInvoiceList');
+    Route::get('/view-stock', 'StockController@viewStock');
 });
 
 Route::group(['middleware' => 'guest'], function () {

@@ -30,6 +30,9 @@ $(function () {
             },
             size: {
                 required:true
+            },
+            type: {
+                required:true
             }
         },
         errorPlacement: function (error, element) {

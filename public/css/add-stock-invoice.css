@@ -33,7 +33,7 @@
   }
 
   .user-docs-images-wrapper {
-    display: inline-block;
+    display: table-cell;
     position: relative;
   }
 

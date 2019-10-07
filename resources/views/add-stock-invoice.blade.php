@@ -45,8 +45,9 @@
           <label for="mobile">Invoice Images (multiple)</label>
           <input type="file" class="form-control" name="images[]" placeholder="Document Images" multiple>
         </div>
+        </div>
         @if (isset($invoice))
-        <div class="col-md-9 mb-9" id="document-images">
+        <div id="document-images">
           @foreach ($invoiceImages as $image)
           <div class="user-docs-images-wrapper">
             <img  class="user-docs-images" alt="{{$image->image}}"
@@ -57,7 +58,7 @@
           @endforeach
         </div>
         @endif
-      </div>
+
 
       <div style="width:20%;float:left;clear:left;">
       <label for="new_item" style="display:block;">Select Item</label>

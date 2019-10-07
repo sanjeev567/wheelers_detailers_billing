@@ -16,7 +16,7 @@ class CreateStockInvoiceTable extends Migration
         Schema::create('stock_invoices', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->unsignedInteger('customer_id');
+            $table->unsignedInteger('seller_id');
             $table->string('invoice_number');
             $table->decimal('total');
             $table->integer('total_items');
@@ -57,7 +57,7 @@ class CreateStockInvoiceTable extends Migration
             $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->nullable()->default(\DB::raw('NULL ON UPDATE CURRENT_TIMESTAMP'));
             $table->foreign('created_by')->references('id')->on('users');
-            $table->foreign('customer_id')->references('id')->on('customers');
+            $table->foreign('seller_id')->references('id')->on('customers');
         });
     }
 

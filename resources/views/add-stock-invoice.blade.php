@@ -1,100 +1,111 @@
 @extends('master')
-@section('page_heading','Invoice View')
+@section('page_heading','Generate Invoice')
 @section ('content')
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1 class="curr_month">
+      Add Stock Invoice
+    </h1>
+  </section>
+
   <!-- Main content -->
-  <section class="">
-  <div class="page-wrapper bg-color-warapper p-t-180 p-b-100 font-robo">
-        <div class="cust-wrapper wrapper--w960">
-            <div class="card card-2">
-                <div class="card-heading"></div>
-                <div class="card-body">
-                    <h2 class="title">Customer Registration</h2>
-                    <form method="POST" id="customer-form">
-                        <input type="hidden" name="id"  id="id" value="{{ !empty($customer)?$customer->id:'' }}">
-                        {{ csrf_field() }}
-                        <div class="row row-space">
-                            <div class="col-6">
-                                <div class="input-group">
-                                <input class="input--style-2" type="text" placeholder="Name" name="name" value="{{ !empty($customer)?$customer->name:'' }}">
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="input-group">
-                                    <input class="input--style-2" type="text" placeholder="GST Number" name="gst_number" value="{{ !empty($customer)?$customer->gst_number:'' }}">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row row-space">
-                            <div class="col-4">
-                                <div class="input-group">
-                                    <input class="input--style-2" type="text" placeholder="Mobile" name="mobile" value="{{ !empty($customer)?$customer->mobile:'' }}">
-                                </div>
-                            </div>
-                            <div class="col-8">
-                                <div class="input-group">
-                                    <input class="input--style-2" type="text" placeholder="Email" name="email" value="{{ !empty($customer)?$customer->email:'' }}">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row row-space">
-                            <div class="col-7">
-                                <div class="input-group">
-                                    <input class="input--style-2" type="text" placeholder="Address" name="address" value="{{ !empty($customer)?$customer->address:'' }}">
-                                </div>
-                            </div>
-                            <div class="col-5">
-                                <div class="input-group">
-                                    <div style="width:100%;"class="rs-select2 js-select-simple padd-4">
-                                        <select name="state" class="padd-4">
-                                            <option disabled="disabled" selected>State</option>
-                                            @foreach ($states as $state)
-                                                <option value="{{$state->code}}" {{ (!empty($state) && !empty($customer) && $state->code == $customer->state)? 'selected="selected"' :'' }}>{{$state->state}}</option>
-                                            @endforeach
-                                        </select>
-                                        <div class="select-dropdown"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="p-t-30">
-                            <button class="btn btn--radius btn--green"  id="add-customer-btn" type="submit">Add</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
+  <section class="content">
+    <form method="post" action="#" name="invoice-form" id="invoice-form" style="margin-bottom:15px;display:inline-block;">
+      {{ csrf_field() }}
+
+      <div style="width:50%;margin-bottom:30px;">
+      <label for="customer" style="display:block;">Select Party</label>
+        <select class="form-control advisor-custom-select" id="customer" name="name" data-placeholder="Select Party">
+          <option value=''></option>
+          @foreach ($customers as $customer)
+          <option value="{{ $customer->id }}"> {{ $customer->name }}</option>
+          @endforeach
+        </select>
+      </div>
+      <div style="width:20%;float:left;margin-bottom:20px;">
+        <label for="invoice-number" style="display:block;">Invoice Number</label>
+        <input type="text" name="invoice_number" id="invoice-number" class="form-control" style="min-height: 44px;" placeholder="Invoice Number">
+      </div>
+
+      <div style="width:20%;float:left;margin-bottom:20px;margin-left:20px;margin-right:12px;">
+        <label for="invoice-date" style="display:block;">Invoice Date</label>
+        <input type="date" name="invoice_date" id="invoice-date" class="form-control" style="min-height: 44px;" placeholder="Invoice Date">
+      </div>
+
+      <div class="form-row">
+        <div class="col-md-6">
+          <label for="mobile">Invoice Images (multiple)</label>
+          <input type="file" class="form-control" name="images[]" placeholder="Document Images" multiple>
         </div>
-    </div>
+        @if (isset($user))
+        <div class="col-md-9 mb-9" id="document-images">
+          @foreach ($images as $image)
+          <div class="user-docs-images-wrapper">
+            <img  class="user-docs-images" alt="{{$image->image}}"
+            src="{{ asset( config('app.user_doc_image_path') .'/'. $image->image) }}"
+            onerror="this.onerror=null; this.src='{{ asset( config('app.app_public_path') .'/img/not_found.png') }}' ">
+            <span class="close user-doc-delete-image" data-id="{{$image->id}}">x</span>
+          </div>
+          @endforeach
+        </div>
+        @endif
+      </div>
+
+      <div style="width:20%;float:left;clear:left;">
+      <label for="new_item" style="display:block;">Select Item</label>
+        <select class="form-control advisor-custom-select" id="new_item" name="name" data-placeholder="Select Item" style="width: 100% !important;">
+          <option value=''></option>
+          @foreach ($items as $item)
+          <option value="{{ $item->id }}" data-price="{{ $item->price_without_tax }}"> {{ $item->name }} - {{ ($item->size == 's')?'Small':(($item->size =='m')?'Medium':(($item->size == 'l')?'Large':''))}}</option>
+          @endforeach
+        </select>
+      </div>
+      <div style="width:14%;float:left;margin-left:30px;">
+        <label for="buying_price" style="display:block;">Buying Price</label>
+        <input type="number" name="buying_price" id="buying_price" class="form-control" placeholder="Buying Price">
+      </div>
+      <div style="width:10%;float:left;margin-left:30px;">
+        <label for="selling_price" style="display:block;">Selling Price</label>
+        <input type="number" name="" id="selling_price" class="form-control" placeholder="Price" readonly>
+      </div>
+      <div style="width:10%;float:left;margin-left:30px;">
+        <label for="new-quantity" style="display:block;">Quantity</label>
+        <input type="number" name="quantity" id="new-quantity" min="1" class="form-control" placeholder="Quantity" value="1">
+      </div>
+      <div style="width:15%;float:left;margin-left:30px;margin-bottom:30px;">
+        <input type="submit" class="btn btn-info add-item-btn" value="Add" style="margin-top:31px;">
+      </div>
+    </form>
+
+    <table id="item-list-table" class="stripe">
+      <thead>
+        <td>Item ID</td>
+        <td>Item</td>
+        <td>Buying Price</td>
+        <td>Selling Price</td>
+        <td>Quantity</td>
+        <td>Total</td>
+        <td>Action</td>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+    <button type="button" class="btn btn-info" style="margin-top:20px;" id="generate_invoice_btn">Save</button>
   </section>
   <!-- /.content -->
 </div>
 @endsection
 
 @section ('body_scripts')
-    <script src="{{ config('app.app_public_path') }}/vendor/datepicker/moment.min.js"></script>
-    <script src="{{ config('app.app_public_path') }}/vendor/datepicker/daterangepicker.js"></script>
-    <script src="{{ config('app.app_public_path') }}/vendor/select2/select2.min.js"></script>
-    <script src="{{ config('app.app_public_path') }}/js/lib/jquery.validate.min.js"></script>
-
-    <!-- Main JS-->
-    <script src="{{ config('app.app_public_path') }}/js/add-customer.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.full.min.js"></script>
+<script src="{{ config('app.app_public_path') }}/js/lib/jquery.validate.min.js"></script>
+<script src="{{ config('app.app_public_path') }}js/add-stock-invoice.js"></script>
 @endsection
 
 @section ('styles')
 <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css" rel="stylesheet" />
-
-<!-- Icons font CSS-->
-    <link href="{{ config('app.app_public_path') }}/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
-    <link href="{{ config('app.app_public_path') }}/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
-    <!-- Font special for pages-->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
-
-    <!-- Vendor CSS-->
-    <link href="{{ config('app.app_public_path') }}/vendor/select2/select2.min.css" rel="stylesheet" media="all">
-    <link href="{{ config('app.app_public_path') }}/vendor/datepicker/daterangepicker.css" rel="stylesheet" media="all">
-
-    <!-- Main CSS-->
-    <link rel="stylesheet" href="{{ config('app.app_public_path') }}/css/add-customer.css"  media="all">
 @endsection

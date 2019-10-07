@@ -33,7 +33,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/generate-invoice', 'InvoiceController@generateInvoice');
 
     Route::get('/add-stock/{id?}', 'StockController@addStockView');
-    Route::post('/add-stock', 'StockController@addStock');
+    Route::post('/add-stock-invoice', 'StockController@addStockInvoice');
     Route::get('/stock-invoice-list', 'StockController@stockInvoiceList');
     Route::get('/view-stock', 'StockController@viewStock');
 });

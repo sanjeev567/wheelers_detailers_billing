@@ -93,7 +93,7 @@ class InvoiceController extends BaseController
                         \DB::rollback();
                         return response()->json(['status' => '0', 'data' => null, 'msg' => 'Not enough stock for material: ' . $itemDetails->name.
                          ', only '.$itemDetails->stock.' left in inventory.']);
-                    } else {
+                    } else if ($itemDetails->type == "material") {
                         $itemDetails->update([
                             'stock' => $itemDetails->stock - $row[3],
                         ]);

@@ -22,13 +22,14 @@ body {
 
 .mid_header {
   min-height: 137px !important;
-  padding-top: 50px !important;
+  padding-top: 70px !important;
 }
 
 .invoice_word {
   letter-spacing: 6px !important;
   font-size: 42px !important;
   color:#000 !important;
+  font-weight: bold !important;
 }
 
 .customer_name {
@@ -59,7 +60,7 @@ body {
 }
 
 .item_list_header {
-  background-color: #414143 !important;
+  background-color: #000 !important;
   min-height: 30px !important;
   margin-left: -15px !important;
   margin-right: -15px !important;
@@ -109,7 +110,6 @@ body {
 .text_amount_row div {
   letter-spacing: 0px !important;
   font-size: 12px !important;
-  font-weight: normal !important;
 }
 
 .seller_info div {
@@ -134,13 +134,13 @@ body {
 }
 
 .signature {
-  margin-top:100px !important;
+  margin-top:70px !important;
   float: right !important;
   font-weight:bold !important;
 }
 
 .grand_total_row {
-  background-color: #414143 !important;
+  background-color: #000 !important;
   color:#fff !important;
   padding-top:10px !important;
   padding-bottom:10px !important;
@@ -168,7 +168,9 @@ body {
   color: #464646!important;
 }
 
-
+.total_heading {
+  font-weight: bold !important;
+}
 
 
 

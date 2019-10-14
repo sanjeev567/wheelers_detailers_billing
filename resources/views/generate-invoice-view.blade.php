@@ -52,6 +52,7 @@
             letter-spacing: 6px;
             font-size: 48px;
             font-weight: bold;
+            padding-left: 50px;
         }
 
         .customer_name {
@@ -69,6 +70,7 @@
             color: #888;
             letter-spacing: 2px;
             font-size: 16px;
+            padding-left: 50px;
         }
 
         .invoice_to {
@@ -176,7 +178,7 @@
         }
 
         .signature {
-            margin-top:70px;
+            margin-top:60px;
             float: right;
         }
 
@@ -188,7 +190,6 @@
         }
 
         .signature_wrapper {
-            border: 1px solid #000;
             margin-top: 10px;
         }
 
@@ -210,6 +211,12 @@
             right: 24px;
             top: 30px;
             color: #464646;
+        }
+
+        .signature_border{
+            border: 1px solid #000 !important;
+            display: flow-root;
+            padding: 0px 10px;
         }
     </style>
     <link rel="stylesheet" media="print" href="{{ config('app.app_public_path') }}/css/invoice-print.css">
@@ -336,9 +343,13 @@
                 </div>
                 <div class="row" style="margin-top:10px;">
                     <div class="col-xs-5"></div>
-                            <div class="col-xs-3 grand_total_heading grand_total_row">Grand Total:</div>
-                            <div class="col-xs-4 grand_total_value grand_total_row"><span class='WebRupee'>Rs. </span> {{ $invoice->total }}</div>
+                    <div class="col-xs-7">
+                        <div>
+                            <div class="col-xs-5 grand_total_heading grand_total_row">Grand Total:</div>
+                            <div class="col-xs-7 grand_total_value grand_total_row"><span class='WebRupee'>Rs. </span> {{ $invoice->total }}</div>
                         </div>
+                    </div>
+                </div>
                 <!-- /.row -->
                 <hr style="margin-bottom:10px;margin-top:10px;">
                 <div class="row text_amount_row">
@@ -369,8 +380,10 @@
                         </div>
                         <div class="row signature_wrapper">
                             <div class="col-xs-12">
-                                <div class="seller_name">{{config('app_config.SELLER_NAME')}}</div>
-                                <div class="signature">Authorised Signatory</div>
+                                <div class="signature_border">
+                                    <div class="seller_name">{{config('app_config.SELLER_NAME')}}</div>
+                                    <div class="signature">Authorised Signatory</div>
+                                </div>
                             </div>
                         </div>
                     </div>

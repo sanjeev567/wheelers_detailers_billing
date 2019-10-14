@@ -51,6 +51,7 @@
         .invoice_word {
             letter-spacing: 6px;
             font-size: 48px;
+            font-weight: bold;
         }
 
         .customer_name {
@@ -101,6 +102,7 @@
         .total_heading {
             font-size: 15px;
             color:#666;
+            font-weight: bold;
         }
 
         .total_value {
@@ -140,7 +142,6 @@
         .text_amount_row span, .text_amount_row div{
             letter-spacing: 0px;
             font-size: 12px;
-            font-weight: normal;
         }
 
         .border_black {
@@ -175,7 +176,7 @@
         }
 
         .signature {
-            margin-top:100px;
+            margin-top:70px;
             float: right;
         }
 
@@ -358,12 +359,12 @@
                     <div class="col-xs-6 border_black seller_info">
                         <div class="row">
                             <div class="col-xs-12">
-                                <h5 style="margin-top:0;">Bank Details:-</h5>
-                                <div>Paytm: <span> 9311155553 </span> </div>
-                                <div>Bank: <span>{{ $invoice->seller_bank }} </span> </div>
-                                <div>Branch: <span>{{ $invoice->seller_branch }} </span> </div>
-                                <div>IFS Code: <span>{{ $invoice->seller_ifsc }} </span> </div>
-                                <div>Account: <span>{{ $invoice->seller_account_number }} </span> </div>
+                                <h5 style="margin-top:0;font-weight:bold;">Bank Details:-</h5>
+                                <div><span style="font-weight:bold;">Paytm:</span> <span> 9311155553 </span> </div>
+                                <div><span style="font-weight:bold;">Bank:</span> <span>{{ $invoice->seller_bank }} </span> </div>
+                                <div><span style="font-weight:bold;">Branch:</span> <span>{{ $invoice->seller_branch }} </span> </div>
+                                <div><span style="font-weight:bold;">IFS Code:</span> <span>{{ $invoice->seller_ifsc }} </span> </div>
+                                <div><span style="font-weight:bold;">Account:</span> <span>{{ $invoice->seller_account_number }} </span> </div>
                             </div>
                         </div>
                         <div class="row signature_wrapper">

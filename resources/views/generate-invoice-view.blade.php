@@ -348,7 +348,7 @@
                         </div>
                         <div class="row">
                             <div class="col-xs-12 border_black t_c">
-                                <h5>Terms & Conditions:-</h5>
+                                <h5 style="font-weight:bold;">Terms & Conditions:-</h5>
                                 @foreach ( config('app_config.SELLER_TERMS_AND_CONDITIONS') as $term )
                                     <div>- {{ $term }}</div>
                                 @endforeach
@@ -359,6 +359,7 @@
                         <div class="row">
                             <div class="col-xs-12">
                                 <h5 style="margin-top:0;">Bank Details:-</h5>
+                                <div>Paytm: <span> 9311155553 </span> </div>
                                 <div>Bank: <span>{{ $invoice->seller_bank }} </span> </div>
                                 <div>Branch: <span>{{ $invoice->seller_branch }} </span> </div>
                                 <div>IFS Code: <span>{{ $invoice->seller_ifsc }} </span> </div>

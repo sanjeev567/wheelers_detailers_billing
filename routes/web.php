@@ -11,6 +11,7 @@
 |
  */
 Route::group(['middleware' => 'auth'], function () {
+    Route::get('/logout', 'Auth\LoginController@logout');
     Route::get('/', 'InvoiceController@invoiceView');
     Route::get('/home', 'InvoiceController@invoiceView');
     Route::get('/invoice-list', 'InvoiceController@invoiceList');

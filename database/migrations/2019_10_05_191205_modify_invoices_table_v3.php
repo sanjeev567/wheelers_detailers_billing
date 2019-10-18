@@ -26,7 +26,7 @@ class ModifyInvoicesTableV3 extends Migration
     public function down()
     {
         Schema::table('invoices', function (Blueprint $table) {
-            $table->dropColum('seller_state');
+            $table->dropColumn('seller_state');
         });
     }
 }

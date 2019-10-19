@@ -33,12 +33,12 @@
             </li>
             <li>
                 <a href="{{ config('app.app_url_prefix') }}/add-stock">
-                    <i class="fa fa-user-plus"></i> <span>Add Stock Invoice</span>
+                    <i class="fa fa-user-plus"></i> <span>Add Stock</span>
                 </a>
             </li>
             <li>
                 <a href="{{ config('app.app_url_prefix') }}/stock-invoice-list">
-                    <i class="fa fa-list"></i> <span>List Stock Invoice</span>
+                    <i class="fa fa-list"></i> <span>List Stock</span>
                 </a>
             </li>
             <li>

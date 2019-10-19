@@ -7,9 +7,9 @@
   <section class="content-header">
     <h1 class="curr_month">
       @if (!empty($invoice))
-        Edit Stock Invoice
+        Edit Stock
       @else
-        Add Stock Invoice
+        Add Stock
       @endif
     </h1>
   </section>

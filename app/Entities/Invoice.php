@@ -48,6 +48,8 @@ class Invoice extends Model
         'invoice_number',
         'customer_state',
         'seller_state',
+        'challan_number',
+        'type'
     ];
 
     /**

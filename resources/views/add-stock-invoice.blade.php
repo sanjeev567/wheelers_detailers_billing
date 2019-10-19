@@ -7,9 +7,9 @@
   <section class="content-header">
     <h1 class="curr_month">
       @if (!empty($invoice))
-        Edit Stock Invoice
+        Edit Stock
       @else
-        Add Stock Invoice
+        Add Stock
       @endif
     </h1>
   </section>
@@ -103,6 +103,12 @@
             <td class="dark">{{ $item->id }}</td>
             <td class="dark">{{ $item->item_name }}</td>
             <td><span class='WebRupee'>Rs. </span>{{ $item->item_cost_without_tax }}</td>
+            <td>
+            <span class='WebRupee'>Rs. </span>
+            {{$items->first(function($itemDetail) use ($item) {
+                return $itemDetail->id == $item->item_id;
+              })->price_without_tax}}
+            </td>
             <td>{{ $item->tax_percent }}</td>
             <td>{{ $item->quantity }}</td>
             <td><span class='WebRupee'>Rs. </span>{{ ($item->item_cost * $item->quantity) - ($item->item_cost * $item->quantity * $item->discount/100) }}</td>

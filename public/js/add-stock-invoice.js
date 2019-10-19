@@ -45,7 +45,7 @@ $(function () {
             buying_price,
             price,
             quantity,
-            Math.round(price * quantity * 100) / 100,
+            Math.round(buying_price * quantity * 100) / 100,
             '<button class="btn btn-danger delete_btn">Remove</button>'
         ]).draw(false);
     });

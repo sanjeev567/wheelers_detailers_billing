@@ -381,7 +381,7 @@
                         <div class="row signature_wrapper">
                             <div class="col-xs-12">
                                 <div class="signature_border">
-                                    <div class="seller_name">{{config('app_config.SELLER_NAME')}}</div>
+                                    <div class="seller_name">{{ $invoice->seller_name }}</div>
                                     <div class="signature">Authorised Signatory</div>
                                 </div>
                             </div>

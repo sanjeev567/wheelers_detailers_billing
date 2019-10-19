@@ -10,8 +10,6 @@ $(function () {
         }
     });
 
-    handleInvoiceTypeChange();
-
     $("#invoice-form").validate({
         rules: {
             name: {
@@ -98,23 +96,6 @@ $(function () {
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 alert('Error in creating invoice');
-            }
-        });
-    }
-
-    $('#invoice_type').on('change', handleInvoiceTypeChange);
-
-    function handleInvoiceTypeChange() {
-        var type = $('#invoice_type').val();
-        $('#new_item option').removeAttr('disabled');
-        $('#new_item option[data-type!="'+type+'"]').prop('disabled', true);
-
-        $("#new_item").val(null).trigger("change");
-        $("#new_item").select2("destroy");
-        $('#new_item').select2({
-            containerCssClass: ':all:',
-            placeholder: function () {
-                $(this).data('placeholder');
             }
         });
     }

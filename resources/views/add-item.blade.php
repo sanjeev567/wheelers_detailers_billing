@@ -27,10 +27,10 @@
                             <div class="col-4">
                             <div class="input-group">
                                     <div class="rs-select2 js-select-simple select--no-search padd-4">
-                                        <select name="type" class="padd-4">
-                                            <option disabled="disabled" {{ (empty($item) || $item->size == '' || $item->size == null)? 'selected="selected"' :'' }}>Type</option>
-                                            <option value="material" {{ (!empty($item) && $item->size == 's')? 'selected="selected"' :'' }}>Material</option>
-                                            <option value="treatment" {{ (!empty($item) && $item->size == 'l')? 'selected="selected"' :'' }}>Treatment</option>
+                                        <select id="new-type" name="type" class="padd-4">
+                                            <option disabled="disabled" {{ (empty($item) || $item->type == '' || $item->type == null)? 'selected="selected"' :'' }}>Type</option>
+                                            <option value="material" {{ (!empty($item) && $item->type == 'material')? 'selected="selected"' :'' }}>Material</option>
+                                            <option value="treatment" {{ (!empty($item) && $item->type == 'treatment')? 'selected="selected"' :'' }}>Treatment</option>
                                         </select>
                                         <div class="select-dropdown"></div>
                                     </div>

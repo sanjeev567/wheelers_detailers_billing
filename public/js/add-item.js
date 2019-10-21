@@ -29,7 +29,9 @@ $(function () {
                 required: true
             },
             size: {
-                required:true
+                required: function() {
+                    return $('#new-type').val() != "material";
+                }
             },
             type: {
                 required:true

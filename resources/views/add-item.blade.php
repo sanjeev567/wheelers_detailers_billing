@@ -40,14 +40,18 @@
                         <div class="row row-space">
                             <div class="col-3">
                                 <div class="input-group">
-                                    <div class="rs-select2 js-select-simple select--no-search padd-4">
-                                        <select name="size" class="padd-4">
+                                    <div class="rs-select2 js-select-simple select--no-search padd-4 type_treatment">
+                                        <select id="new-size" name="size" class="padd-4">
                                             <option disabled="disabled" {{ (empty($item) || $item->size == '' || $item->size == null)? 'selected="selected"' :'' }}>Size</option>
                                             <option value="s" {{ (!empty($item) && $item->size == 's')? 'selected="selected"' :'' }}>Small</option>
                                             <option value="m" {{ (!empty($item) && $item->size == 'm')? 'selected="selected"' :'' }}>Medium</option>
                                             <option value="l" {{ (!empty($item) && $item->size == 'l')? 'selected="selected"' :'' }}>Large</option>
                                         </select>
                                         <div class="select-dropdown"></div>
+                                    </div>
+
+                                    <div class="rs-select2 js-select-simple select--no-search padd-4 type_material">
+                                        <input class="input--style-2" type="text" placeholder="HSN Number" name="hsn_number" value="{{ !empty($item)?$item->hsn_number:'' }}">
                                     </div>
                                 </div>
                             </div>

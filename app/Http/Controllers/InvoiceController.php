@@ -183,6 +183,8 @@ class InvoiceController extends BaseController
                     ->join('items as i', 'i.id', '=', 'id.item_id')
                     ->select([
                         'id.*',
+                        'i.type as type',
+                        'i.hsn_number',
                         \DB::raw('(id.item_cost * id.quantity) - (id.item_cost * id.quantity * id.discount/100) as sub_total'),
                     ])
                     ->where('id.invoice_id', $request->id)

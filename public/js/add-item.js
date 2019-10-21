@@ -75,4 +75,22 @@ $(function () {
         return false;
     });
 
+    if ($('#new-type').val() =="material") {
+        $('.type_treatment').hide();
+    } else{
+        $('.type_material').hide();
+    }
+
+    $('#new-type').on('change', function() {
+        let val = $(this).val();
+
+        if (val == "material") {
+            $('.type_material').show();
+            $('.type_treatment').hide();
+        } else {
+            $('.type_material').hide();
+            $('.type_treatment').show();
+        }
+    });
+
 });

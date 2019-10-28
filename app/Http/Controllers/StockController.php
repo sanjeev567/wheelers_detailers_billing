@@ -61,7 +61,7 @@ class StockController extends BaseController
 
             $sellerDetails = Customer::whereId($request->customer)->first();
 
-            $invoice = StockInvoice::Create([
+            $data = [
                 'seller_id' => $request->customer,
                 'total_items' => count($request->data),
                 'created_by' => \Auth::id(),
@@ -71,7 +71,6 @@ class StockController extends BaseController
                 'customer_mobile' => config('app_config.SELLER_PHONE1'),
                 'customer_email' => '',
                 'customer_address' => config('app_config.SELLER_ADDRESS_LINE1') . config('app_config.SELLER_ADDRESS_LINE2') . config('app_config.SELLER_ADDRESS_LINE3'),
-                'invoice_number' => $request->invoice_number,
                 'customer_state' => config('app_config.SELLER_STATE'),
                 'buyer_gstin' => config('app_config.SELLER_GSTIN'),
 
@@ -85,7 +84,16 @@ class StockController extends BaseController
                 'total_tax' => '0',
                 'total_discount' => '0',
                 'total' => '0',
-            ]);
+                'type' => $request->type,
+            ];
+
+            if ($request->type == "challan") {
+                $data['challan_number'] = $request->invoice_number;
+            } else {
+                $data['invoice_number'] = $request->invoice_number;
+            }
+
+            $invoice = StockInvoice::Create($data);
 
             if ($invoice) {
 
@@ -166,7 +174,7 @@ class StockController extends BaseController
 
             $sellerDetails = Customer::whereId($request->customer)->first();
 
-            StockInvoice::whereId($request->id)->update([
+            $data = [
                 'seller_id' => $request->customer,
                 'total_items' => count($request->data),
                 'created_by' => \Auth::id(),
@@ -190,7 +198,16 @@ class StockController extends BaseController
                 'total_tax' => '0',
                 'total_discount' => '0',
                 'total' => '0',
-            ]);
+                'type' => $request->type,
+            ];
+
+            if ($request->type == "challan") {
+                $data['challan_number'] = $request->invoice_number;
+            } else {
+                $data['invoice_number'] = $request->invoice_number;
+            }
+
+            StockInvoice::whereId($request->id)->update($data);
 
             $oldInvoiceDetails = StockInvoiceDetail::where('stock_invoice_id', $request->id)->get();
 
@@ -280,6 +297,7 @@ class StockController extends BaseController
                     ->join('customers as c', 'c.id', '=', 'i.seller_id')
                     ->select([
                         'i.id as id',
+                        'i.type as type',
                         'i.total as total',
                         'c.name as seller_name',
                         'c.mobile as seller_mobile',

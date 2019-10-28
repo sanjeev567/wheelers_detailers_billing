@@ -49,6 +49,8 @@ class StockInvoice extends Model
         'customer_state',
         'seller_state',
         'invoice_date',
+        'challan_number',
+        'type'
     ];
 
     /**

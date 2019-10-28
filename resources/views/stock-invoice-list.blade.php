@@ -15,15 +15,17 @@
   <section class="content">
   <table id="customer-list-table" class="stripe">
       <thead>
+        <td>Type</td>
         <td>Customer Name</td>
         <td>Customer Mobile</td>
         <td>Total</td>
-        <td>Invoice Date</td>
+        <td>Invoice/Challan Date</td>
         <td>Action</td>
       </thead>
       <tbody>
         @foreach ($invoices as $invoice)
           <tr>
+            <td>{{ ucfirst($invoice->type) }}</td>
             <td>{{ $invoice->seller_name }}</td>
             <td>{{ $invoice->seller_mobile }}</td>
             <td>{{ $invoice->total }}</td>

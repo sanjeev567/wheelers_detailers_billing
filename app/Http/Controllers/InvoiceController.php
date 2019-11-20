@@ -78,24 +78,33 @@ class InvoiceController extends BaseController
                 'total_tax' => '0',
                 'total_discount' => '0',
                 'total' => '0',
-                'type' => (!empty($request->invoice_type))?$request->invoice_type:'treatment'
+                'type' => (!empty($request->invoice_type)) ? $request->invoice_type : 'treatment',
             ]);
 
             if ($invoice) {
                 foreach ($request->data as $row) {
-                    $itemDetails = Item::whereId($row[0])->first();
-                    $total += ($itemDetails->price * $row[3]) - ($itemDetails->price * $row[3] * $row[4] / 100);
-                    $totalTax += $itemDetails->tax_value * $row[3];
-                    $totalWithoutTax += $itemDetails->price_without_tax * $row[3];
-                    $totalDiscount += $itemDetails->price * $row[3] * $row[4] / 100;
+                    $dis = $row[4];
+                    $qty = $row[3];
 
-                    if ($request->force == "false" && $itemDetails->type == "material" && $itemDetails->stock - $row[3] < 0) {
+                    $itemDetails = Item::whereId($row[0])->first();
+
+                    $subTotalWithoutTax = $itemDetails->price_without_tax * $qty;
+                    $subTotalDiscount = ($itemDetails->price_without_tax * $qty * $dis / 100);
+                    $subTotalTax = (($subTotalWithoutTax - $subTotalDiscount) * $itemDetails->tax_percent / 100);
+                    $subTotal = $subTotalWithoutTax - $subTotalDiscount + $subTotalTax;
+
+                    $totalWithoutTax += $subTotalWithoutTax;
+                    $totalDiscount += $subTotalDiscount;
+                    $totalTax += $subTotalTax;
+                    $total += $subTotal;
+
+                    if ($request->force == "false" && $itemDetails->type == "material" && $itemDetails->stock - $qty < 0) {
                         \DB::rollback();
-                        return response()->json(['status' => '-1', 'data' => null, 'msg' => 'Not enough stock for material: ' . $itemDetails->name.
-                         ', only '.$itemDetails->stock.' left in inventory. Are you sure you want to make this invoice?']);
+                        return response()->json(['status' => '-1', 'data' => null, 'msg' => 'Not enough stock for material: ' . $itemDetails->name .
+                            ', only ' . $itemDetails->stock . ' left in inventory. Are you sure you want to make this invoice?']);
                     } else if ($itemDetails->type == "material") {
                         $itemDetails->update([
-                            'stock' => $itemDetails->stock - $row[3],
+                            'stock' => $itemDetails->stock - $qty,
                         ]);
                     }
 
@@ -105,8 +114,8 @@ class InvoiceController extends BaseController
                         'item_id' => $itemDetails->id,
                         'item_cost' => $itemDetails->price,
                         'item_cost_without_tax' => $itemDetails->price_without_tax,
-                        'quantity' => $row[3],
-                        'discount' => $row[4],
+                        'quantity' => $qty,
+                        'discount' => $dis,
                         'created_by' => \Auth::id(),
                         'item_name' => $itemDetails->name,
                         'tax_percent' => $itemDetails->tax_percent,

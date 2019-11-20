@@ -272,9 +272,9 @@
                                 <th>Product/Service</th>
                                 <th>HSN/SAC</th>
                                 <th>Unit Price</th>
-                                <th>Tax</th>
                                 <th>Qty</th>
-                                <th>Discount %</th>
+                                <th>Discount</th>
+                                <th>Tax</th>
                                 <th>Subtotal</th>
                             </tr>
                         </thead>
@@ -284,9 +284,9 @@
                                 <td class="dark">{{ $item->item_name }}</td>
                                 <td class="dark">{{ ($item->type=="treatment") ?config('app_config.TREATMENT_SAC_NUMBER'):$item->hsn_number }}</td>
                                 <td><span class='WebRupee'>Rs. </span>{{ $item->item_cost_without_tax }}</td>
-                                <td>{{ $item->tax_percent }} %</td>
                                 <td>{{ $item->quantity }}</td>
                                 <td>{{ $item->discount }} %</td>
+                                <td>{{ $item->tax_percent }} %</td>
                                 <td class="dark"><span class='WebRupee'>Rs. </span>{{ round($item->sub_total, 2) }}</td>
                             </tr>
                             @endforeach

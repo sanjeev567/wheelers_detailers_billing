@@ -28,7 +28,6 @@
             width: 793px !important;
             margin: 0 auto;
             font-size: 14px;
-            height: 100vh;
         }
 
         .header {
@@ -171,8 +170,6 @@
         }
 
         .bottom {
-            position: fixed;
-            bottom: 20px;
             width: 751px;
             padding: 10px;
         }
@@ -218,6 +215,22 @@
             display: flow-root;
             padding: 0px 10px;
         }
+
+        html, body {
+            height: 100%;
+        }
+        .page-wrap {
+            min-height: 100%;
+            /* equal to footer height */
+            margin-bottom: -495px;
+        }
+        .page-wrap:after {
+            content: "";
+            display: block;
+        }
+        .site-footer, .page-wrap:after {
+            height: 495px;
+        }
     </style>
     <link rel="stylesheet" media="print" href="{{ config('app.app_public_path') }}/css/invoice-print.css">
 </head>
@@ -228,6 +241,7 @@
 
         <!-- Main content -->
         <section class="invoice">
+        <div class="page-wrap">
                 <div class="row mid_header">
                     <span class="invoice-type">Original</span>
                     <div class="col-md-5 col-xs-5">
@@ -237,8 +251,8 @@
                                     <div class="customer_name color_theme">{{ $invoice->customer_name }}</div>
                                     <div><strong>Mobile </strong> {{ $invoice->customer_mobile }}</div>
                                     <div><strong>Email </strong> {{ $invoice->customer_email }}</div>
-                                    <div><strong>Address </strong> {{ $invoice->customer_address }}</div>
-                                    <div><strong>GST </strong> {{ $invoice->buyer_gstin }}</div>
+                                    <div style="text-transform:capitalize;"><strong>Address </strong> {{ $invoice->customer_address }}</div>
+                                    <div style="text-transform:uppercase;"><strong>GST </strong> {{ $invoice->buyer_gstin }}</div>
                                 </address>
                             </div>
                     </div>
@@ -269,7 +283,7 @@
                     <table class="table table-striped table-bordered item_table">
                         <thead class="item_list_header">
                             <tr>
-                                <th>Product/Service</th>
+                                <th style="width:25%">Product/Service</th>
                                 <th>HSN/SAC</th>
                                 <th>Unit Price</th>
                                 <th>Qty</th>
@@ -297,9 +311,13 @@
             </div>
             <!-- /.row -->
 
-
-            <div class="bottom">
-                <hr style="margin-bottom:10px;border-color: #000;">
+        </div>
+            <div class="bottom site-footer">
+                <div>
+                    <span style="font-weight:bold;">Total In Word:</span>
+                    <span id="amount_in_words"></span>
+                </div>
+                <hr style="margin-bottom:10px;border-color: #000;margin-top:10px;">
                 <div class="row ">
                     <!-- accepted payments column -->
                     <div class="col-xs-5">
@@ -315,30 +333,30 @@
                     <div class="col-xs-5 totals-col">
                         <div class="row">
                             <div class="col-xs-5 total_heading">Sub Total:</div>
-                            <div class="col-xs-6 total_value"><span class='WebRupee'>Rs. </span> {{ $invoice->total_without_tax }}</div>
+                            <div class="col-xs-7 total_value"><span class='WebRupee'>Rs. </span> {{ $invoice->total_without_tax }}</div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-xs-5 total_heading">Discount:</div>
+                            <div class="col-xs-7 total_value"><span class='WebRupee'>Rs. </span> {{ $invoice->total_discount }}</div>
                         </div>
                         <hr>
                         @if ($invoice->customer_state == $invoice->seller_state)
                         <div class="row">
                             <div class="col-xs-5 total_heading">SGST:</div>
-                            <div class="col-xs-6 total_value"><span class='WebRupee'>Rs. </span> {{ round($invoice->total_tax/2, 2) }}</div>
+                            <div class="col-xs-7 total_value"><span class='WebRupee'>Rs. </span> {{ round($invoice->total_tax/2, 2) }}</div>
                         </div>
                         <hr>
                         <div class="row">
                             <div class="col-xs-5 total_heading">CGST:</div>
-                            <div class="col-xs-6 total_value"><span class='WebRupee'>Rs. </span> {{ round($invoice->total_tax/2, 2) }}</div>
+                            <div class="col-xs-7 total_value"><span class='WebRupee'>Rs. </span> {{ round($invoice->total_tax/2, 2) }}</div>
                         </div>
                         @else
                         <div class="row">
                             <div class="col-xs-5 total_heading">IGST:</div>
-                            <div class="col-xs-6 total_value"><span class='WebRupee'>Rs. </span> {{ $invoice->total_tax }}</div>
+                            <div class="col-xs-7 total_value"><span class='WebRupee'>Rs. </span> {{ $invoice->total_tax }}</div>
                         </div>
                         @endif
-                        <hr>
-                        <div class="row">
-                            <div class="col-xs-5 total_heading">Discount:</div>
-                            <div class="col-xs-6 total_value"><span class='WebRupee'>Rs. </span> {{ $invoice->total_discount }}</div>
-                        </div>
                         <hr>
                     </div>
                     <!-- /.col -->
@@ -356,10 +374,6 @@
                 <hr style="margin-bottom:10px;margin-top:10px;">
                 <div class="row text_amount_row">
                     <div class="col-xs-6">
-                        <div class="row">
-                            <div class="col-xs-4 total_heading">Total In Word:</div>
-                            <div class="col-xs-8 total_value"><span id="amount_in_words"></span></div>
-                        </div>
                         <div class="row">
                             <div class="col-xs-12 border_black t_c">
                                 <h5 style="font-weight:bold;">Terms & Conditions:-</h5>

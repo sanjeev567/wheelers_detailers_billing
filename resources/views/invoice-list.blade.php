@@ -15,19 +15,21 @@
   <section class="content">
   <table id="customer-list-table" class="stripe">
       <thead>
-        <td>Customer Name</td>
-        <td>Customer Mobile</td>
-        <td>Total</td>
-        <td>Invoice Date</td>
+        <td>Invoice Number</td>
+        <td>Date</td>
+        <td>Buyer Name</td>
+        <td>Buyer Address</td>
+        <td>Amount</td>
         <td>Action</td>
       </thead>
       <tbody>
         @foreach ($invoices as $invoice)
           <tr>
-            <td>{{ $invoice->customer_name }}</td>
-            <td>{{ $invoice->customer_mobile }}</td>
-            <td>{{ $invoice->total }}</td>
+            <td>{{ $invoice->invoice_number }}</td>
             <td>{{ \Carbon\Carbon::parse($invoice->created_at)->format('d-M-Y h:i A') }}</td>
+            <td>{{ $invoice->customer_name }}</td>
+            <td style="text-transform:capitalize;">{{ $invoice->customer_address }}</td>
+            <td>{{ $invoice->total }}</td>
             <td><a class="btn btn-info" href="{{ config('app.app_url_prefix') }}/invoice/{{ $invoice->id }}">View</a></td>
           </tr>
         @endforeach

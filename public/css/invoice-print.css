@@ -129,8 +129,7 @@ body {
 }
 
 .bottom {
-  position: fixed !important;
-  bottom: 40px !important;
+  margin-bottom: 40px !important;
   width: 680px !important;
   padding: 10px !important;
 }
@@ -199,4 +198,21 @@ body {
 .table td,
 .table th {
   background-color: inherit !important;
+}
+
+
+html, body {
+  height: 100% !important;
+}
+.page-wrap {
+  min-height: 100% !important;
+  /* equal to footer height */
+  margin-bottom: -495px !important;
+}
+.page-wrap:after {
+  content: "" !important;
+  display: block !important;
+}
+.site-footer, .page-wrap:after {
+  height: 495px !important;
 }

@@ -150,12 +150,12 @@ class InvoiceController extends BaseController
         try {
             if (view()->exists('invoice-list')) {
                 $invoices = \DB::table('invoices as i')
-                    ->join('customers as c', 'c.id', '=', 'i.customer_id')
                     ->select([
                         'i.id as id',
+                        'i.invoice_number as invoice_number',
                         'i.total as total',
-                        'c.name as customer_name',
-                        'c.mobile as customer_mobile',
+                        'i.customer_name as customer_name',
+                        'i.customer_address as customer_address',
                         'i.created_at as created_at',
                     ])
                     ->get();

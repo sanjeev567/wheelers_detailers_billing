@@ -157,6 +157,7 @@ class InvoiceController extends BaseController
                         'i.customer_name as customer_name',
                         'i.customer_address as customer_address',
                         'i.created_at as created_at',
+                        'i.deleted_at as deleted_at',
                     ])
                     ->get();
 
@@ -186,6 +187,7 @@ class InvoiceController extends BaseController
                         'c.email as customer_email',
                     ])
                     ->where('i.id', $request->id)
+                    ->whereNull('i.deleted_at')
                     ->first();
 
                 $invoiceDetails = \DB::table('invoice_details as id')
@@ -204,6 +206,46 @@ class InvoiceController extends BaseController
                 return view('view-not-found', ['viewName' => 'Invoice page']);
             }
         } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
+    /**
+     * Function to cancel invoice
+     *
+     * @param Requst $request
+     *
+     */
+    public function cancelInvoice(Request $request)
+    {
+        \DB::beginTransaction();
+        try {
+            $invoice = Invoice::whereId($request->id)->first();
+
+            if (!$invoice) {
+                return response()->json(['status' => '0', 'msg' => 'Invoice already cancelled']);
+            }
+
+            $invoiceDetails = InvoiceDetail::where('invoice_id', $invoice->id)->get();
+
+            foreach ($invoiceDetails as $item) {
+                $itemDetails = Item::whereId($item->item_id)->first();
+
+                if ($itemDetails->type == "material") {
+                    $itemDetails->update([
+                        'stock' => $itemDetails->stock + $item->quantity,
+                    ]);
+                }
+
+                $item->delete();
+            }
+
+            $invoice->delete();
+
+            \DB::commit();
+            return response()->json(['status' => '1', 'data' => $invoice->id]);
+        } catch (\Throwable $th) {
+            \DB::rollback();
             throw $th;
         }
     }

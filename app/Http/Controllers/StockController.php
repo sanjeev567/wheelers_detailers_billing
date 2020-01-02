@@ -298,6 +298,8 @@ class StockController extends BaseController
                     ->select([
                         'i.id as id',
                         'i.type as type',
+                        'i.challan_number as challan_number',
+                        'i.invoice_number as invoice_number',
                         'i.total as total',
                         'c.name as seller_name',
                         'c.mobile as seller_mobile',

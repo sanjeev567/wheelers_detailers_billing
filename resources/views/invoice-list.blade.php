@@ -13,6 +13,7 @@
 
   <!-- Main content -->
   <section class="content">
+    {{ csrf_field() }}
   <table id="customer-list-table" class="stripe">
       <thead>
         <td>Invoice Number</td>
@@ -30,7 +31,14 @@
             <td>{{ $invoice->customer_name }}</td>
             <td style="text-transform:capitalize;">{{ $invoice->customer_address }}</td>
             <td>{{ $invoice->total }}</td>
-            <td><a class="btn btn-info" href="{{ config('app.app_url_prefix') }}/invoice/{{ $invoice->id }}">View</a></td>
+            <td>
+              @if (empty($invoice->deleted_at))
+              <a class="btn btn-info" href="{{ config('app.app_url_prefix') }}/invoice/{{ $invoice->id }}">View</a>
+              | <a class="btn btn-danger invoice-cancel-btn" data-id="{{ $invoice->id }}" style="color:#fff;">Cancel Invoice</a>
+              @else
+                <div class="btn btn-info disabled" style="cursor:not-allowed !important;">Invoice Cancelled</div>
+              @endif
+            </td>
           </tr>
         @endforeach
       </tbody>

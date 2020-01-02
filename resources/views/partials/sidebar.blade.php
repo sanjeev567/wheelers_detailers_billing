@@ -41,7 +41,7 @@
                     <i class="fa fa-list"></i> <span>List Stock</span>
                 </a>
             </li>
-            <li>
+            <!-- <li>
                 <a href="{{ config('app.app_url_prefix') }}/add-package">
                     <i class="fa fa-archive"></i> <span>Add Package</span>
                 </a>
@@ -50,7 +50,7 @@
                 <a href="{{ config('app.app_url_prefix') }}/package-list">
                     <i class="fa fa-list"></i> <span>Pacakge List</span>
                 </a>
-            </li>
+            </li> -->
         </ul>
     </section>
 </aside>

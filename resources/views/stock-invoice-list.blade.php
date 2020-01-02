@@ -15,7 +15,9 @@
   <section class="content">
   <table id="customer-list-table" class="stripe">
       <thead>
+        <td>ID</td>
         <td>Type</td>
+        <td>Invoice/Challan Number</td>
         <td>Customer Name</td>
         <td>Customer Mobile</td>
         <td>Total</td>
@@ -25,7 +27,9 @@
       <tbody>
         @foreach ($invoices as $invoice)
           <tr>
+            <td>{{ $invoice->id }}</td>
             <td>{{ ucfirst($invoice->type) }}</td>
+            <td>{{ ($invoice->type =="invoice")?strtoupper($invoice->invoice_number):strtoupper($invoice->challan_number) }}</td>
             <td>{{ $invoice->seller_name }}</td>
             <td>{{ $invoice->seller_mobile }}</td>
             <td>{{ $invoice->total }}</td>

@@ -16,6 +16,7 @@
     {{ csrf_field() }}
   <table id="customer-list-table" class="stripe">
       <thead>
+        <td>ID</td>
         <td>Invoice Number</td>
         <td>Date</td>
         <td>Buyer Name</td>
@@ -26,6 +27,7 @@
       <tbody>
         @foreach ($invoices as $invoice)
           <tr>
+            <td>{{ $invoice->id }}</td>
             <td>{{ $invoice->invoice_number }}</td>
             <td>{{ \Carbon\Carbon::parse($invoice->created_at)->format('d-M-Y h:i A') }}</td>
             <td>{{ $invoice->customer_name }}</td>
@@ -36,7 +38,8 @@
               <a class="btn btn-info" href="{{ config('app.app_url_prefix') }}/invoice/{{ $invoice->id }}">View</a>
               | <a class="btn btn-danger invoice-cancel-btn" data-id="{{ $invoice->id }}" style="color:#fff;">Cancel Invoice</a>
               @else
-                <div class="btn btn-info disabled" style="cursor:not-allowed !important;">Invoice Cancelled</div>
+                <a class="btn btn-info" href="{{ config('app.app_url_prefix') }}/invoice/{{ $invoice->id }}">View</a>
+                | <div class="btn btn-info disabled" style="cursor:not-allowed !important;">Invoice Cancelled</div>
               @endif
             </td>
           </tr>

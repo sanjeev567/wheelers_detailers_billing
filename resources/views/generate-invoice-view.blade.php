@@ -232,6 +232,19 @@
             height: 495px;
         }
     </style>
+    @if (!empty($invoice->deleted_at))
+        <style>
+            section.invoice::before {
+                content: "Cancelled Invoice";
+                font-size: 90px;
+                position: absolute;
+                color: #cccccc7a;
+                transform: rotateZ(45deg);
+                z-index: 99;
+                top: 300px;
+            }
+        </style>
+    @endif
     <link rel="stylesheet" media="print" href="{{ config('app.app_public_path') }}/css/invoice-print.css">
 </head>
 
@@ -243,7 +256,11 @@
         <section class="invoice">
         <div class="page-wrap">
                 <div class="row mid_header">
-                    <span class="invoice-type">Original</span>
+                    @if (empty($invoice->deleted_at))
+                        <span class="invoice-type">Original</span>
+                    @else
+                        <span class="invoice-type">Cancelled Invoice</span>
+                    @endif
                     <div class="col-md-5 col-xs-5">
                             <div class="invoice-col">
                                 <span class="invoice_to">Invoice To</span>
@@ -415,11 +432,13 @@
         <!-- /.content -->
     </div>
 
+    @if (empty($invoice->deleted_at))
     <div class="print-btns">
         <button class="btn btn-info" data-type="Original" id="original">Print Original</button>
         <button class="btn btn-info" data-type="Duplicate" id="duplicate">Print Duplicate</button>
         <button class="btn btn-info" data-type="Triplicate" id="triplicate">Print Triplicate</button>
     </div>
+    @endif
     <!-- ./wrapper -->
 </body>
 <script>

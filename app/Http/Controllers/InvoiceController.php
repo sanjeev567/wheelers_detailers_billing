@@ -187,7 +187,6 @@ class InvoiceController extends BaseController
                         'c.email as customer_email',
                     ])
                     ->where('i.id', $request->id)
-                    ->whereNull('i.deleted_at')
                     ->first();
 
                 $invoiceDetails = \DB::table('invoice_details as id')

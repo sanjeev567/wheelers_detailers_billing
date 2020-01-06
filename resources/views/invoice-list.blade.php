@@ -38,7 +38,8 @@
               <a class="btn btn-info" href="{{ config('app.app_url_prefix') }}/invoice/{{ $invoice->id }}">View</a>
               | <a class="btn btn-danger invoice-cancel-btn" data-id="{{ $invoice->id }}" style="color:#fff;">Cancel Invoice</a>
               @else
-                <div class="btn btn-info disabled" style="cursor:not-allowed !important;">Invoice Cancelled</div>
+                <a class="btn btn-info" href="{{ config('app.app_url_prefix') }}/invoice/{{ $invoice->id }}">View</a>
+                | <div class="btn btn-info disabled" style="cursor:not-allowed !important;">Invoice Cancelled</div>
               @endif
             </td>
           </tr>

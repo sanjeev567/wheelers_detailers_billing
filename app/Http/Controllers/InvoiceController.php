@@ -43,9 +43,7 @@ class InvoiceController extends BaseController
             $totalTax = 0;
             $totalWithoutTax = 0;
             $totalDiscount = 0;
-
             $customerDetails = Customer::whereId($request->customer)->first();
-            $currentInvoiceNumber = Invoice::where('created_at', '>=', strtotime('first day of january this year'))->get()->count();
 
             $invoice = Invoice::Create([
                 'customer_id' => $request->customer,

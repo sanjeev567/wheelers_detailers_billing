@@ -40,6 +40,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/stock-invoice-list', 'StockController@stockInvoiceList');
     Route::post('/delete-user-doc-image', 'StockController@deleteUserDocumentImage');
     Route::get('/view-stock', 'StockController@viewStock');
+
+    Route::post('/invoice-list-dump', 'InvoiceListDumpController@invoiceListDumpDownload');
 });
 
 Route::group(['middleware' => 'guest'], function () {

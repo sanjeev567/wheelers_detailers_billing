@@ -20,7 +20,6 @@
         <td>Invoice Number</td>
         <td>Date</td>
         <td>Buyer Name</td>
-        <td>Buyer Address</td>
         <td>Amount</td>
         <td>Action</td>
       </thead>
@@ -29,9 +28,8 @@
           <tr>
             <td>{{ $invoice->id }}</td>
             <td>{{ $invoice->invoice_number }}</td>
-            <td>{{ \Carbon\Carbon::parse($invoice->created_at)->format('d-M-Y h:i A') }}</td>
+            <td data-order="{{ \Carbon\Carbon::parse($invoice->created_at)->format('U') }}">{{ \Carbon\Carbon::parse($invoice->created_at)->format('d-M-Y h:i A') }}</td>
             <td>{{ $invoice->customer_name }}</td>
-            <td style="text-transform:capitalize;">{{ $invoice->customer_address }}</td>
             <td>{{ $invoice->total }}</td>
             <td>
               @if (empty($invoice->deleted_at))

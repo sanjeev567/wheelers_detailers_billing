@@ -230,6 +230,7 @@
         }
         .site-footer, .page-wrap:after {
             height: 495px;
+            margin-top: 25px;
         }
     </style>
     @if (!empty($invoice->deleted_at))

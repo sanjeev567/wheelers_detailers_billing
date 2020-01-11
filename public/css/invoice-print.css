@@ -215,6 +215,7 @@ html, body {
 }
 .site-footer, .page-wrap:after {
   height: 495px !important;
+  margin-top: 25px !important;
 }
 
 .wrapper {

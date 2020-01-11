@@ -10,6 +10,18 @@ $('#customer-list-table').DataTable({
     ],
 });
 
+$('#invoice-list-table').DataTable({
+    order: [[0, "desc"]],
+    select: true,
+    // dom: 'Bfrtip',
+    // buttons: [
+    //     $.extend( true, {}, {
+    //         extend: 'excelHtml5', footer: true,
+    //         messageTop: $('#partyName').html()
+    //     } )
+    // ],
+});
+
 $(document).on('click', '.invoice-cancel-btn', function () {
     if(!verifyRemove('Are you sure you want to cancel this invoice?')){
         return false;

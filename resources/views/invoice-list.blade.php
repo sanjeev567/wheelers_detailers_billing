@@ -13,8 +13,16 @@
 
   <!-- Main content -->
   <section class="content">
+    <div style="display: inline-block;">
+      <form id="invoice-list-dump-form" method="post" action="invoice-list-dump">
+        {{ csrf_field() }}
+        <div style="float:left;margin-right:20px;">
+          <input type="Submit" class="btn btn-info" value="Export" id="invoice-list-dump-btn">
+        </div>
+      </form>
+    </div>
     {{ csrf_field() }}
-  <table id="customer-list-table" class="stripe">
+  <table id="invoice-list-table" class="stripe">
       <thead>
         <td>ID</td>
         <td>Invoice Number</td>
@@ -28,7 +36,7 @@
           <tr>
             <td>{{ $invoice->id }}</td>
             <td>{{ $invoice->invoice_number }}</td>
-            <td data-order="{{ \Carbon\Carbon::parse($invoice->created_at)->format('U') }}">{{ \Carbon\Carbon::parse($invoice->created_at)->format('d-M-Y h:i A') }}</td>
+            <td data-order="{{ \Carbon\Carbon::parse($invoice->created_at)->format('U') }}">{{ \Carbon\Carbon::parse($invoice->created_at)->format('d-M-Y') }}</td>
             <td>{{ $invoice->customer_name }}</td>
             <td>{{ $invoice->total }}</td>
             <td>

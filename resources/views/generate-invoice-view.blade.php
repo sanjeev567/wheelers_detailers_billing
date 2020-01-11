@@ -28,6 +28,9 @@
             width: 793px !important;
             margin: 0 auto;
             font-size: 14px;
+            height: auto;
+            min-height: 99vh;
+            padding-bottom: 485px !important;
         }
 
         .header {
@@ -172,6 +175,8 @@
         .bottom {
             width: 751px;
             padding: 10px;
+            bottom: 0;
+            position: absolute;
         }
 
         .signature {
@@ -208,6 +213,7 @@
             right: 24px;
             top: 30px;
             color: #464646;
+            font-weight: bold;
         }
 
         .signature_border{
@@ -425,7 +431,7 @@
 
                 <hr style="margin-bottom:10px;margin-top:10px;">
                 <div class="company_info">
-                    Registered Address: H. No.  8897 2nd Floor, Karol Bagh, Gali No. 14B, Sidhipura, Delhi - 110005
+                    Registered Address: 3556, Aggarwal Building Morigate Delhi - 110006
                 </div>
             </div>
 

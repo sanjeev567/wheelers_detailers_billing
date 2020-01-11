@@ -14,13 +14,15 @@
   <section class="content">
     <form method="post" action="#" name="invoice-form" id="invoice-form" style="margin-bottom:15px;display:inline-block;">
       {{ csrf_field() }}
+      <input type="hidden" name="id" id="id" value="{{ !empty($invoice)?$invoice->id:'' }}">
 
       <div style="width:50%;margin-bottom:30px;">
         <label for="customer" style="display:block;">Select Customer</label>
         <select class="form-control advisor-custom-select" id="customer" name="name" data-placeholder="Select Customer">
           <option value=''></option>
           @foreach ($customers as $customer)
-          <option value="{{ $customer->id }}" {{ ($selectedCustomer == $customer->id)?'selected':'' }}> {{ $customer->name }}</option>
+          <option value="{{ $customer->id }}" {{ ($selectedCustomer == $customer->id)?'selected':'' }}
+          {{ (!empty($invoice) && $invoice->customer_id == $customer->id)? 'selected="selected"' :'' }}> {{ $customer->name }}</option>
           @endforeach
         </select>
       </div>
@@ -63,6 +65,17 @@
         <td>Action</td>
       </thead>
       <tbody>
+        @foreach ($invoiceDetails as $item)
+        <tr>
+            <td class="dark">{{ $item->item_id }}</td>
+            <td class="dark">{{ $item->item_name }} </td>
+            <td>{{ $item->item_cost_without_tax }}</td>
+            <td>{{ $item->quantity }}</td>
+            <td>{{ $item->discount }}</td>
+            <td>{{ ($item->item_cost * $item->quantity) - ($item->item_cost * $item->quantity * $item->discount/100) }}</td>
+            <td class="dark"><button class="btn btn-danger delete_btn">Remove</button></td>
+        </tr>
+        @endforeach
       </tbody>
     </table>
 
@@ -76,7 +89,7 @@
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.full.min.js"></script>
 <script src="{{ config('app.app_public_path') }}/js/lib/jquery.validate.min.js"></script>
-<script src="{{ config('app.app_public_path') }}js/invoice-view.js"></script>
+<script src="{{ config('app.app_public_path') }}/js/invoice-view.js"></script>
 @endsection
 
 @section ('styles')

@@ -74,10 +74,17 @@ $(function () {
         }
 
         var prefix = $.trim($('#app_url_prefix').val());
+        let url = prefix + "/generate-invoice";
+        let invoiceId = $('#id').val();
+
+        if (invoiceId != '' && invoiceId != undefined) {
+            url = prefix + "/invoice-edit";
+        }
+
         $.ajax({
-            url: prefix + "/generate-invoice",
+            url: url,
             type: "POST",
-            data: { _token: _token, customer: customer, data: newData, force: force },
+            data: { _token: _token, customer: customer, data: newData, force: force, id: invoiceId },
             dataType: "json",
             success: function (response) {
                 if (response.status == '1') {

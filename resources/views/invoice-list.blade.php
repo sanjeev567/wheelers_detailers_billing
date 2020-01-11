@@ -42,6 +42,7 @@
             <td>
               @if (empty($invoice->deleted_at))
               <a class="btn btn-info" href="{{ config('app.app_url_prefix') }}/invoice/{{ $invoice->id }}">View</a>
+              | <a class="btn btn-warning" href="{{ config('app.app_url_prefix') }}/invoice-edit/{{ $invoice->id }}">Edit</a>
               | <a class="btn btn-danger invoice-cancel-btn" data-id="{{ $invoice->id }}" style="color:#fff;">Cancel Invoice</a>
               @else
                 <a class="btn btn-info" href="{{ config('app.app_url_prefix') }}/invoice/{{ $invoice->id }}">View</a>

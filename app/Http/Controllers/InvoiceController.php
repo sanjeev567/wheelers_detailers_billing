@@ -18,12 +18,26 @@ class InvoiceController extends BaseController
     {
         try {
             if (view()->exists('invoice-view')) {
+                if (!empty($request->id)) {
+                    $invoice = Invoice::whereId($request->id)->first();
+                    $invoiceDetails = InvoiceDetail::where('invoice_id', $request->id)->get();
+                } else {
+                    $invoice = null;
+                    $invoiceDetails = [];
+                }
+
                 $items = Item::all();
                 $customers = Customer::all();
 
                 $selectedCustomer = $request->cust;
 
-                return view('invoice-view', ['items' => $items, 'customers' => $customers, 'selectedCustomer' => $selectedCustomer]);
+                return view('invoice-view', [
+                    'items' => $items,
+                    'customers' => $customers,
+                    'selectedCustomer' => $selectedCustomer,
+                    'invoice' => $invoice,
+                    'invoiceDetails' => $invoiceDetails
+                ]);
             } else {
                 return view('view-not-found', ['viewName' => 'Invoice page']);
             }
@@ -267,6 +281,132 @@ class InvoiceController extends BaseController
 
             return 'TW-' . $financial_year . '-' . ((int) $currentInvoiceNumber + 1);
         } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
+    /**
+     * Function to edit the invoice
+     *
+     * @param Request $request
+     *
+     * @return JSON
+     */
+    public function editInvoice(Request $request)
+    {
+        try {
+            \DB::beginTransaction();
+            $total = 0;
+            $totalTax = 0;
+            $totalWithoutTax = 0;
+            $totalDiscount = 0;
+            $customerDetails = Customer::whereId($request->customer)->first();
+
+            $data = [
+                'customer_id' => $request->customer,
+                'total_items' => count($request->data),
+                'created_by' => \Auth::id(),
+
+                'customer_name' => $customerDetails->name,
+                'customer_mobile' => $customerDetails->mobile,
+                'customer_email' => $customerDetails->email,
+                'customer_address' => $customerDetails->address,
+                'invoice_number' => $this->getInvoiceNumber(),
+                'customer_state' => $customerDetails->state,
+                'buyer_gstin' => $customerDetails->gst_number,
+                'seller_name' => config('app_config.SELLER_NAME'),
+                'web_link' => config('app_config.SELLER_WEB_LINKS'),
+                'seller_phone1' => config('app_config.SELLER_PHONE1'),
+                'seller_phone2' => config('app_config.SELLER_PHONE2'),
+                'seller_address_line1' => config('app_config.SELLER_ADDRESS_LINE1'),
+                'seller_address_line2' => config('app_config.SELLER_ADDRESS_LINE2'),
+                'seller_address_line3' => config('app_config.SELLER_ADDRESS_LINE3'),
+                'seller_gstin' => config('app_config.SELLER_GSTIN'),
+                'seller_pan' => config('app_config.SELLER_PAN'),
+                'seller_bank' => config('app_config.SELLER_BANK_NAME'),
+                'seller_branch' => config('app_config.SELLER_BANK_BRANCH_NAME'),
+                'seller_ifsc' => config('app_config.SELLER_BANK_IFSC'),
+                'seller_account_number' => config('app_config.SELLER_BANK_ACCOUNT_NUMBER'),
+                'seller_cin' => config('app_config.SELLER_CIN'),
+                'seller_state' => config('app_config.SELLER_STATE'),
+                'total_without_tax' => '0',
+                'total_tax' => '0',
+                'total_discount' => '0',
+                'total' => '0',
+                'type' => (!empty($request->invoice_type)) ? $request->invoice_type : 'treatment',
+            ];
+
+            $invoice = Invoice::whereId($request->id)->update($data);
+
+            if ($invoice) {
+                $oldInvoiceDetails = InvoiceDetail::where('invoice_id', $request->id)->get();
+
+                foreach ($oldInvoiceDetails as $details) {
+                    $itemDetails = Item::whereId($details->item_id)->first();
+
+                    $itemDetails->update([
+                        'stock' => $itemDetails->stock - $details->quantity,
+                    ]);
+
+                    $details->forceDelete();
+                }
+
+                foreach ($request->data as $row) {
+                    $dis = $row[4];
+                    $qty = $row[3];
+
+                    $itemDetails = Item::whereId($row[0])->first();
+
+                    $subTotalWithoutTax = $itemDetails->price_without_tax * $qty;
+                    $subTotalDiscount = ($itemDetails->price_without_tax * $qty * $dis / 100);
+                    $subTotalTax = (($subTotalWithoutTax - $subTotalDiscount) * $itemDetails->tax_percent / 100);
+                    $subTotal = $subTotalWithoutTax - $subTotalDiscount + $subTotalTax;
+
+                    $totalWithoutTax += $subTotalWithoutTax;
+                    $totalDiscount += $subTotalDiscount;
+                    $totalTax += $subTotalTax;
+                    $total += $subTotal;
+
+                    if ($request->force == "false" && $itemDetails->type == "material" && $itemDetails->stock - $qty < 0) {
+                        \DB::rollback();
+                        return response()->json(['status' => '-1', 'data' => null, 'msg' => 'Not enough stock for material: ' . $itemDetails->name .
+                            ', only ' . $itemDetails->stock . ' left in inventory. Are you sure you want to make this invoice?']);
+                    } else if ($itemDetails->type == "material") {
+                        $itemDetails->update([
+                            'stock' => $itemDetails->stock - $qty,
+                        ]);
+                    }
+
+                    InvoiceDetail::create([
+                        'invoice_id' => $request->id,
+                        'customer_id' => $request->customer,
+                        'item_id' => $itemDetails->id,
+                        'item_cost' => $itemDetails->price,
+                        'item_cost_without_tax' => $itemDetails->price_without_tax,
+                        'quantity' => $qty,
+                        'discount' => $dis,
+                        'created_by' => \Auth::id(),
+                        'item_name' => $itemDetails->name,
+                        'tax_percent' => $itemDetails->tax_percent,
+                        'tax_value' => $itemDetails->tax_value,
+                    ]);
+                }
+
+                Invoice::whereId($request->id)->update([
+                    'total_without_tax' => $totalWithoutTax,
+                    'total_tax' => $totalTax,
+                    'total_discount' => $totalDiscount,
+                    'total' => $total,
+                ]);
+
+                \DB::commit();
+                return response()->json(['status' => '1', 'data' => $request->id]);
+            }
+
+            \DB::rollback();
+            return response()->json(['status' => '0', 'data' => null]);
+        } catch (\Throwable $th) {
+            \DB::rollback();
             throw $th;
         }
     }

@@ -107,17 +107,16 @@
       <tbody>
         @foreach ($invoiceItems as $item)
         <tr>
-            <td class="dark">{{ $item->id }}</td>
+            <td class="dark">{{ $item->item_id }}</td>
             <td class="dark">{{ $item->item_name }}</td>
-            <td><span class='WebRupee'>Rs. </span>{{ $item->item_cost_without_tax }}</td>
+            <td>{{ $item->item_cost_without_tax }}</td>
             <td>
-            <span class='WebRupee'>Rs. </span>
             {{$items->first(function($itemDetail) use ($item) {
                 return $itemDetail->id == $item->item_id;
               })->price_without_tax}}
             </td>
             <td>{{ $item->quantity }}</td>
-            <td><span class='WebRupee'>Rs. </span>{{ ($item->item_cost * $item->quantity) - ($item->item_cost * $item->quantity * $item->discount/100) }}</td>
+            <td>{{ ($item->item_cost * $item->quantity) - ($item->item_cost * $item->quantity * $item->discount/100) }}</td>
             <td class="dark"><button class="btn btn-danger delete_btn">Remove</button></td>
         </tr>
         @endforeach

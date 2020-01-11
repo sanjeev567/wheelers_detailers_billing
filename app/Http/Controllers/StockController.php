@@ -96,7 +96,6 @@ class StockController extends BaseController
             $invoice = StockInvoice::Create($data);
 
             if ($invoice) {
-
                 $request->data = json_decode($request->data);
                 foreach ($request->data as $row) {
                     $itemDetails = Item::whereId($row[0])->first();
@@ -162,7 +161,7 @@ class StockController extends BaseController
     }
 
     /**
-     * Funtion to return the view for invoice generation page
+     * Funtion to edit invoice in the system
      */
     public function editStockInvoice(Request $request)
     {
@@ -212,18 +211,18 @@ class StockController extends BaseController
             $oldInvoiceDetails = StockInvoiceDetail::where('stock_invoice_id', $request->id)->get();
 
             foreach ($oldInvoiceDetails as $details) {
-                $details->delete();
-                $itemDetails = Item::whereId($details->item_id)->first();
+                $itemData = Item::whereId($details->item_id)->first();
 
-                if ($request->force == "false" && $itemDetails->type == "material" && $itemDetails->stock - $details->quantity < 0) {
+                if ($request->force == "false" && $itemData->type == "material" && $itemData->stock - $details->quantity < 0) {
                     \DB::rollback();
-                    return response()->json(['status' => '-1', 'data' => null, 'msg' => 'Not enough stock for material: ' . $itemDetails->name .
-                        ', only ' . $itemDetails->stock . ' left in inventory. Are you sure you want to update this invoice?']);
-                } else if ($itemDetails->type == "material") {
-                    $itemDetails->update([
-                        'stock' => $itemDetails->stock - $details->quantity,
+                    return response()->json(['status' => '-1', 'data' => null, 'msg' => 'Not enough stock for material: ' . $itemData->name .
+                        ', only ' . $itemData->stock . ' left in inventory. Are you sure you want to update this invoice?']);
+                } else if ($itemData->type == "material") {
+                    $itemData->update([
+                        'stock' => $itemData->stock - $details->quantity,
                     ]);
                 }
+                $details->forceDelete();
             }
 
             $request->data = json_decode($request->data);
@@ -280,7 +279,7 @@ class StockController extends BaseController
 
             \DB::commit();
             return response()->json(['status' => '1', 'data' => $request->id]);
-        } catch (\Throwable $th) {
+        } catch (\Exception $th) {
             \DB::rollback();
             throw $th;
         }

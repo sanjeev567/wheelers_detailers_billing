@@ -56,7 +56,7 @@ class InvoiceController extends BaseController
                 'customer_mobile' => $customerDetails->mobile,
                 'customer_email' => $customerDetails->email,
                 'customer_address' => $customerDetails->address,
-                'invoice_number' => 'TW-' . date('y') . '/' . ((int) date('y') + 1) . '-' . ((int) $currentInvoiceNumber + 1),
+                'invoice_number' => $this->getInvoiceNumber(),
                 'customer_state' => $customerDetails->state,
                 'buyer_gstin' => $customerDetails->gst_number,
                 'seller_name' => config('app_config.SELLER_NAME'),
@@ -245,6 +245,30 @@ class InvoiceController extends BaseController
             return response()->json(['status' => '1', 'data' => $invoice->id]);
         } catch (\Throwable $th) {
             \DB::rollback();
+            throw $th;
+        }
+    }
+
+    /**
+     * Function to get new invoice number
+     */
+    public function getInvoiceNumber()
+    {
+        try {
+            $date = date_create();
+            if (date_format($date, "m") >= 4) { //On or After April (FY is current year - next year)
+                $financial_year = (date_format($date, "y")) . '/' . (date_format($date, "y") + 1);
+
+                $currentInvoiceNumber = Invoice::withTrashed()->where('created_at', '>=', date('Y-m-d H:i:s', strtotime('first day of april this year')))->get()->count();
+
+            } else { //On or Before March (FY is previous year - current year)
+                $financial_year = (date_format($date, "y") - 1) . '/' . date_format($date, "y");
+
+                $currentInvoiceNumber = Invoice::withTrashed()->where('created_at', '>=', date('Y-m-d H:i:s', strtotime('first day of april last year')))->get()->count();
+            }
+
+            return 'TW-' . $financial_year . '-' . ((int) $currentInvoiceNumber + 1);
+        } catch (\Throwable $th) {
             throw $th;
         }
     }

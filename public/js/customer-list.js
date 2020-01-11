@@ -1,4 +1,5 @@
 $('#customer-list-table').DataTable({
+    order: [[0, "desc"]],
     select: true,
     dom: 'Bfrtip',
     buttons: [

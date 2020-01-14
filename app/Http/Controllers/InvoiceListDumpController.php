@@ -72,7 +72,8 @@ class InvoiceListDumpController extends BaseController
                 'id.item_cost_without_tax as price_without_tax',
                 'id.item_name as product',
                 'id.discount as discount',
-                'id.tax_percent'
+                'id.tax_percent',
+                'i.deleted_at'
             ])
             ->orderBy('i.id', 'desc')
             ->get();
@@ -149,7 +150,7 @@ class InvoiceListDumpController extends BaseController
                 $sheetData[$count]['customer_address'] = strtoupper($data->customer_address) . strtoupper(' '. $data->customer_state);
                 $sheetData[$count]['buyer_gstin'] = strtoupper($data->buyer_gstin);
                 $sheetData[$count]['product'] = strtoupper($data->product);
-                $sheetData[$count]['sac'] = strtoupper(config('app-config.TREATMENT_SAC_NUMBER'));
+                $sheetData[$count]['sac'] = strtoupper(config('app_config.TREATMENT_SAC_NUMBER'));
                 $sheetData[$count]['quantity'] = (int)$data->quantity;
                 $sheetData[$count]['price_without_tax'] = (float)$data->price_without_tax;
                 $sheetData[$count]['sub_total'] = $subTotal;

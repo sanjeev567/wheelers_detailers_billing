@@ -14,6 +14,7 @@
   <!-- Main content -->
   <section class="content">
     <div style="display: inline-block;">
+    <input type="hidden" name="user_doc_image_path" id="user_doc_image_path" value="{{ config('app.user_doc_image_path') }}">
       <form id="invoice-list-dump-form" method="post" action="invoice-list-dump">
         {{ csrf_field() }}
         <div style="float:left;margin-right:20px;">
@@ -43,7 +44,12 @@
               @if (empty($invoice->deleted_at))
               <a class="btn btn-info" href="{{ config('app.app_url_prefix') }}/invoice/{{ $invoice->id }}">View</a>
               | <a class="btn btn-warning" href="{{ config('app.app_url_prefix') }}/invoice-edit/{{ $invoice->id }}">Edit</a>
-              | <a class="btn btn-danger invoice-cancel-btn" data-id="{{ $invoice->id }}" style="color:#fff;">Cancel Invoice</a>
+              @if ($invoice->image_count > 0)
+                | <a class="btn btn-success upload-invoice-image-btn" data-id="{{ $invoice->id }}" style="color:#fff">Upload Image</a>
+                @else
+                | <a class="btn btn-danger upload-invoice-image-btn" data-id="{{ $invoice->id }}" style="color:#fff">Upload Image</a>
+              @endif
+              | <a class="btn btn-danger invoice-cancel-btn" data-id="{{ $invoice->id }}" style="color:#fff;">Cancel</a>
               @else
                 <a class="btn btn-info" href="{{ config('app.app_url_prefix') }}/invoice/{{ $invoice->id }}">View</a>
                 | <div class="btn btn-info disabled" style="cursor:not-allowed !important;">Invoice Cancelled</div>
@@ -55,6 +61,34 @@
     </table>
   </section>
   <!-- /.content -->
+</div>
+
+<!-- Modal -->
+<div id="uploadModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content" style="width: 540px;max-width:540px;">
+      <div class="modal-header">
+        <h4 class="modal-title">Upload Invoice Image</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" name="current-invoice-id" id="current-invoice-id" value="">
+        <div id="invoice-images-wrapper">
+
+        </div>
+        <!-- Form -->
+        <form method='post' action='' enctype="multipart/form-data">
+          Select file : <input type='file' class="form-control" name='images' id='file' class='form-control'><br>
+          <input type='button' class='btn btn-info' value='Upload' id='btn_upload'>
+        </form>
+
+        <!-- Preview-->
+        <div id='preview'></div>
+      </div>
+    </div>
+  </div>
 </div>
 @endsection
 

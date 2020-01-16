@@ -19,6 +19,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/invoice-edit/{id}', 'InvoiceController@invoiceView');
     Route::post('/invoice-edit', 'InvoiceController@editInvoice');
 
+    Route::post('/upload-invoice-image', 'InvoiceController@uploadInvoiceImage');
+    Route::post('/delete-invoice-image', 'InvoiceController@deleteInvoiceImage');
+    Route::post('/get-invoice-images', 'InvoiceController@getInvoiceImages');
+
 
     Route::get('/add-customer/{id?}', 'CustomerController@addCustomerView');
     Route::post('/add-customer', 'CustomerController@addCustomer');

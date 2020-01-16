@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Entities\Customer;
 use App\Entities\Invoice;
 use App\Entities\InvoiceDetail;
+use App\Entities\InvoiceImage;
 use App\Entities\Item;
 use App\Http\Controllers\Controller as BaseController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class InvoiceController extends BaseController
 {
@@ -162,6 +164,7 @@ class InvoiceController extends BaseController
         try {
             if (view()->exists('invoice-list')) {
                 $invoices = \DB::table('invoices as i')
+                    ->leftJoin('invoice_images as ii', 'ii.invoice_id', '=', 'i.id')
                     ->select([
                         'i.id as id',
                         'i.invoice_number as invoice_number',
@@ -170,7 +173,9 @@ class InvoiceController extends BaseController
                         'i.customer_address as customer_address',
                         'i.created_at as created_at',
                         'i.deleted_at as deleted_at',
+                        \DB::raw("SUM(CASE WHEN ii.id != '' THEN 1 ELSE 0 END) as image_count")
                     ])
+                    ->groupBy('i.id')
                     ->get();
 
                 return view('invoice-list', ['invoices' => $invoices]);
@@ -391,6 +396,103 @@ class InvoiceController extends BaseController
         } catch (\Throwable $th) {
             \DB::rollback();
             throw $th;
+        }
+    }
+
+    /**
+     * Funtion to upload invoice images
+     *
+     * @param Request $request
+     */
+    public function uploadInvoiceImage(Request $request)
+    {
+        try {
+            $file = $request->file('image');
+            if ($file) {
+                $name = $file->getClientOriginalName();
+                $name = str_slug(pathinfo($name, PATHINFO_FILENAME));
+                $name = $name . time(). rand(99, 999) .'.' . $file->getClientOriginalExtension();
+
+                $pathToMove = (config('app.app_public_path_absolute') !== "")
+                ? (config('app.app_public_path_absolute') . config('app.user_doc_image_path'))
+                : public_path(config('app.user_doc_image_path'));
+
+                $file->move($pathToMove, $name);
+
+                InvoiceImage::insert([
+                    'invoice_id' => $request->invoiceId,
+                    'image' => $name,
+                    'description' => 'uploaded from web with invoice number ' . $request->invoiceId,
+                    'created_by' => \Auth::id(),
+                ]);
+
+                return response()->json(['status' => '1', 'data' => "true"]);
+            }
+            return response()->json(['status' => '0', 'data' => null]);
+        } catch (\Exception $th) {
+            return $this->returnExceptionResponse($th);
+        }
+    }
+
+    /**
+     * Function to delete an invoice image from system
+     *
+     * @param Request $request
+     */
+    public function deleteInvoiceImage(Request $request)
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+                'id' => 'required|string|max:100',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json(['status' => 0, 'data' => $validator->errors()]);
+            }
+
+            $invoiceImage = InvoiceImage::whereId($request->id)->first();
+
+            $imageFolderPath = (config('app.app_public_path_absolute') !== "")
+            ? (config('app.app_public_path_absolute') . config('app.user_doc_image_path'))
+            : public_path(config('app.user_doc_image_path'));
+
+            $fileToDelete = $imageFolderPath . '/' . $invoiceImage->image;
+
+            if (file_exists($fileToDelete)) {
+                unlink($fileToDelete);
+            }
+
+            $invoiceImage->delete();
+            if ($invoiceImage) {
+                return response()->json(['status' => '1', 'data' => (string) $invoiceImage]);
+            } else {
+                return response()->json(['status' => '0', 'data' => null]);
+            }
+        } catch (\Throwable $th) {
+            return $this->returnExceptionResponse($th);
+        }
+    }
+
+    /**
+     * Function to get the list of all images of an invoice
+     *
+     * @param Request $request
+     */
+    public function getInvoiceImages(Request $request)
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+                'invoiceId' => 'required|string|max:100',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json(['status' => 0, 'data' => $validator->errors()]);
+            }
+
+            $images = InvoiceImage::where('invoice_id', $request->invoiceId)->pluck('image', 'id');
+            return response()->json(['status' => '1', 'data' => $images]);
+        } catch (\Throwable $th) {
+            return $this->returnExceptionResponse($th);
         }
     }
 }

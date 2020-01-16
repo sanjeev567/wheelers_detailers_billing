@@ -170,3 +170,58 @@ table.dataTable {
   top: -29px !important;
   min-width: auto !important;
 }
+
+.user-docs-images {
+  width: auto;
+  height: 130px;
+  margin: 10px;
+}
+
+#img-cover {
+  position: absolute;
+  display: none;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  opacity: 0.6;
+  z-index: 9998;
+}
+
+#img-container {
+  position: fixed;
+  display: none;
+  top: 50%;
+  left: 50%;
+  margin-top: -50px;
+  margin-left: -100px;
+  z-index: 9999;
+}
+
+.maximize-img {
+  max-width: 1000px;
+  width: 100%;
+  height: auto;
+}
+
+.user-docs-images-wrapper {
+  display: inline-block;
+  position: relative;
+}
+
+.user-docs-images-wrapper:hover .close {
+  opacity: 0.75;
+}
+
+.user-docs-images-wrapper .close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #000;
+  border-radius: 30px;
+  color: #fff;
+  width: 30px;
+  text-align: center;
+  height: 30px;
+}

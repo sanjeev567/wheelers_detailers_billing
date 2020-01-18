@@ -54,7 +54,7 @@
 					</div>
 
 					<div class="text-center p-t-90">
-						<a class="txt1" href="#">
+						<a class="txt1" href="{{ config('app.app_url_prefix') }}/forgot-password">
 							Forgot Password?
 						</a>
 					</div>

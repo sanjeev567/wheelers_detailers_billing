@@ -23,7 +23,7 @@ class ApplicationLogMiddleware
             $log = [
                 'user_id' => (!empty(\Auth::id())) ? \Auth::id() : '0',
                 'client_ip' => json_encode($request->ip()),
-                'request_url' => $request->path(),
+                'request_url' => substr($request->path(), 0, 189),
                 'request_headers' => json_encode(getallheaders()),
                 'request' => json_encode($request->all()),
                 'response_status' => $response->status(),

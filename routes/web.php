@@ -57,3 +57,14 @@ Route::group(['middleware' => 'guest'], function () {
     })->name('login');
     Route::post('/login', 'Auth\LoginController@login');
 });
+
+Route::middleware([
+    "guest"
+])->group(function () {
+    Route::get("/forgot-password", "Auth\LoginController@forgotPasswordView");
+    Route::post("/forgot-password", "Auth\LoginController@forgotPassword");
+    Route::get("/reset-password/{token}", "Auth\LoginController@resetPasswordView");
+    Route::get("/verify-otp/{mobile}/{token}", "Auth\LoginController@verifyOtpView");
+    Route::post("/verify-otp", "Auth\LoginController@verifyOtp");
+    Route::post("/reset-password", "Auth\LoginController@resetPassword");
+});

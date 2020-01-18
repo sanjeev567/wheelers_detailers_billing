@@ -1,5 +1,10 @@
 <?php
 return [
+    "OTP" => [
+        "AUTH_KEY" => env("OTP_AUTH_KEY", "224642AJPWUyL85b3f9072"),
+        "MESSAGE" => "OTP to reset password is ##OTP##. \nMars Car Care Pvt. Service Ltd.",
+        "SENDER" => "MCCOTP",
+    ],
     'TREATMENT_SAC_NUMBER' => '998714',
     'SELLER_REG_ADDRESS' => '16A, Uday Plaza, Uday Park, Delhi-110049',
     'SELLER_ADDRESS_LINE1' => 'A-10/64, Ground Floor, Opposite DPS',
